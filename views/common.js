@@ -15,7 +15,12 @@ var commonTemplate =
 			A.title ('roboterhund.net')
 		),
 		A.body (
-			A.insert (params.CONTENT)
+			A.insert (params.CONTENT),
+			A.div (
+				A.id ('contUser'),
+				A.insert (params.CONT_USER),
+				A.insert (params.LOGIN_CONTROL)
+			)
 		)
 	);
 
@@ -32,7 +37,7 @@ function link (href, title, text) {
 		A.href (href),
 		inTitle (title),
 		text
-	)
+	);
 }
 
 module.exports = {
