@@ -36,6 +36,18 @@ var login = A.string (
 			{
 				href: loginRoutes.facebook.ROUTE,
 				prov: 'Facebook'
+			},
+			{
+				href: loginRoutes.github.ROUTE,
+				prov: 'GitHub'
+			},
+			{
+				href: loginRoutes.google.ROUTE,
+				prov: 'Google'
+			},
+			{
+				href: loginRoutes.twitter.ROUTE,
+				prov: 'Twitter'
 			}
 		]
 	}

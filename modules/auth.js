@@ -4,9 +4,9 @@
 var url = require ('url');
 
 var FacebookStrategy = require ('passport-facebook').Strategy;
-//var GithubStrategy = require ('passport-github').Strategy;
-//var GoogleStrategy = require ('passport-google').Strategy;
-//var TwitterStrategy = require ('passport-twitter').Strategy;
+var GithubStrategy = require ('passport-github').Strategy;
+var GoogleStrategy = require ('passport-google').Strategy;
+var TwitterStrategy = require ('passport-twitter').Strategy;
 
 var authParams = require ('../private/auth');
 var dbConfig = require ('../private/db');
@@ -31,6 +31,9 @@ function usePassport (app, passport, host, map, db, debug) {
 
 	var check = toCheckUser (db, debug);
 	useFacebookStrategy (passport, check, host, map);
+	useGithubStrategy (passport, check, host, map);
+	useGoogleStrategy (passport, check, host, map);
+	useTwitterStrategy (passport, check, host, map);
 }
 
 /**
@@ -53,6 +56,81 @@ function useFacebookStrategy (passport, check, host, map) {
 			},
 			function (accessToken, refreshToken, profile, done) {
 				check ('Facebook', profile, done);
+			}
+		)
+	);
+}
+
+/**
+ *
+ * @param passport
+ * @param check
+ * @param host
+ * @param map
+ */
+function useGithubStrategy (passport, check, host, map) {
+	passport.use (
+		new GithubStrategy (
+			{
+				clientID: authParams.github.id,
+				clientSecret: authParams.github.secret,
+				callbackURL: url.resolve (
+					host,
+					map.root.login.github.back.ROUTE
+				)
+			},
+			function (accessToken, refreshToken, profile, done) {
+				check ('GitHub', profile, done);
+			}
+		)
+	);
+}
+
+/**
+ *
+ * @param passport
+ * @param check
+ * @param host
+ * @param map
+ */
+function useGoogleStrategy (passport, check, host, map) {
+	passport.use (
+		new GoogleStrategy (
+			{
+				returnURL: url.resolve (
+					host,
+					map.root.login.google.back.ROUTE
+				),
+				realm: host
+			},
+			function (identifier, profile, done) {
+				check ('Google', profile, done);
+			}
+		)
+	);
+
+}
+
+/**
+ *
+ * @param passport
+ * @param check
+ * @param host
+ * @param map
+ */
+function useTwitterStrategy (passport, check, host, map) {
+	passport.use (
+		new TwitterStrategy (
+			{
+				consumerKey: authParams.twitter.key,
+				consumerSecret: authParams.twitter.secret,
+				callbackURL: url.resolve (
+					host,
+					map.root.login.twitter.back.ROUTE
+				)
+			},
+			function (accessToken, refreshToken, profile, done) {
+				check ('Twitter', profile, done);
 			}
 		)
 	);
