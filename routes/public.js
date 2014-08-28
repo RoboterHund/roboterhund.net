@@ -7,7 +7,7 @@
  */
 function setupPublicRoutes (router) {
 	var mMap = require ('./map');
-	var root = mMap.root;
+	var root = mMap.root ();
 
 	var mCommon = require ('../content/common');
 	var mPublic = require ('../content/public');

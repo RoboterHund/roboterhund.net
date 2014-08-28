@@ -51,7 +51,7 @@ function useFacebookStrategy (passport, check, host, map) {
 				clientSecret: authParams.facebook.secret,
 				callbackURL: url.resolve (
 					host,
-					map.root.login.facebook.back.ROUTE
+					map.root ().login.facebook.back.ROUTE
 				)
 			},
 			function (accessToken, refreshToken, profile, done) {
@@ -76,7 +76,7 @@ function useGithubStrategy (passport, check, host, map) {
 				clientSecret: authParams.github.secret,
 				callbackURL: url.resolve (
 					host,
-					map.root.login.github.back.ROUTE
+					map.root ().login.github.back.ROUTE
 				)
 			},
 			function (accessToken, refreshToken, profile, done) {
@@ -99,7 +99,7 @@ function useGoogleStrategy (passport, check, host, map) {
 			{
 				returnURL: url.resolve (
 					host,
-					map.root.login.google.back.ROUTE
+					map.root ().login.google.back.ROUTE
 				),
 				realm: host
 			},
@@ -126,7 +126,7 @@ function useTwitterStrategy (passport, check, host, map) {
 				consumerSecret: authParams.twitter.secret,
 				callbackURL: url.resolve (
 					host,
-					map.root.login.twitter.back.ROUTE
+					map.root ().login.twitter.back.ROUTE
 				)
 			},
 			function (accessToken, refreshToken, profile, done) {

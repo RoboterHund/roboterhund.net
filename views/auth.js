@@ -4,7 +4,7 @@
 var A = require ('april1-html');
 
 var mMap = require ('../routes/map');
-var root = mMap.root;
+var root = mMap.root ();
 var loginRoutes = root.login;
 
 var common = require ('./common');

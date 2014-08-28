@@ -8,7 +8,7 @@
  */
 function setupAuthRoutes (router, passport) {
 	var mMap = require ('./map');
-	var root = mMap.root;
+	var root = mMap.root ();
 
 	var loginRoute = root.login;
 	var successRedirect = toRedirectAuthenticated (mMap);
@@ -41,7 +41,7 @@ function setupAuthRoutes (router, passport) {
 		root.logout.ROUTE,
 		function (req, res) {
 			req.logout ();
-			res.redirect (mMap.root.ROUTE);
+			res.redirect (mMap.root ().ROUTE);
 		}
 	);
 }
@@ -60,7 +60,7 @@ function setupAuthStrategyRoutes (
 		passport.authenticate (
 			provider,
 			{
-				failureRedirect: mMap.root.authFail.ROUTE
+				failureRedirect: mMap.root ().authFail.ROUTE
 			}
 		),
 		successRedirect
@@ -80,7 +80,7 @@ function nop () {
  */
 function toRedirectAuthenticated (mMap) {
 	return function redirectAuthenticated (req, res) {
-		res.redirect (mMap.root.ROUTE);
+		res.redirect (mMap.root ().ROUTE);
 	};
 }
 
