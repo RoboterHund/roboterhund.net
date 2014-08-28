@@ -2,7 +2,6 @@
 'use strict';
 
 var path = require ('path');
-var url = require ('url');
 
 var connectMongo = require ('connect-mongo');
 var cookieParser = require ('cookie-parser');
@@ -26,22 +25,12 @@ function startServer (rootDirName) {
 	var mSetup = require ('./setup');
 	var config = mSetup.configuration ();
 
-	var debugs = require ('./debug').debugs ();
-
-	var host = url.format (
-		{
-			protocol: 'http',
-			hostname: 'localhost',
-			port: require ('../private/port').listenPort
-		}
-	);
-
 	// express
 	var app = express ();
 
 	// database
 	var dbConfig = require ('../private/db');
-	var database = mDatabase.database (debugs.main);
+	var database = mDatabase.database (config);
 
 	// static server
 	var staticDir = path.join (rootDirName, 'static');
@@ -74,13 +63,13 @@ function startServer (rootDirName) {
 
 	// passport
 	mAuth.usePassport (
-		app, passport, host, config,
-		database, debugs.auth
+		app, passport, config,
+		database
 	);
 
 	// common handlers
 	app.use (mCommon.toInit (database));
-	app.use (mCommon.toCheckAuth (debugs.auth, config));
+	app.use (mCommon.toCheckAuth (config));
 
 	// router
 	var router = new express.Router ();

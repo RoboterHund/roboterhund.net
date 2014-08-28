@@ -25,12 +25,12 @@ function toInit (db) {
 
 /**
  *
- * @param debug
  * @param config
  * @returns {Function}
  */
-function toCheckAuth (debug, config) {
+function toCheckAuth (config) {
 	var authViews = mViewsAuth.views (config);
+	var debug = config.debugs.auth;
 
 	return function checkAuth (req, res, next) {
 		if (req.isAuthenticated ()) {
@@ -51,7 +51,7 @@ function toCheckAuth (debug, config) {
 		} else {
 			req.viewParams [params.CONT_USER] = authViews.noAuthUser;
 			req.viewParams [params.LOGIN_CONTROL] = authViews.login;
-			
+
 			next ();
 		}
 	};

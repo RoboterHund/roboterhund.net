@@ -3,21 +3,21 @@
 
 /**
  *
- * @param debug
+ * @param config
  * @returns {*}
  */
-function database (debug) {
+function database (config) {
 	var mongoskin = require ('mongoskin');
-	var config = require ('../private/db');
+	var dbConfig = require ('../private/db');
 
 	var db = mongoskin.db (
-		config.connection,
+		dbConfig.connection,
 		{
 			native_parser: true
 		}
 	);
 
-	debug ('db connection created');
+	config.debugs.main ('db connection created');
 
 	return db;
 }

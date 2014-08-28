@@ -17,40 +17,37 @@ var usersCollection = dbConfig.collections.users;
  *
  * @param app
  * @param passport
- * @param host
  * @param config
  * @param db
- * @param debug
  */
-function usePassport (app, passport, host, config, db, debug) {
+function usePassport (app, passport, config, db) {
 	app.use (passport.initialize ());
 	app.use (passport.session ());
 
 	passport.serializeUser (serializeUser);
-	passport.deserializeUser (toDeserializeUser (db, debug));
+	passport.deserializeUser (toDeserializeUser (db, config));
 
-	var check = toCheckUser (db, debug);
-	useFacebookStrategy (passport, check, host, config);
-	useGithubStrategy (passport, check, host, config);
-	useGoogleStrategy (passport, check, host, config);
-	useTwitterStrategy (passport, check, host, config);
+	var check = toCheckUser (db, config);
+	useFacebookStrategy (passport, check, config);
+	useGithubStrategy (passport, check, config);
+	useGoogleStrategy (passport, check, config);
+	useTwitterStrategy (passport, check, config);
 }
 
 /**
  *
  * @param passport
  * @param check
- * @param host
  * @param config
  */
-function useFacebookStrategy (passport, check, host, config) {
+function useFacebookStrategy (passport, check, config) {
 	passport.use (
 		new FacebookStrategy (
 			{
 				clientID: authParams.facebook.id,
 				clientSecret: authParams.facebook.secret,
 				callbackURL: url.resolve (
-					host,
+					config.host,
 					config.root.login.facebook.back.ROUTE
 				)
 			},
@@ -65,17 +62,16 @@ function useFacebookStrategy (passport, check, host, config) {
  *
  * @param passport
  * @param check
- * @param host
  * @param config
  */
-function useGithubStrategy (passport, check, host, config) {
+function useGithubStrategy (passport, check, config) {
 	passport.use (
 		new GithubStrategy (
 			{
 				clientID: authParams.github.id,
 				clientSecret: authParams.github.secret,
 				callbackURL: url.resolve (
-					host,
+					config.host,
 					config.root.login.github.back.ROUTE
 				)
 			},
@@ -90,18 +86,17 @@ function useGithubStrategy (passport, check, host, config) {
  *
  * @param passport
  * @param check
- * @param host
  * @param config
  */
-function useGoogleStrategy (passport, check, host, config) {
+function useGoogleStrategy (passport, check, config) {
 	passport.use (
 		new GoogleStrategy (
 			{
 				returnURL: url.resolve (
-					host,
+					config.host,
 					config.root.login.google.back.ROUTE
 				),
-				realm: host
+				realm: config.host
 			},
 			function (identifier, profile, done) {
 				check ('Google', profile, done);
@@ -115,17 +110,16 @@ function useGoogleStrategy (passport, check, host, config) {
  *
  * @param passport
  * @param check
- * @param host
  * @param config
  */
-function useTwitterStrategy (passport, check, host, config) {
+function useTwitterStrategy (passport, check, config) {
 	passport.use (
 		new TwitterStrategy (
 			{
 				consumerKey: authParams.twitter.key,
 				consumerSecret: authParams.twitter.secret,
 				callbackURL: url.resolve (
-					host,
+					config.host,
 					config.root.login.twitter.back.ROUTE
 				)
 			},
@@ -148,10 +142,12 @@ function serializeUser (user, done) {
 /**
  *
  * @param db
- * @param debug
+ * @param config
  * @returns {Function}
  */
-function toDeserializeUser (db, debug) {
+function toDeserializeUser (db, config) {
+	var debug = config.debugs.auth ();
+
 	return function deserializeUser (id, done) {
 		db.collection (
 			usersCollection
@@ -186,10 +182,12 @@ function toUserFound (id, done, debug) {
 /**
  *
  * @param db
- * @param debug
+ * @param config
  * @returns {Function}
  */
-function toCheckUser (db, debug) {
+function toCheckUser (db, config) {
+	var debug = config.debugs.auth;
+
 	return function checkUser (from, profile, done) {
 		db.collection (
 			usersCollection
