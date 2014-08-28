@@ -3,15 +3,15 @@
 
 var url = require ('url');
 
-
 /**
  *
  * @param app
- * @param passport
  * @param config
  * @param db
  */
-function usePassport (app, passport, config, db) {
+function usePassport (app, config, db) {
+	var passport = config.modules.passport;
+
 	app.use (passport.initialize ());
 	app.use (passport.session ());
 
@@ -195,7 +195,7 @@ function toCheckUser (db, config) {
 				from: from,
 				authId: profile.id
 			},
-			toRegisterUser (from, profile, done, db, debug)
+			toRegisterUser (from, profile, done, db, debug, config)
 		);
 	};
 }
@@ -207,9 +207,10 @@ function toCheckUser (db, config) {
  * @param done
  * @param db
  * @param debug
+ * @param config
  * @returns {Function}
  */
-function toRegisterUser (from, profile, done, db, debug) {
+function toRegisterUser (from, profile, done, db, debug, config) {
 	return function registerUser (err, user) {
 		if (err) {
 			debug (err);
