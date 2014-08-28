@@ -62,7 +62,7 @@ function startServer (rootDirName) {
 	);
 
 	// passport
-	mAuth.usePassport (app, config, database);
+	mAuth.usePassport (app, database, config);
 
 	// common handlers
 	app.use (

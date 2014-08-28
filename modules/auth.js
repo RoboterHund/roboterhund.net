@@ -6,10 +6,10 @@ var url = require ('url');
 /**
  *
  * @param app
- * @param config
  * @param db
+ * @param config
  */
-function usePassport (app, config, db) {
+function usePassport (app, db, config) {
 	var passport = config.modules.passport;
 
 	app.use (
