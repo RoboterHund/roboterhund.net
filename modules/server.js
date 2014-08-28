@@ -25,13 +25,22 @@ function startServer (rootDirName) {
 
 	// static server
 	var staticDir = path.join (rootDirName, 'static');
-	app.use (modules.express.static (staticDir));
+	app.use (
+		config.root.ROUTE,
+		modules.express.static (staticDir)
+	);
 
 	// favicon
-	app.use (modules.favicon (path.join (staticDir, 'favicon.ico')));
+	app.use (
+		config.root.ROUTE,
+		modules.favicon (path.join (staticDir, 'favicon.ico'))
+	);
 
 	// cookies
-	app.use (modules.cookieParser ());
+	app.use (
+		config.root.ROUTE,
+		modules.cookieParser ()
+	);
 
 	// session
 	var MongoStore = modules.connectMongo (modules.expressSession);
@@ -43,6 +52,7 @@ function startServer (rootDirName) {
 		}
 	);
 	app.use (
+		config.root.ROUTE,
 		modules.expressSession (
 			{
 				secret: config.private.session.secret,
@@ -55,15 +65,24 @@ function startServer (rootDirName) {
 	mAuth.usePassport (app, config, database);
 
 	// common handlers
-	app.use (mCommon.toInit (database));
-	app.use (mCommon.toCheckAuth (config));
+	app.use (
+		config.root.ROUTE,
+		mCommon.toInit (database)
+	);
+	app.use (
+		config.root.ROUTE,
+		mCommon.toCheckAuth (config)
+	);
 
 	// router
 	var router = new modules.express.Router ();
 	mPublic.setupPublicRoutes (router, config);
 	var mAuthRoutes = require ('../routes/auth');
 	mAuthRoutes.setupAuthRoutes (router, modules.passport, config);
-	app.use (router);
+	app.use (
+		config.root.ROUTE,
+		router
+	);
 
 	// start listen port
 	app.listen (config.private.port.listenPort);

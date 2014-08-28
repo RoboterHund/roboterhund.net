@@ -12,8 +12,14 @@ var url = require ('url');
 function usePassport (app, config, db) {
 	var passport = config.modules.passport;
 
-	app.use (passport.initialize ());
-	app.use (passport.session ());
+	app.use (
+		config.root.ROUTE,
+		passport.initialize ()
+	);
+	app.use (
+		config.root.ROUTE,
+		passport.session ()
+	);
 
 	passport.serializeUser (serializeUser);
 	passport.deserializeUser (toDeserializeUser (db, config));
