@@ -3,8 +3,6 @@
 
 var A = require ('april1-html');
 
-var pmDbParams = require ('../private/db');
-
 var mViewsCommon = require ('../views/common');
 var mViewsAuth = require ('../views/auth');
 var params = require ('../views/params');
@@ -40,7 +38,7 @@ function toCheckAuth (config) {
 			var userId = req.session.passport.user;
 
 			req.db.collection (
-				pmDbParams.collections.users
+				config.private.db.collections.users
 			).findOne (
 				{
 					_id: userId

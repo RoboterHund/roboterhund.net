@@ -11,6 +11,8 @@ function configuration () {
 	var mDebug = require ('./debug');
 	config.debugs = mDebug.debugs ();
 
+	config.private = privateParams ();
+
 	var url = require ('url');
 	config.host = url.format (
 		{
@@ -24,6 +26,21 @@ function configuration () {
 	config.root = mMap.root ();
 
 	return config;
+}
+
+/**
+ *
+ * @returns {{}}
+ */
+function privateParams () {
+	var params = {};
+
+	params.auth = require ('../private/auth');
+	params.db = require ('../private/db');
+	params.port = require ('../private/port');
+	params.session = require ('../private/session');
+
+	return params;
 }
 
 module.exports = {

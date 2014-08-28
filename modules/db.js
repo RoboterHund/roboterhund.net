@@ -8,10 +8,9 @@
  */
 function database (config) {
 	var mongoskin = require ('mongoskin');
-	var dbConfig = require ('../private/db');
 
 	var db = mongoskin.db (
-		dbConfig.connection,
+		config.private.db.connection,
 		{
 			native_parser: true
 		}

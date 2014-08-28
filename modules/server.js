@@ -10,8 +10,6 @@ var expressSession = require ('express-session');
 var favicon = require ('serve-favicon');
 var passport = require ('passport');
 
-var pmPort = require ('../private/port');
-
 var mCommon = require ('../content/common');
 var mPublic = require ('../routes/public');
 
@@ -29,7 +27,6 @@ function startServer (rootDirName) {
 	var app = express ();
 
 	// database
-	var dbConfig = require ('../private/db');
 	var database = mDatabase.database (config);
 
 	// static server
@@ -43,19 +40,18 @@ function startServer (rootDirName) {
 	app.use (cookieParser ());
 
 	// session
-	var sessionParams = require ('../private/session');
 	var MongoStore = connectMongo (expressSession);
 	var mongoStore = new MongoStore (
 		{
-			db: dbConfig.name,
-			collection: dbConfig.collections.sessions,
+			db: config.private.db.name,
+			collection: config.private.db.collections.sessions,
 			stringify: false
 		}
 	);
 	app.use (
 		expressSession (
 			{
-				secret: sessionParams.secret,
+				secret: config.private.session.secret,
 				store: mongoStore
 			}
 		)
@@ -79,7 +75,7 @@ function startServer (rootDirName) {
 	app.use (router);
 
 	// start listen port
-	app.listen (pmPort.listenPort);
+	app.listen (config.private.port.listenPort);
 }
 
 module.exports = {

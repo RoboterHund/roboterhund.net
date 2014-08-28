@@ -3,15 +3,6 @@
 
 var url = require ('url');
 
-var FacebookStrategy = require ('passport-facebook').Strategy;
-var GithubStrategy = require ('passport-github').Strategy;
-var GoogleStrategy = require ('passport-google').Strategy;
-var TwitterStrategy = require ('passport-twitter').Strategy;
-
-var authParams = require ('../private/auth');
-var dbConfig = require ('../private/db');
-
-var usersCollection = dbConfig.collections.users;
 
 /**
  *
@@ -41,11 +32,13 @@ function usePassport (app, passport, config, db) {
  * @param config
  */
 function useFacebookStrategy (passport, check, config) {
+	var FacebookStrategy = require ('passport-facebook').Strategy;
+
 	passport.use (
 		new FacebookStrategy (
 			{
-				clientID: authParams.facebook.id,
-				clientSecret: authParams.facebook.secret,
+				clientID: config.private.auth.facebook.id,
+				clientSecret: config.private.auth.facebook.secret,
 				callbackURL: url.resolve (
 					config.host,
 					config.root.login.facebook.back.ROUTE
@@ -65,11 +58,13 @@ function useFacebookStrategy (passport, check, config) {
  * @param config
  */
 function useGithubStrategy (passport, check, config) {
+	var GithubStrategy = require ('passport-github').Strategy;
+
 	passport.use (
 		new GithubStrategy (
 			{
-				clientID: authParams.github.id,
-				clientSecret: authParams.github.secret,
+				clientID: config.private.auth.github.id,
+				clientSecret: config.private.auth.github.secret,
 				callbackURL: url.resolve (
 					config.host,
 					config.root.login.github.back.ROUTE
@@ -89,6 +84,8 @@ function useGithubStrategy (passport, check, config) {
  * @param config
  */
 function useGoogleStrategy (passport, check, config) {
+	var GoogleStrategy = require ('passport-google').Strategy;
+
 	passport.use (
 		new GoogleStrategy (
 			{
@@ -113,11 +110,13 @@ function useGoogleStrategy (passport, check, config) {
  * @param config
  */
 function useTwitterStrategy (passport, check, config) {
+	var TwitterStrategy = require ('passport-twitter').Strategy;
+
 	passport.use (
 		new TwitterStrategy (
 			{
-				consumerKey: authParams.twitter.key,
-				consumerSecret: authParams.twitter.secret,
+				consumerKey: config.private.auth.twitter.key,
+				consumerSecret: config.private.auth.twitter.secret,
 				callbackURL: url.resolve (
 					config.host,
 					config.root.login.twitter.back.ROUTE
@@ -150,7 +149,7 @@ function toDeserializeUser (db, config) {
 
 	return function deserializeUser (id, done) {
 		db.collection (
-			usersCollection
+			config.private.db.collections.users
 		).findOne (
 			{
 				_id: id
@@ -190,7 +189,7 @@ function toCheckUser (db, config) {
 
 	return function checkUser (from, profile, done) {
 		db.collection (
-			usersCollection
+			config.private.db.collections.users
 		).findOne (
 			{
 				from: from,
@@ -220,7 +219,7 @@ function toRegisterUser (from, profile, done, db, debug) {
 
 		} else {
 			db.collection (
-				usersCollection
+				config.private.db.collections.users
 			).insert (
 				{
 					from: from,
