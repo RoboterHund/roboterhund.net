@@ -18,11 +18,11 @@ var usersCollection = dbConfig.collections.users;
  * @param app
  * @param passport
  * @param host
- * @param map
+ * @param config
  * @param db
  * @param debug
  */
-function usePassport (app, passport, host, map, db, debug) {
+function usePassport (app, passport, host, config, db, debug) {
 	app.use (passport.initialize ());
 	app.use (passport.session ());
 
@@ -30,10 +30,10 @@ function usePassport (app, passport, host, map, db, debug) {
 	passport.deserializeUser (toDeserializeUser (db, debug));
 
 	var check = toCheckUser (db, debug);
-	useFacebookStrategy (passport, check, host, map);
-	useGithubStrategy (passport, check, host, map);
-	useGoogleStrategy (passport, check, host, map);
-	useTwitterStrategy (passport, check, host, map);
+	useFacebookStrategy (passport, check, host, config);
+	useGithubStrategy (passport, check, host, config);
+	useGoogleStrategy (passport, check, host, config);
+	useTwitterStrategy (passport, check, host, config);
 }
 
 /**
@@ -41,9 +41,9 @@ function usePassport (app, passport, host, map, db, debug) {
  * @param passport
  * @param check
  * @param host
- * @param map
+ * @param config
  */
-function useFacebookStrategy (passport, check, host, map) {
+function useFacebookStrategy (passport, check, host, config) {
 	passport.use (
 		new FacebookStrategy (
 			{
@@ -51,7 +51,7 @@ function useFacebookStrategy (passport, check, host, map) {
 				clientSecret: authParams.facebook.secret,
 				callbackURL: url.resolve (
 					host,
-					map.root ().login.facebook.back.ROUTE
+					config.root.login.facebook.back.ROUTE
 				)
 			},
 			function (accessToken, refreshToken, profile, done) {
@@ -66,9 +66,9 @@ function useFacebookStrategy (passport, check, host, map) {
  * @param passport
  * @param check
  * @param host
- * @param map
+ * @param config
  */
-function useGithubStrategy (passport, check, host, map) {
+function useGithubStrategy (passport, check, host, config) {
 	passport.use (
 		new GithubStrategy (
 			{
@@ -76,7 +76,7 @@ function useGithubStrategy (passport, check, host, map) {
 				clientSecret: authParams.github.secret,
 				callbackURL: url.resolve (
 					host,
-					map.root ().login.github.back.ROUTE
+					config.root.login.github.back.ROUTE
 				)
 			},
 			function (accessToken, refreshToken, profile, done) {
@@ -91,15 +91,15 @@ function useGithubStrategy (passport, check, host, map) {
  * @param passport
  * @param check
  * @param host
- * @param map
+ * @param config
  */
-function useGoogleStrategy (passport, check, host, map) {
+function useGoogleStrategy (passport, check, host, config) {
 	passport.use (
 		new GoogleStrategy (
 			{
 				returnURL: url.resolve (
 					host,
-					map.root ().login.google.back.ROUTE
+					config.root.login.google.back.ROUTE
 				),
 				realm: host
 			},
@@ -116,9 +116,9 @@ function useGoogleStrategy (passport, check, host, map) {
  * @param passport
  * @param check
  * @param host
- * @param map
+ * @param config
  */
-function useTwitterStrategy (passport, check, host, map) {
+function useTwitterStrategy (passport, check, host, config) {
 	passport.use (
 		new TwitterStrategy (
 			{
@@ -126,7 +126,7 @@ function useTwitterStrategy (passport, check, host, map) {
 				consumerSecret: authParams.twitter.secret,
 				callbackURL: url.resolve (
 					host,
-					map.root ().login.twitter.back.ROUTE
+					config.root.login.twitter.back.ROUTE
 				)
 			},
 			function (accessToken, refreshToken, profile, done) {

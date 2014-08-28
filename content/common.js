@@ -26,15 +26,19 @@ function toInit (db) {
 /**
  *
  * @param debug
+ * @param config
  * @returns {Function}
  */
-function toCheckAuth (debug) {
+function toCheckAuth (debug, config) {
+	var authViews = mViewsAuth.views (config);
+
 	return function checkAuth (req, res, next) {
 		if (req.isAuthenticated ()) {
-			req.viewParams [params.CONT_USER] =
-				mViewsAuth.authUser;
+			req.viewParams [params.CONT_USER] = authViews.authUser;
+			req.viewParams [params.LOGIN_CONTROL] = authViews.logout;
 
 			var userId = req.session.passport.user;
+
 			req.db.collection (
 				pmDbParams.collections.users
 			).findOne (
@@ -44,12 +48,10 @@ function toCheckAuth (debug) {
 				toAuthUserFound (req, userId, next, debug)
 			);
 
-			req.viewParams [params.LOGIN_CONTROL] = mViewsAuth.logout;
-
 		} else {
-			req.viewParams [params.CONT_USER] =
-				mViewsAuth.noAuthUser;
-			req.viewParams [params.LOGIN_CONTROL] = mViewsAuth.login;
+			req.viewParams [params.CONT_USER] = authViews.noAuthUser;
+			req.viewParams [params.LOGIN_CONTROL] = authViews.login;
+			
 			next ();
 		}
 	};

@@ -5,34 +5,33 @@
  *
  * @param router
  * @param passport
+ * @param config
  */
-function setupAuthRoutes (router, passport) {
-	var mMap = require ('./map');
-	var root = mMap.root ();
-
+function setupAuthRoutes (router, passport, config) {
+	var root = config.root;
 	var loginRoute = root.login;
-	var successRedirect = toRedirectAuthenticated (mMap);
+	var successRedirect = toRedirectAuthenticated (config);
 
 	setupAuthStrategyRoutes (
-		router, passport, mMap,
+		router, passport, config,
 		loginRoute.facebook,
 		'facebook',
 		successRedirect);
 
 	setupAuthStrategyRoutes (
-		router, passport, mMap,
+		router, passport, config,
 		loginRoute.github,
 		'github',
 		successRedirect);
 
 	setupAuthStrategyRoutes (
-		router, passport, mMap,
+		router, passport, config,
 		loginRoute.google,
 		'google',
 		successRedirect);
 
 	setupAuthStrategyRoutes (
-		router, passport, mMap,
+		router, passport, config,
 		loginRoute.twitter,
 		'twitter',
 		successRedirect);
@@ -41,13 +40,13 @@ function setupAuthRoutes (router, passport) {
 		root.logout.ROUTE,
 		function (req, res) {
 			req.logout ();
-			res.redirect (mMap.root ().ROUTE);
+			res.redirect (root.ROUTE);
 		}
 	);
 }
 
 function setupAuthStrategyRoutes (
-	router, passport, mMap, loginRoute, provider, successRedirect) {
+	router, passport, config, loginRoute, provider, successRedirect) {
 
 	router.get (
 		loginRoute.ROUTE,
@@ -60,7 +59,7 @@ function setupAuthStrategyRoutes (
 		passport.authenticate (
 			provider,
 			{
-				failureRedirect: mMap.root ().authFail.ROUTE
+				failureRedirect: config.root.authFail.ROUTE
 			}
 		),
 		successRedirect
@@ -75,12 +74,12 @@ function nop () {
 
 /**
  *
- * @param mMap
+ * @param config
  * @returns {Function}
  */
-function toRedirectAuthenticated (mMap) {
+function toRedirectAuthenticated (config) {
 	return function redirectAuthenticated (req, res) {
-		res.redirect (mMap.root ().ROUTE);
+		res.redirect (config.root.ROUTE);
 	};
 }
 

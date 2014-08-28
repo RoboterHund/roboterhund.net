@@ -23,6 +23,9 @@ var mDatabase = require ('./db');
  * start server
  */
 function startServer (rootDirName) {
+	var mSetup = require ('./setup');
+	var config = mSetup.configuration ();
+
 	var debugs = require ('./debug').debugs ();
 
 	var host = url.format (
@@ -70,21 +73,20 @@ function startServer (rootDirName) {
 	);
 
 	// passport
-	var map = require ('../routes/map');
 	mAuth.usePassport (
-		app, passport, host, map,
+		app, passport, host, config,
 		database, debugs.auth
 	);
 
 	// common handlers
 	app.use (mCommon.toInit (database));
-	app.use (mCommon.toCheckAuth (debugs.auth));
+	app.use (mCommon.toCheckAuth (debugs.auth, config));
 
 	// router
 	var router = new express.Router ();
-	mPublic.setupPublicRoutes (router);
+	mPublic.setupPublicRoutes (router, config);
 	var mAuthRoutes = require ('../routes/auth');
-	mAuthRoutes.setupAuthRoutes (router, passport);
+	mAuthRoutes.setupAuthRoutes (router, passport, config);
 	app.use (router);
 
 	// start listen port

@@ -4,7 +4,6 @@
 var A = require ('april1-html');
 
 var mCommon = require ('../views/common');
-var params = require ('./params');
 
 /**
  * root view
