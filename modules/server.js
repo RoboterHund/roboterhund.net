@@ -101,7 +101,16 @@ function startServer (rootDirName) {
 	);
 
 	// start listen port
-	app.listen (config.private.port.listenPort);
+	var mainDebug = config.debugs.main;
+	var server = app.listen (
+		config.private.port.listenPort,
+		function () {
+			mainDebug (
+				'start server listen on port %s',
+				server.address ().port
+			);
+		}
+	);
 }
 
 module.exports = {
