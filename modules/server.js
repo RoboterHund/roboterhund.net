@@ -23,6 +23,15 @@ function startServer (rootDirName) {
 	// database
 	var database = mDatabase.database (config);
 
+	// app data
+	var mGlobal = require ('./global');
+	var appData = mGlobal.appData (
+		{
+			db: database
+		},
+		config
+	);
+
 	// static server
 	var staticDir = path.join (rootDirName, 'static');
 	app.use (
@@ -62,12 +71,19 @@ function startServer (rootDirName) {
 	);
 
 	// passport
-	mAuth.usePassport (app, database, config);
+	mAuth.usePassport (
+		{
+			app: app,
+			db: database,
+			appData: appData
+		},
+		config
+	);
 
 	// common handlers
 	app.use (
 		config.root.ROUTE,
-		mCommon.toInit (database)
+		mCommon.toInit (appData)
 	);
 	app.use (
 		config.root.ROUTE,

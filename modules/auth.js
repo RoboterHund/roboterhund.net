@@ -5,11 +5,12 @@ var url = require ('url');
 
 /**
  *
- * @param app
- * @param db
+ * @param params
  * @param config
  */
-function usePassport (app, db, config) {
+function usePassport (params, config) {
+	var app = params.app;
+	var db = params.appData.db;
 	var passport = config.modules.passport;
 
 	app.use (
@@ -154,9 +155,7 @@ function toDeserializeUser (db, config) {
 	var debug = config.debugs.auth ();
 
 	return function deserializeUser (id, done) {
-		db.collection (
-			config.private.db.collections.users
-		).findOne (
+		db.users ().findOne (
 			{
 				_id: id
 			},
@@ -194,14 +193,12 @@ function toCheckUser (db, config) {
 	var debug = config.debugs.auth;
 
 	return function checkUser (from, profile, done) {
-		db.collection (
-			config.private.db.collections.users
-		).findOne (
+		db.users ().findOne (
 			{
 				from: from,
 				authId: profile.id
 			},
-			toRegisterUser (from, profile, done, db, debug, config)
+			toRegisterUser (from, profile, done, db, debug)
 		);
 	};
 }
@@ -213,10 +210,9 @@ function toCheckUser (db, config) {
  * @param done
  * @param db
  * @param debug
- * @param config
  * @returns {Function}
  */
-function toRegisterUser (from, profile, done, db, debug, config) {
+function toRegisterUser (from, profile, done, db, debug) {
 	return function registerUser (err, user) {
 		if (err) {
 			debug (err);
@@ -225,9 +221,7 @@ function toRegisterUser (from, profile, done, db, debug, config) {
 			done (null, user);
 
 		} else {
-			db.collection (
-				config.private.db.collections.users
-			).insert (
+			db.users ().insert (
 				{
 					from: from,
 					authId: profile.id,

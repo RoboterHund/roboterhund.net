@@ -9,12 +9,13 @@ var params = require ('../views/params');
 
 /**
  * common route handler
- * @param db
+ * @param appData
  * @returns {Function}
  */
-function toInit (db) {
+function toInit (appData) {
 	return function init (req, res, next) {
-		req.db = db;
+		req.appData = appData;
+		req.db = appData.db;
 		req.viewParams = {};
 
 		next ();
@@ -37,9 +38,7 @@ function toCheckAuth (config) {
 
 			var userId = req.session.passport.user;
 
-			req.db.collection (
-				config.private.db.collections.users
-			).findOne (
+			req.db.users ().findOne (
 				{
 					_id: userId
 				},

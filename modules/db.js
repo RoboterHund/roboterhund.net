@@ -9,7 +9,7 @@
 function database (config) {
 	var mongoskin = require ('mongoskin');
 
-	var db = mongoskin.db (
+	var database = mongoskin.db (
 		config.private.db.connection,
 		{
 			native_parser: true
@@ -18,9 +18,39 @@ function database (config) {
 
 	config.debugs.main ('db connection created');
 
-	return db;
+	return database;
+}
+
+/**
+ *
+ * @param db
+ * @param config
+ * @returns {{}}
+ */
+function collections (db, config) {
+	var dbCols = {};
+
+	var collections = config.private.db.collections;
+
+	dbCols.users = toCollection (db, collections.users);
+	dbCols.sessions = toCollection (db, collections.sessions);
+
+	return dbCols;
+}
+
+/**
+ *
+ * @param db
+ * @param name
+ * @returns {Function}
+ */
+function toCollection (db, name) {
+	return function collection () {
+		return db.collection (name);
+	};
 }
 
 module.exports = {
-	database: database
+	database: database,
+	collections: collections
 };
