@@ -3,7 +3,7 @@
 
 var A = require ('april1-html');
 
-var mCommon = require ('../views/common');
+var mCommon = require ('common');
 
 /**
  * root view
