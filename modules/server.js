@@ -131,6 +131,14 @@ function createRouter (express, params) {
 	var mAuthRoutes = require ('./login/routes');
 	mAuthRoutes.setupAuthRoutes (router, params);
 
+	//noinspection JSUnusedLocalSymbols
+	router.get (
+		'/fail',
+		function (req, res, next) {
+			throw new Error ('FAIL!');
+		}
+	);
+
 	return router;
 }
 
