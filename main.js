@@ -3,6 +3,4 @@
 
 var mServer = require ('./modules/server');
 
-var startServer = mServer.startServer ;
-
-startServer (__dirname);
+mServer.startServer (__dirname);

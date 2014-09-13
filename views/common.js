@@ -1,41 +1,132 @@
 // common views
 'use strict';
 
-var A = require ('april1-html');
-
-var params = require ('./params');
-
 /**
- * common document template
+ * common template
+ * @returns {*}
  */
-var commonTemplate =
-	A.template (
+function getCommonTemplate (params) {
+	var A = params.appGlobal.A;
+	var keys = params.appGlobal.viewKeys;
+
+	return A.template (
 		A.DOCTYPE,
 		A.head (
 			A.title ('roboterhund.net')
 		),
 		A.body (
-			A.insert (params.CONTENT)
+			A.insert (keys.CONTENT),
+			A.div (
+				A.id ('contUser'),
+				A.insert (keys.CONT_USER),
+				A.insert (keys.LOGIN_CONTROL)
+			)
+		)
+	);
+}
+
+/**
+ * auth views
+ * @param params
+ * @returns {{}}
+ */
+function getAuthViews (params) {
+	var routes = params.routes;
+
+	var A = params.appGlobal.A;
+	var keys = params.appGlobal.viewKeys;
+
+	/**
+	 * login link list
+	 */
+	var login = A.string (
+		A.template (
+			A.ul (
+				A.list (
+					'provs',
+					A.li (
+						A.link (
+							A.insert ('href'),
+							A.macro (
+								'Login with ',
+								A.insert ('prov')
+							),
+							A.insert ('prov')
+						)
+					)
+				)
+			)
+		),
+		{
+			provs: [
+				{
+					href: routes.facebookLogin,
+					prov: 'Facebook'
+				},
+				{
+					href: routes.githubLogin,
+					prov: 'GitHub'
+				},
+				{
+					href: routes.googleLogin,
+					prov: 'Google'
+				},
+				{
+					href: routes.twitterLogin,
+					prov: 'Twitter'
+				}
+			]
+		}
+	);
+
+	var logoutLabel = 'Logout';
+
+	var logout = A.string (
+		A.template (
+			A.ul (
+				A.li (
+					A.link (
+						routes.logout,
+						logoutLabel,
+						logoutLabel
+					)
+				)
+			)
 		)
 	);
 
-/**
- * title attribute
- */
-var inTitle = A.specAttr ('title');
+	/**
+	 * authenticated user template
+	 */
+	var authUser = A.template (
+		A.p (
+			'user: ',
+			A.span (
+				A.inClass ('user'),
+				A.insert (keys.AUTH_USER)
+			),
+			' (',
+			A.insert (keys.USER_FROM),
+			')'
+		)
+	);
 
-/**
- * link
- */
-function link (href, title, text) {
-	return A.a (
-		A.href (href),
-		inTitle (title),
-		text
-	)
+	/**
+	 * user not authenticated
+	 */
+	var noAuthUser = A.constant (
+		A.p ('no user')
+	);
+
+	return {
+		login: login,
+		logout: logout,
+		authUser: authUser,
+		noAuthUser: noAuthUser
+	};
 }
 
 module.exports = {
-	commonTemplate: commonTemplate,
-	link: link
+	getCommonTemplate: getCommonTemplate,
+	getAuthViews: getAuthViews
 };

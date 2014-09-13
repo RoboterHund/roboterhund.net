@@ -9,4 +9,7 @@ node_modules/
 
 # not published
 private/
-static/
+static/css/
+static/img/
+static/favicon.ico
+start.bat
