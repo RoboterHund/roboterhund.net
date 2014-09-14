@@ -128,6 +128,9 @@ function createRouter (express, params) {
 	var mContentHome = require ('../content/home');
 	mContentHome.setupHomePage (router, params);
 
+	var mContentTmdp = require ('../content/tmdp');
+	mContentTmdp.setupRoutes (router, params);
+
 	var mAuthRoutes = require ('./login/routes');
 	mAuthRoutes.setupAuthRoutes (router, params);
 

@@ -4,6 +4,10 @@
 module.exports = {
 	root: '/',
 
+	playlist: '/kasaneteto/videos',
+	resetPlaylistLoader: '/kasaneteto/videos/load/reset',
+	loadNextPlaylistPage: '/kasaneteto/videos/load/continue',
+
 	authFail: '/auth-fail',
 
 	facebookLogin: '/login/facebook',
@@ -18,5 +22,6 @@ module.exports = {
 	twitterLogin: '/login/twitter',
 	twitterBack: '/login/twitter/back',
 
+	login: '/login',
 	logout: '/logout'
 };

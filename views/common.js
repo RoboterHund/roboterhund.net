@@ -8,6 +8,7 @@
 function getCommonTemplate (params) {
 	var A = params.appGlobal.A;
 	var keys = params.appGlobal.viewKeys;
+	var routes = params.routes;
 
 	return A.template (
 		A.DOCTYPE,
@@ -20,6 +21,18 @@ function getCommonTemplate (params) {
 				A.id ('contUser'),
 				A.insert (keys.CONT_USER),
 				A.insert (keys.LOGIN_CONTROL)
+			),
+			A.hr (),
+			A.link (
+				routes.root,
+				'Home',
+				'Home'
+			),
+			' | ',
+			A.link (
+				routes.playlist,
+				'The Miracle Diva Project',
+				'Kasane Teto playlist'
 			)
 		)
 	);

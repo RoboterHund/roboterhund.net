@@ -22,6 +22,8 @@ function initGlobalData (params) {
 
 	data.db = params.collections;
 
+	data.youtube = {};
+
 	return data;
 }
 

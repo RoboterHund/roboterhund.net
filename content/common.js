@@ -9,6 +9,7 @@
 function toInit (appGlobal) {
 	return function init (req, res, next) {
 		req.appGlobal = appGlobal;
+		req.tempData = {};
 		req.viewVals = {};
 
 		next ();
