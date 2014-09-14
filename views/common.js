@@ -33,6 +33,9 @@ function getCommonTemplate (params) {
 				routes.showPlaylist,
 				'The Miracle Diva Project',
 				'Kasane Teto playlist'
+			),
+			A.p (
+				'© 2014 RoboterHund'
 			)
 		)
 	);
