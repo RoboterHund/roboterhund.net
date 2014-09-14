@@ -43,7 +43,7 @@ function requireUserAdmin (req, res) {
 		return true;
 
 	} else {
-		res.redirect (require ('../content/routes').root);
+		res.redirect (require ('../routes/map').root);
 		return false;
 	}
 }

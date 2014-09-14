@@ -42,7 +42,7 @@ function setupServer (rootDirName, debugs) {
 		}
 	);
 
-	params.routes = require ('../content/routes');
+	params.routes = require ('../routes/map');
 
 	var express = require ('express');
 	var app = express ();
