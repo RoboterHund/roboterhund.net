@@ -4,7 +4,7 @@
 module.exports = {
 	root: '/',
 
-	playlist: '/kasaneteto/videos',
+	showPlaylist: '/kasaneteto/videos',
 	resetPlaylistLoader: '/kasaneteto/videos/load/reset',
 	loadNextPlaylistPage: '/kasaneteto/videos/load/continue',
 

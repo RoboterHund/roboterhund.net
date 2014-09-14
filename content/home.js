@@ -2,30 +2,19 @@
 'use strict';
 
 /**
- * setup home page route
- * @param router
- * @param params
+ * set home page as page content
+ * @param req
+ * @param res
+ * @param next
  */
-function setupHomePage (router, params) {
-	var mViewsHome = require ('../views/home');
-	params.appGlobal.views.home = mViewsHome.getHomeView (params);
+function homePage (req, res, next) {
+	var keys = req.appGlobal.viewKeys;
 
-	router.get (
-		params.routes.root,
+	req.viewVals [keys.CONTENT] = req.appGlobal.views.home;
 
-		function (req, res, next) {
-			var keys = req.appGlobal.viewKeys;
-
-			req.viewVals [keys.CONTENT] =
-				req.appGlobal.views.home;
-
-			next ();
-		},
-
-		params.appGlobal.render
-	);
+	next ();
 }
 
 module.exports = {
-	setupHomePage: setupHomePage
+	homePage: homePage
 };
