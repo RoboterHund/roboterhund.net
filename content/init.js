@@ -53,6 +53,7 @@ function initTmdp (router, params) {
 
 	router.get (
 		routes.showPlaylist,
+		mYoutube.checkIsUserAdmin,
 		mYoutube.loadPlaylist,
 		mContentTmdp.playlist,
 		params.appGlobal.render

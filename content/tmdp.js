@@ -37,12 +37,43 @@ function playlist (req, res, next) {
 		videos.push (video);
 	}
 
+	req.viewVals [keys.VIDEO_LOADER] = getLoader (req);
 	req.viewVals [keys.VIDEO_PLAYLIST] = videos;
 
 	req.viewVals [keys.CONTENT] =
 		req.appGlobal.views.playlistTemplate;
 
 	next ();
+}
+
+/**
+ * get playlist loader view
+ * @param req
+ * @returns {string}
+ */
+function getLoader (req) {
+	if (req.tempData.isAdmin) {
+		var appGlobal = req.appGlobal;
+		var loader = appGlobal.views.loader;
+
+		if (!loader) {
+			var mPlaylist = require ('../views/playlist');
+			appGlobal.views.loader = mPlaylist.getLoader (
+				{
+					appGlobal: {
+						A: appGlobal.A
+					},
+					routes: require ('./routes')
+				}
+			);
+			loader = appGlobal.views.loader;
+		}
+
+		return loader;
+
+	} else {
+		return '';
+	}
 }
 
 module.exports = {

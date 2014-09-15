@@ -11,17 +11,22 @@ function checkIsUserAdmin (req, res, next) {
 	req.tempData.isAdmin = false;
 
 	if (req.isAuthenticated ()) {
+		var userId = req.session.passport.user;
+
 		req.appGlobal.db.admins ().findOne (
 			{
-				key: req.session.passport.user
+				key: userId.toString ()
 			},
-			function authUserFound (err, user) {
+			function adminUserFound (err, user) {
 				if (err) {
-					req.appGlobal.debugs.auth ('failed to find user ' + id);
+					req.appGlobal.debugs.auth ('failed to find user ' + userId);
 					next (err);
 
-				} else {
+				} else if (user !== null) {
 					req.tempData.isAdmin = true;
+					next ();
+
+				} else {
 					next ();
 				}
 			}
