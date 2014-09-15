@@ -60,6 +60,14 @@ function initTmdp (router, params) {
 	);
 
 	router.get (
+		routes.showPlaylistFromTo,
+		mYoutube.checkIsUserAdmin,
+		mYoutube.loadPlaylist,
+		mContentTmdp.playlist,
+		params.appGlobal.render
+	);
+
+	router.get (
 		routes.resetPlaylistLoader,
 		mYoutube.checkIsUserAdmin,
 		mYoutube.clearNextPageToken,

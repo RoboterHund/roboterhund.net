@@ -5,6 +5,8 @@ module.exports = {
 	root: '/',
 
 	showPlaylist: '/kasaneteto/videos',
+	showPlaylistFromTo: '/kasaneteto/videos/:from/:to',
+
 	resetPlaylistLoader: '/kasaneteto/videos/load/reset',
 	loadNextPlaylistPage: '/kasaneteto/videos/load/continue',
 

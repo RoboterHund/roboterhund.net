@@ -17,11 +17,25 @@ function playlist (req, res, next) {
 
 	var playlist = req.appGlobal.youtube.list;
 
+	var from = parseInt (req.params.from);
+
+	if (isNaN (from) || from < 1) {
+		from = 0;
+
+	} else {
+		from -= 1;
+	}
+
+	var to = parseInt (req.params.to);
+
+	if (isNaN (to) || to > playlist.length) {
+		to = playlist.length;
+	}
+
 	var i;
-	var n = playlist.length;
 	var playlistItem;
 	var video;
-	for (i = 0; i < n; i++) {
+	for (i = to - 1; i >= from; i--) {
 		playlistItem = playlist [i];
 
 		video = {};
