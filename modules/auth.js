@@ -26,10 +26,19 @@ function usePassport (params) {
 	passport.deserializeUser (toDeserializeUser (users, debug));
 
 	var check = toCheckUser (users, debug);
-	useFacebookStrategy (passport, check, params);
-	useGithubStrategy (passport, check, params);
-	useGoogleStrategy (passport, check, params);
-	useTwitterStrategy (passport, check, params);
+	var authParams = require ('../private/auth');
+	if (authParams.facebook.enabled) {
+		useFacebookStrategy (passport, check, params);
+	}
+	if (authParams.github.enabled) {
+		useGithubStrategy (passport, check, params);
+	}
+	if (authParams.google.enabled) {
+		useGoogleStrategy (passport, check, params);
+	}
+	if (authParams.twitter.enabled) {
+		useTwitterStrategy (passport, check, params);
+	}
 }
 
 /**
