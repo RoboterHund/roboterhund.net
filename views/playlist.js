@@ -26,6 +26,11 @@ function getTemplate (params) {
 					)
 				)
 			)
+		),
+		A.link (
+			routes.login,
+			'Login',
+			'Admin'
 		)
 	);
 }

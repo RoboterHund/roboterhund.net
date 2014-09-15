@@ -83,6 +83,13 @@ function initTmdp (router, params) {
 function initAuth (router, params) {
 	var routes = params.routes;
 
+	var mContentAuth = require ('../content/auth');
+	router.get (
+		routes.login,
+		mContentAuth.toShowAuth (params),
+		params.appGlobal.render
+	);
+
 	var setupParams = {};
 
 	setupParams.router = router;

@@ -2,6 +2,24 @@
 'use strict';
 
 /**
+ * get login view
+ * @param params
+ * @returns {*}
+ */
+function getLoginView (params) {
+	var A = params.appGlobal.A;
+	var keys = params.appGlobal.viewKeys;
+
+	return A.template (
+		A.div (
+			A.id ('contUser'),
+			A.insert (keys.CONT_USER),
+			A.insert (keys.LOGIN_CONTROL)
+		)
+	);
+}
+
+/**
  * auth views
  * @param params
  * @returns {{}}
@@ -133,5 +151,6 @@ function getAuthViews (params) {
 }
 
 module.exports = {
+	getLoginView: getLoginView,
 	getAuthViews: getAuthViews
 };

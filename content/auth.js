@@ -2,6 +2,25 @@
 'use strict';
 
 /**
+ * show auth panel
+ * @param params
+ */
+function toShowAuth (params) {
+	var mViewsAuth = require ('../views/auth');
+	params.appGlobal.views.login =
+		mViewsAuth.getLoginView (params);
+
+	return function showAuth (req, res, next) {
+		var keys = req.appGlobal.viewKeys;
+
+		req.viewVals [keys.CONTENT] =
+			req.appGlobal.views.login;
+
+		next ();
+	};
+}
+
+/**
  * check if request is authenticated and prepare view accordingly
  * @param params
  * @returns {Function}
@@ -47,5 +66,6 @@ function toCheckAuthUser (params) {
 }
 
 module.exports = {
+	toShowAuth: toShowAuth,
 	toCheckAuthUser: toCheckAuthUser
 };

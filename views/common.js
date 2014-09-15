@@ -17,11 +17,6 @@ function getCommonTemplate (params) {
 		),
 		A.body (
 			A.insert (keys.CONTENT),
-			A.div (
-				A.id ('contUser'),
-				A.insert (keys.CONT_USER),
-				A.insert (keys.LOGIN_CONTROL)
-			),
 			A.hr (),
 			A.link (
 				routes.root,
