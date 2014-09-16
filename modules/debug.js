@@ -13,6 +13,7 @@ function getDebugs () {
 	// roboterhund.net debug message targets
 	debugs.auth = debug ('rhnet:auth');
 	debugs.main = debug ('rhnet:main');
+	debugs.tmdp = debug ('rhnet:tmdp');
 
 	return debugs;
 }

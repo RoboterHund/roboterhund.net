@@ -95,43 +95,30 @@ function setupServer (rootDirName, debugs) {
 		)
 	);
 
-	var mLoginAuth = require ('./login/auth');
-	mLoginAuth.usePassport (params);
+	var mAuth = require ('./auth');
+	mAuth.usePassport (params);
 
 	var mContentCommon = require ('../content/common');
 	app.use (
 		params.routes.root,
 		mContentCommon.toInit (params.appGlobal)
 	);
+
+	var mContentAuth = require ('../content/auth');
 	app.use (
 		params.routes.root,
-		mContentCommon.toCheckAuthUser (params)
+		mContentAuth.toCheckAuthUser (params)
 	);
 
-	var router = createRouter (express, params);
+	var mContentInit = require ('../content/init');
+	var router = new express.Router ();
+	mContentInit.init (router, params);
 	app.use (
 		params.routes.root,
 		router
 	);
 
 	return app;
-}
-
-/**
- * create express router
- * @param express
- * @param params
- */
-function createRouter (express, params) {
-	var router = new express.Router ();
-
-	var mContentHome = require ('../content/home');
-	mContentHome.setupHomePage (router, params);
-
-	var mAuthRoutes = require ('./login/routes');
-	mAuthRoutes.setupAuthRoutes (router, params);
-
-	return router;
 }
 
 module.exports = {

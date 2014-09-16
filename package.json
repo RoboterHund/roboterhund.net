@@ -24,7 +24,8 @@
 		"passport-twitter": "1.0.2",
 		"passport-github": "0.1.5",
 		"passport-google": "0.3.0",
-		"serve-favicon": "2.0.1"
+		"serve-favicon": "2.0.1",
+		"youtube-api": "0.2.2"
 	},
 
 	"engines": {

@@ -32,6 +32,12 @@ function getCollections (params) {
 	var database = params.database;
 	var names = params.db.collections;
 
+	collections.admins = function getAdmins () {
+		return database.collection (names.admins);
+	};
+	collections.tmdpVideos = function getAdmins () {
+		return database.collection (names.tmdpVideos);
+	};
 	collections.sessions = function getSessions () {
 		return database.collection (names.sessions);
 	};

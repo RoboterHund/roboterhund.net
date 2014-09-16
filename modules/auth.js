@@ -26,10 +26,19 @@ function usePassport (params) {
 	passport.deserializeUser (toDeserializeUser (users, debug));
 
 	var check = toCheckUser (users, debug);
-	useFacebookStrategy (passport, check, params);
-	useGithubStrategy (passport, check, params);
-	useGoogleStrategy (passport, check, params);
-	useTwitterStrategy (passport, check, params);
+	var authParams = require ('../private/auth');
+	if (authParams.facebook.enabled) {
+		useFacebookStrategy (passport, check, params);
+	}
+	if (authParams.github.enabled) {
+		useGithubStrategy (passport, check, params);
+	}
+	if (authParams.google.enabled) {
+		useGoogleStrategy (passport, check, params);
+	}
+	if (authParams.twitter.enabled) {
+		useTwitterStrategy (passport, check, params);
+	}
 }
 
 /**
@@ -40,7 +49,7 @@ function usePassport (params) {
  */
 function useFacebookStrategy (passport, check, params) {
 	var url = require ('url');
-	var secret = require ('../../private/auth');
+	var secret = require ('../private/auth');
 	var FacebookStrategy = require ('passport-facebook').Strategy;
 
 	passport.use (
@@ -68,7 +77,7 @@ function useFacebookStrategy (passport, check, params) {
  */
 function useGithubStrategy (passport, check, params) {
 	var url = require ('url');
-	var secret = require ('../../private/auth');
+	var secret = require ('../private/auth');
 	var GithubStrategy = require ('passport-github').Strategy;
 
 	passport.use (
@@ -123,7 +132,7 @@ function useGoogleStrategy (passport, check, params) {
  */
 function useTwitterStrategy (passport, check, params) {
 	var url = require ('url');
-	var secret = require ('../../private/auth');
+	var secret = require ('../private/auth');
 	var TwitterStrategy = require ('passport-twitter').Strategy;
 
 	passport.use (
@@ -230,6 +239,20 @@ function toCheckUser (users, debug) {
 	};
 }
 
+/**
+ * logout user
+ * @param req
+ * @param res
+ * @param next
+ */
+function logout (req, res, next) {
+	req.logout ();
+
+	var routes = require ('../content/routes');
+	res.redirect (routes.root);
+}
+
 module.exports = {
-	usePassport: usePassport
+	usePassport: usePassport,
+	logout: logout
 };
