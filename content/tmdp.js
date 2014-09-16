@@ -91,6 +91,11 @@ function getLoader (req) {
 	}
 }
 
+/**
+ * get playlist page selection view
+ * @param req
+ * @returns {string}
+ */
 function getPageSelect (req) {
 	var list = req.appGlobal.youtube.list;
 
@@ -120,7 +125,6 @@ function getPageSelect (req) {
 	var mViewsPlaylist = require ('../views/playlist');
 	var routes = require ('./routes');
 	var showPlaylist = routes.showPlaylist;
-	var keys = req.appGlobal.viewKeys;
 
 	return mViewsPlaylist.getPageSelectView (
 		req.appGlobal,
