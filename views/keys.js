@@ -5,6 +5,7 @@ module.exports = {
 	CONTENT: 'content',
 
 	VIDEO_LOADER: 'vidLoader',
+	VIDEO_PAGE_SELECT: 'vidPagSel',
 	VIDEO_PLAYLIST: 'vidList',
 	VIDEO_POSITION: 'vidPos',
 	VIDEO_LINK: 'vidLink',

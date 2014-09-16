@@ -14,6 +14,7 @@ function getTemplate (params) {
 	return A.template (
 		A.insert (keys.VIDEO_LOADER),
 		A.h1 ('Videos list'),
+		A.insert (keys.VIDEO_PAGE_SELECT),
 		A.ul (
 			A.list (
 				keys.VIDEO_PLAYLIST,
@@ -27,12 +28,52 @@ function getTemplate (params) {
 				)
 			)
 		),
-		A.link (
-			routes.login,
-			'Login',
-			'Admin'
+		A.insert (keys.VIDEO_PAGE_SELECT),
+		A.div (
+			A.link (
+				routes.login,
+				'Login',
+				'Admin'
+			)
 		)
 	);
+}
+
+/**
+ * get page selection view
+ * @param appGlobal
+ * @param params
+ * @returns {string}
+ */
+function getPageSelectView (appGlobal, params) {
+	var A = appGlobal.A;
+
+	var pages = params.pages;
+	var page;
+
+	var items = [];
+	var sep = '';
+	var i;
+	var n = pages.length;
+	for (i = 0; i < n; i++) {
+		page = pages [i];
+
+		items.push (sep);
+		items.push (
+			A.link (
+				params.getRoute (page.from, page.to),
+					'Show videos '
+					+ page.from
+					+ ', '
+					+ page.to,
+				page.to
+			)
+		);
+
+		sep = ' | ';
+	}
+
+	return A.constant.apply (null, items);
 }
 
 /**
@@ -61,5 +102,6 @@ function getLoader (params) {
 
 module.exports = {
 	getTemplate: getTemplate,
+	getPageSelectView: getPageSelectView,
 	getLoader: getLoader
 };

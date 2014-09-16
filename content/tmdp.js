@@ -52,6 +52,7 @@ function playlist (req, res, next) {
 	}
 
 	req.viewVals [keys.VIDEO_LOADER] = getLoader (req);
+	req.viewVals [keys.VIDEO_PAGE_SELECT] = getPageSelect (req);
 	req.viewVals [keys.VIDEO_PLAYLIST] = videos;
 
 	req.viewVals [keys.CONTENT] =
@@ -88,6 +89,54 @@ function getLoader (req) {
 	} else {
 		return '';
 	}
+}
+
+function getPageSelect (req) {
+	var list = req.appGlobal.youtube.list;
+
+	var pages = [];
+
+	var lastItem = list.length;
+	var pageSize = 50;
+	var offset = pageSize - 1;
+	var from = 1;
+	var to;
+	while (from <= lastItem) {
+		to = from + offset;
+		if (to > lastItem) {
+			to = lastItem;
+		}
+
+		pages.push (
+			{
+				from: from,
+				to: to
+			}
+		);
+
+		from += pageSize;
+	}
+
+	var mViewsPlaylist = require ('../views/playlist');
+	var routes = require ('./routes');
+	var showPlaylist = routes.showPlaylist;
+	var keys = req.appGlobal.viewKeys;
+
+	return mViewsPlaylist.getPageSelectView (
+		req.appGlobal,
+		{
+			pages: pages,
+			getRoute: function (from, to) {
+				return (
+					showPlaylist
+					+ '/'
+					+ from
+					+ '/'
+					+ to
+					);
+			}
+		}
+	);
 }
 
 module.exports = {
