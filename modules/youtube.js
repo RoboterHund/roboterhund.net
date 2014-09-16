@@ -23,12 +23,10 @@ function checkIsUserAdmin (req, res, next) {
 					next (err);
 
 				} else if (user !== null) {
-					req.appGlobal.debugs.tmdp ('user is admin');
 					req.tempData.isAdmin = true;
 					next ();
 
 				} else {
-					req.appGlobal.debugs.tmdp ('user NOT admin');
 					next ();
 				}
 			}
@@ -47,9 +45,11 @@ function checkIsUserAdmin (req, res, next) {
  */
 function requireUserAdmin (req, res) {
 	if (req.tempData.isAdmin) {
+		req.appGlobal.debugs.tmdp ('user is admin');
 		return true;
 
 	} else {
+		req.appGlobal.debugs.tmdp ('user NOT admin');
 		res.redirect (require ('../content/routes').root);
 		return false;
 	}
@@ -110,6 +110,11 @@ function storePlaylistPage (req, res, next) {
 	if (requireUserAdmin (req, res)) {
 		var data = req.tempData.youtubeData;
 
+		req.appGlobal.debugs.tmdp (
+			'items retrieved: %d',
+			data.items.length
+		);
+
 		storePlaylistItems (req, next, data, 0);
 	}
 }
@@ -124,12 +129,6 @@ function storePlaylistPage (req, res, next) {
  */
 function storePlaylistItems (req, next, data, index) {
 	var items = data.items;
-
-	req.appGlobal.debugs.tmdp (
-		'items retrieved: %d',
-		items.length
-	);
-
 	if (index < items.length) {
 		var item = items [index];
 		var position = data.pageInfo.totalResults - item.snippet.position;
