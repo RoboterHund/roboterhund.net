@@ -25,7 +25,7 @@ function getCommonTemplate (params) {
 			),
 			' | ',
 			A.link (
-				routes.showPlaylist,
+				routes.showPlaylistLatest,
 				'The Miracle Diva Project',
 				'Kasane Teto playlist'
 			),

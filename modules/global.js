@@ -11,6 +11,7 @@ function initGlobalData (params) {
 	params.appGlobal = data;
 
 	data.debugs = params.debugs;
+	data.routes = params.routes;
 
 	var mViewsTemplates = require ('../views/templates');
 	var keys = require ('../views/keys');

@@ -149,6 +149,34 @@ function getPageSelect (req) {
 	);
 }
 
+/**
+ * show latest videos
+ * @param req
+ * @param res
+ * @param next
+ */
+function latest (req, res, next) {
+	var list = req.appGlobal.youtube.list;
+
+	var showNumber = 20;
+
+	var to = list.length;
+	var from = to - showNumber + 1;
+	if (from < 1) {
+		from = 1;
+	}
+
+	var showPlaylist = req.appGlobal.routes.showPlaylist;
+	res.redirect (
+			showPlaylist
+			+ '/'
+			+ from
+			+ '/'
+			+ to
+	);
+}
+
 module.exports = {
-	playlist: playlist
+	playlist: playlist,
+	latest: latest
 };
