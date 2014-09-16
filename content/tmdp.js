@@ -138,7 +138,9 @@ function getPageSelect (req) {
 					+ '/'
 					+ to
 					);
-			}
+			},
+			excludeFrom: req.params.from,
+			excludeTo: req.params.to
 		}
 	);
 }

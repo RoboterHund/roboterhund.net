@@ -59,16 +59,24 @@ function getPageSelectView (appGlobal, params) {
 		page = pages [i];
 
 		items.push (sep);
-		items.push (
-			A.link (
-				params.getRoute (page.from, page.to),
-					'Show videos '
-					+ page.from
-					+ ', '
-					+ page.to,
-				page.to
-			)
-		);
+
+		if (page.from >= params.excludeFrom
+			&& page.to <= params.excludeTo) {
+
+			items.push (page.to);
+
+		} else {
+			items.push (
+				A.link (
+					params.getRoute (page.from, page.to),
+						'Show videos '
+						+ page.from
+						+ ', '
+						+ page.to,
+					page.to
+				)
+			);
+		}
 
 		sep = ' | ';
 	}
