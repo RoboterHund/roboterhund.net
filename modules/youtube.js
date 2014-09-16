@@ -19,14 +19,16 @@ function checkIsUserAdmin (req, res, next) {
 			},
 			function adminUserFound (err, user) {
 				if (err) {
-					req.appGlobal.debugs.auth ('failed to find user ' + userId);
+					req.appGlobal.debugs.tmdp ('failed to find user ' + userId);
 					next (err);
 
 				} else if (user !== null) {
+					req.appGlobal.debugs.tmdp ('user is admin');
 					req.tempData.isAdmin = true;
 					next ();
 
 				} else {
+					req.appGlobal.debugs.tmdp ('user NOT admin');
 					next ();
 				}
 			}
@@ -122,6 +124,12 @@ function storePlaylistPage (req, res, next) {
  */
 function storePlaylistItems (req, next, data, index) {
 	var items = data.items;
+
+	req.appGlobal.debugs.tmdp (
+		'items retrieved: %d',
+		items.length
+	);
+
 	if (index < items.length) {
 		var item = items [index];
 		var position = data.pageInfo.totalResults - item.snippet.position;
@@ -165,7 +173,7 @@ function storePlaylistItems (req, next, data, index) {
  */
 function clearNextPageToken (req, res, next) {
 	if (requireUserAdmin (req, res)) {
-		delete req.session.nextYoutubePageToken;
+		req.session.nextYoutubePageToken = null;
 		next ();
 	}
 }

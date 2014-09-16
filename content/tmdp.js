@@ -99,6 +99,10 @@ function getLoader (req) {
 function getPageSelect (req) {
 	var list = req.appGlobal.youtube.list;
 
+	if (!list || list.length === 0) {
+		return '';
+	}
+
 	var pages = [];
 
 	var lastItem = list.length;

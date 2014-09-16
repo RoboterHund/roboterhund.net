@@ -52,6 +52,21 @@ function initTmdp (router, params) {
 	};
 
 	router.get (
+		routes.resetPlaylistLoader,
+		mYoutube.checkIsUserAdmin,
+		mYoutube.clearNextPageToken,
+		redirect
+	);
+
+	router.get (
+		routes.loadNextPlaylistPage,
+		mYoutube.checkIsUserAdmin,
+		mYoutube.youtubePlaylistPageRequest,
+		mYoutube.storePlaylistPage,
+		redirect
+	);
+
+	router.get (
 		routes.showPlaylist,
 		mYoutube.checkIsUserAdmin,
 		mYoutube.loadPlaylist,
@@ -65,21 +80,6 @@ function initTmdp (router, params) {
 		mYoutube.loadPlaylist,
 		mContentTmdp.playlist,
 		params.appGlobal.render
-	);
-
-	router.get (
-		routes.resetPlaylistLoader,
-		mYoutube.checkIsUserAdmin,
-		mYoutube.clearNextPageToken,
-		redirect
-	);
-
-	router.get (
-		routes.loadNextPlaylistPage,
-		mYoutube.checkIsUserAdmin,
-		mYoutube.youtubePlaylistPageRequest,
-		mYoutube.storePlaylistPage,
-		redirect
 	);
 }
 
@@ -98,6 +98,7 @@ function initAuth (router, params) {
 		params.appGlobal.render
 	);
 
+	var authParams = require ('../private/auth');
 	var setupParams = {};
 
 	setupParams.router = router;
@@ -106,25 +107,33 @@ function initAuth (router, params) {
 	setupParams.successRedirect =
 		toRedirectAuthenticated (routes.root);
 
-	setupParams.provider = 'facebook';
-	setupParams.loginRoute = routes.facebookLogin;
-	setupParams.backRoute = routes.facebookBack;
-	setupAuthStrategyRoutes (setupParams);
+	if (authParams.facebook.enabled) {
+		setupParams.provider = 'facebook';
+		setupParams.loginRoute = routes.facebookLogin;
+		setupParams.backRoute = routes.facebookBack;
+		setupAuthStrategyRoutes (setupParams);
+	}
 
-	setupParams.provider = 'github';
-	setupParams.loginRoute = routes.githubLogin;
-	setupParams.backRoute = routes.githubBack;
-	setupAuthStrategyRoutes (setupParams);
+	if (authParams.github.enabled) {
+		setupParams.provider = 'github';
+		setupParams.loginRoute = routes.githubLogin;
+		setupParams.backRoute = routes.githubBack;
+		setupAuthStrategyRoutes (setupParams);
+	}
 
-	setupParams.provider = 'google';
-	setupParams.loginRoute = routes.googleLogin;
-	setupParams.backRoute = routes.googleBack;
-	setupAuthStrategyRoutes (setupParams);
+	if (authParams.google.enabled) {
+		setupParams.provider = 'google';
+		setupParams.loginRoute = routes.googleLogin;
+		setupParams.backRoute = routes.googleBack;
+		setupAuthStrategyRoutes (setupParams);
+	}
 
-	setupParams.provider = 'twitter';
-	setupParams.loginRoute = routes.twitterLogin;
-	setupParams.backRoute = routes.twitterBack;
-	setupAuthStrategyRoutes (setupParams);
+	if (authParams.twitter.enabled) {
+		setupParams.provider = 'twitter';
+		setupParams.loginRoute = routes.twitterLogin;
+		setupParams.backRoute = routes.twitterBack;
+		setupAuthStrategyRoutes (setupParams);
+	}
 
 	var mAuth = require ('../modules/auth');
 	router.get (
