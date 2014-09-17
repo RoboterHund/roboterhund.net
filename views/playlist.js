@@ -36,7 +36,10 @@ function getTemplate (params) {
 									A.inClass ('vid-pos'),
 									A.insert (keys.VIDEO_POSITION)
 								),
-								A.insert (keys.VIDEO_TITLE)
+								A.span (
+									A.inClass ('title'),
+									A.insert (keys.VIDEO_TITLE)
+								)
 							)
 						)
 					)

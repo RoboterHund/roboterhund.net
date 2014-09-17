@@ -91,8 +91,8 @@ ul li {
   padding       : 6px 8px 6px 8px;
   border-radius : 2px;
   a {
-    width : 100%;
-    color : rgb(71, 192, 119);
+    width    : 100%;
+    position : relative;
     img {
       float         : left;
       margin-right  : 6px;
@@ -102,6 +102,11 @@ ul li {
     span.vid-pos {
       display : inline-block;
       color   : rgb(240, 96, 128);
+    }
+    span.title {
+      color        : rgb(71, 192, 119);
+      position     : absolute;
+      margin-right : 8px;
     }
   }
   &:hover {
