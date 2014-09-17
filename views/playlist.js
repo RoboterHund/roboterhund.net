@@ -14,7 +14,12 @@ function getTemplate (params) {
 	return A.template (
 		A.header (
 			A.insert (keys.VIDEO_LOADER),
-			'Videos list'
+			'The Miracle Diva Project: ',
+			A.span (
+				A.id ('kasanetetoHeader'),
+				'Kasane Teto'
+			),
+			' original songs - YouTube videos'
 		),
 		A.div (
 			A.inClass ('content'),

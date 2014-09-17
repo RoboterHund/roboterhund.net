@@ -113,3 +113,14 @@ ul li {
     background : rgba(85, 45, 50, 1);
   }
 }
+
+#kasanetetoHeader {
+  color         : #f06080;
+  background    : #360011;
+  font-size     : 101%;
+  margin        : 0 8px;
+  box-shadow    : 0 0 0 1px, 0 2px 0 1px #96090e, inset 0 2px 0 0px #96090e, 0 2px 4px 3px rgba(162, 20, 20, 0.6), inset 0 4px 4px rgba(162, 20, 20, 0.4);
+  border-radius : 2px;
+  padding       : 0 4px 3px 4px;
+  text-shadow   : 0 2px #96090e, 0 3px 3px rgba(162, 20, 20, 0.8);
+}
