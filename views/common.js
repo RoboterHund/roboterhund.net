@@ -18,18 +18,20 @@ function getCommonTemplate (params) {
 		),
 		A.body (
 			A.insert (keys.CONTENT),
-			A.link (
-				routes.root,
-				'Home',
-				'Home'
+			A.div (
+				A.inClass ('main-nav'),
+				A.link (
+					routes.root,
+					'Home',
+					'Home'
+				),
+				A.link (
+					routes.showPlaylistLatest,
+					'The Miracle Diva Project',
+					'Kasane Teto playlist'
+				)
 			),
-			' | ',
-			A.link (
-				routes.showPlaylistLatest,
-				'The Miracle Diva Project',
-				'Kasane Teto playlist'
-			),
-			A.p (
+			A.footer (
 				'© 2014 RoboterHund'
 			)
 		)

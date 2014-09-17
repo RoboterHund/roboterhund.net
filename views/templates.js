@@ -7,6 +7,9 @@
 function getTemplateEngine () {
 	var A = require ('april1-html');
 
+	A.header = A.specTag ('header');
+	A.footer = A.specTag ('footer');
+
 	/**
 	 * link tag
 	 * @type {Function}
