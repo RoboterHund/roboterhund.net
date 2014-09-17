@@ -13,11 +13,11 @@ function getCommonTemplate (params) {
 	return A.template (
 		A.DOCTYPE,
 		A.head (
-			A.title ('roboterhund.net')
+			A.title ('roboterhund.net'),
+			A.stylesheet ('/css/main.css')
 		),
 		A.body (
 			A.insert (keys.CONTENT),
-			A.hr (),
 			A.link (
 				routes.root,
 				'Home',

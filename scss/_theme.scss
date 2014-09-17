@@ -1,0 +1,16 @@
+@import "compass/css3";
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed);
+
+$full-black : rgba(0, 0, 0, 1);
+$phosphor-green : rgba(0, 255, 0, 1);
+
+body {
+  background : $full-black;
+}
+
+body,
+body * {
+  color       : $phosphor-green;
+  font-family : 'Roboto Condensed', sans-serif;
+}
+
