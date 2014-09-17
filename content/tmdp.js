@@ -158,7 +158,7 @@ function getPageSelect (req) {
 function latest (req, res, next) {
 	var list = req.appGlobal.youtube.list;
 
-	var showNumber = 20;
+	var showNumber = 50;
 
 	var to = list.length;
 	var from = to - showNumber + 1;
