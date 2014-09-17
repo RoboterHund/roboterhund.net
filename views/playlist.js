@@ -23,11 +23,21 @@ function getTemplate (params) {
 				A.list (
 					keys.VIDEO_PLAYLIST,
 					A.li (
-						A.a (
-							A.href (A.insert (keys.VIDEO_LINK)),
-							A.insert (keys.VIDEO_POSITION),
-							': ',
-							A.insert (keys.VIDEO_TITLE)
+						A.link (
+							A.insert (keys.VIDEO_LINK),
+							A.insert (keys.VIDEO_LINK),
+							A.macro (
+								A.img (
+									A.src (
+										A.insert (keys.VIDEO_THUMBNAIL)
+									)
+								),
+								A.span (
+									A.inClass ('vid-pos'),
+									A.insert (keys.VIDEO_POSITION)
+								),
+								A.insert (keys.VIDEO_TITLE)
+							)
 						)
 					)
 				)
@@ -65,7 +75,12 @@ function getPageSelectView (appGlobal, params) {
 		if (page.from >= params.excludeFrom
 			&& page.to <= params.excludeTo) {
 
-			items.push (page.to);
+			items.push (
+				A.span (
+					A.inClass ('no-link'),
+					page.to
+				)
+			);
 
 		} else {
 			items.push (

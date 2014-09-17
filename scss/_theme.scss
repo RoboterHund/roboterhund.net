@@ -38,22 +38,33 @@ div.content {
 
 div.pages {
   display : block;
+
+  .no-link,
+  a {
+    border-radius   : 12px;
+    padding         : 5px;
+    display         : inline-block;
+    font-size       : 80%;
+    margin          : 3px;
+    text-decoration : none;
+    box-shadow      : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
+  }
+  a:hover {
+    color       : rgb(168, 89, 99);
+    text-shadow : 0 0px 1px;
+  }
+  .no-link {
+    text-shadow : 0 0px 1px;
+    color       : rgb(172, 172, 172);
+  }
+  a:hover,
+  .no-link {
+    box-shadow : -1px -1px 1px 0px rgba(0, 0, 0, 0.2), 1px 1px 1px 0px rgba(255, 255, 255, 0.1), inset -1px -1px 2px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 1px 0 rgba(255, 255, 255, 0.1);
+  }
 }
 
 div.content ul {
   margin : 12px 0;
-}
-
-div.pages a {
-  border-radius   : 12px;
-  padding         : 5px;
-  font-size       : 80%;
-  margin          : 3px;
-  text-decoration : none;
-  box-shadow      : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
-  &:hover {
-    background : rgba(85, 45, 50, 1);
-  }
 }
 
 a {
@@ -81,6 +92,17 @@ ul li {
   border-radius : 2px;
   a {
     width : 100%;
+    color : rgb(71, 192, 119);
+    img {
+      float         : left;
+      margin-right  : 6px;
+      border-radius : 2px;
+      box-shadow    : -1px -1px 1px 1px rgba(0, 0, 0, 0.6), 1px 1px 1px 1px rgba(255, 255, 255, 0.3);
+    }
+    span.vid-pos {
+      display : inline-block;
+      color   : rgb(240, 96, 128);
+    }
   }
   &:hover {
     background : rgba(85, 45, 50, 1);
