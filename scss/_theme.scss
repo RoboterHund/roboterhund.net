@@ -30,10 +30,17 @@ ul li {
 
 div.content {
   margin        : 12px;
-  background    : rgb(39, 35, 36);
+  //  background    : rgb(39, 35, 36);
   padding       : 12px;
   border-radius : 3px;
   box-shadow    : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
+}
+
+div.content,
+div.content ul li {
+  background-color : rgb(69, 72, 77);
+  //  @include filter-gradient(#45484d, #282828, horizontal);
+  @include background-image(linear-gradient(left top, rgb(48, 44, 47) 0%, rgb(37, 33, 33) 100%));
 }
 
 div.pages {
@@ -82,7 +89,7 @@ footer {
   color      : rgba(0, 255, 0, 0.5);
 }
 
-ul li {
+div.content ul li {
   width      : 50%;
   box-sizing : border-box;
   display    : inline-block;
@@ -110,17 +117,22 @@ ul li {
     }
   }
   &:hover {
-    background : rgba(85, 45, 50, 1);
+    background-color : rgba(85, 45, 50, 1);
+    @include background-image(linear-gradient(left top, rgb(114, 60, 67) 0%, rgb(72, 38, 43) 100%));
   }
 }
 
 #kasanetetoHeader {
-  color         : #f06080;
-  background    : #360011;
-  font-size     : 101%;
-  margin        : 0 8px;
-  box-shadow    : 0 0 0 1px, 0 2px 0 1px #96090e, inset 0 2px 0 0px #96090e, 0 2px 4px 3px rgba(162, 20, 20, 0.6), inset 0 4px 4px rgba(162, 20, 20, 0.4);
-  border-radius : 2px;
-  padding       : 0 4px 3px 4px;
-  text-shadow   : 0 2px #96090e, 0 3px 3px rgba(162, 20, 20, 0.8);
+  color            : #ff98b0;
+  //  background    : #360011;
+  font-size        : 101%;
+  margin           : 0 8px;
+  box-shadow       : 0 0 0 1px, 0 2px 0 1px #96090e, inset 0 2px 0 0px #96090e, 0 2px 4px 3px rgba(162, 20, 20, 0.6), inset 0 4px 4px rgba(162, 20, 20, 0.4);
+  border-radius    : 2px;
+  padding          : 0 4px 3px 4px;
+  text-shadow      : 0 2px #96090e, 0 3px 3px rgba(162, 20, 20, 0.8);
+
+  background-color : rgb(242, 8, 39);
+  @include filter-gradient(#f20827, #cb173b, vertical);
+  @include background-image(linear-gradient(top, rgba(242, 8, 39, 1) 0%, rgba(237, 43, 72, 1) 50%, rgba(208, 8, 41, 1) 51%, rgba(209, 13, 46, 1) 71%, rgba(203, 23, 59, 1) 100%));
 }
