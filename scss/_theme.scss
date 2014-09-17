@@ -51,6 +51,9 @@ div.pages a {
   margin          : 3px;
   text-decoration : none;
   box-shadow      : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
+  &:hover {
+    background : rgba(85, 45, 50, 1);
+  }
 }
 
 a {
@@ -69,8 +72,17 @@ footer {
 }
 
 ul li {
+  width      : 50%;
+  box-sizing : border-box;
+  display    : inline-block;
   margin        : 1px 0px;
   box-shadow    : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
   padding       : 6px 8px 6px 8px;
   border-radius : 2px;
+  a {
+    width : 100%;
+  }
+  &:hover {
+    background : rgba(85, 45, 50, 1);
+  }
 }

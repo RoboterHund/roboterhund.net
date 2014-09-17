@@ -23,10 +23,10 @@ function getTemplate (params) {
 				A.list (
 					keys.VIDEO_PLAYLIST,
 					A.li (
-						A.insert (keys.VIDEO_POSITION),
-						': ',
 						A.a (
 							A.href (A.insert (keys.VIDEO_LINK)),
+							A.insert (keys.VIDEO_POSITION),
+							': ',
 							A.insert (keys.VIDEO_TITLE)
 						)
 					)
