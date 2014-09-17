@@ -8,24 +8,69 @@ body {
   background : $full-black;
 }
 
-body,
-body * {
+* {
   color       : $phosphor-green;
   font-family : 'Roboto Condensed', sans-serif;
 }
 
-h1 {
+header {
   font-size : 120%;
   margin    : 16px;
 }
 
 a {
-  border        : solid 1px rgba(0, 0, 0, 0.1);
   margin-bottom : 2px;
   display       : inline-block;
   padding       : 1px 5px;
 }
 
-li {
+ul li {
   margin : 2px 12px;
+}
+
+div.content {
+  margin        : 12px;
+  background    : rgb(39, 35, 36);
+  padding       : 12px;
+  border-radius : 3px;
+  box-shadow    : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
+}
+
+div.pages {
+  display : block;
+}
+
+div.content ul {
+  margin : 12px 0;
+}
+
+div.pages a {
+  border-radius   : 12px;
+  padding         : 5px;
+  font-size       : 80%;
+  margin          : 3px;
+  text-decoration : none;
+  box-shadow      : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
+}
+
+a {
+  margin-bottom   : 2px;
+  display         : inline-block;
+  padding         : 1px 5px;
+  color           : rgb(103, 147, 226);
+  text-decoration : none;
+}
+
+footer {
+  text-align : center;
+  font-size  : 80%;
+  margin     : 20px;
+  color      : rgba(0, 255, 0, 0.5);
+}
+
+ul li {
+  margin        : 1px 0px;
+  box-shadow    : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
+  padding       : 6px 8px 6px 8px;
+  border-radius : 2px;
 }
