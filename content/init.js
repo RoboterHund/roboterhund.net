@@ -88,6 +88,14 @@ function initTmdp (router, params) {
 		mYoutube.loadPlaylist,
 		mContentTmdp.latest
 	);
+
+	// legacy route
+	router.get (
+		routes.legacy.kasanetetoList,
+		function (req, res, next) {
+			res.redirect (301, routes.showPlaylistLatest);
+		}
+	);
 }
 
 /**

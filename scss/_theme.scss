@@ -136,3 +136,11 @@ div.content ul li {
   @include filter-gradient(#f20827, #cb173b, vertical);
   @include background-image(linear-gradient(top, rgba(242, 8, 39, 1) 0%, rgba(237, 43, 72, 1) 50%, rgba(208, 8, 41, 1) 51%, rgba(209, 13, 46, 1) 71%, rgba(203, 23, 59, 1) 100%));
 }
+
+// hack
+body {
+  div,
+  p {
+    margin : 12px 12px 0 12px;
+  }
+}

@@ -27,5 +27,9 @@ module.exports = {
 
 	logout: '/logout',
 
-	authFail: '/auth-fail'
+	authFail: '/auth-fail',
+
+	legacy: {
+		kasanetetoList: '/tmdp/list'
+	}
 };
