@@ -39,7 +39,7 @@ function setupServer (rootDirName, debugs) {
 		{
 			protocol: 'http',
 			hostname: serverParams.host,
-			port: serverParams.listenPort
+			port: serverParams.hostPort
 		}
 	);
 
