@@ -81,6 +81,21 @@ function initTmdp (router, params) {
 		mContentTmdp.playlist,
 		params.appGlobal.render
 	);
+
+	router.get (
+		routes.showPlaylistLatest,
+		mYoutube.checkIsUserAdmin,
+		mYoutube.loadPlaylist,
+		mContentTmdp.latest
+	);
+
+	// legacy route
+	router.get (
+		routes.legacy.kasanetetoList,
+		function (req, res, next) {
+			res.redirect (301, routes.showPlaylistLatest);
+		}
+	);
 }
 
 /**

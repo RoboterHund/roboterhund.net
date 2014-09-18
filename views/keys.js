@@ -9,6 +9,7 @@ module.exports = {
 	VIDEO_PLAYLIST: 'vidList',
 	VIDEO_POSITION: 'vidPos',
 	VIDEO_LINK: 'vidLink',
+	VIDEO_THUMBNAIL: 'vidThumb',
 	VIDEO_TITLE: 'vidTitle',
 
 	CONT_USER: 'contUser',

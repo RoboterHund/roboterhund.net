@@ -12,23 +12,46 @@ function getTemplate (params) {
 	var routes = params.routes;
 
 	return A.template (
-		A.insert (keys.VIDEO_LOADER),
-		A.h1 ('Videos list'),
-		A.insert (keys.VIDEO_PAGE_SELECT),
-		A.ul (
-			A.list (
-				keys.VIDEO_PLAYLIST,
-				A.li (
-					A.insert (keys.VIDEO_POSITION),
-					': ',
-					A.a (
-						A.href (A.insert (keys.VIDEO_LINK)),
-						A.insert (keys.VIDEO_TITLE)
+		A.header (
+			A.insert (keys.VIDEO_LOADER),
+			'The Miracle Diva Project: ',
+			A.span (
+				A.id ('kasanetetoHeader'),
+				'Kasane Teto'
+			),
+			' original songs - YouTube videos'
+		),
+		A.div (
+			A.inClass ('content'),
+			A.insert (keys.VIDEO_PAGE_SELECT),
+			A.ul (
+				A.list (
+					keys.VIDEO_PLAYLIST,
+					A.li (
+						A.link (
+							A.insert (keys.VIDEO_LINK),
+							A.insert (keys.VIDEO_LINK),
+							A.macro (
+								A.img (
+									A.src (
+										A.insert (keys.VIDEO_THUMBNAIL)
+									)
+								),
+								A.span (
+									A.inClass ('vid-pos'),
+									A.insert (keys.VIDEO_POSITION)
+								),
+								A.span (
+									A.inClass ('title'),
+									A.insert (keys.VIDEO_TITLE)
+								)
+							)
+						)
 					)
 				)
-			)
+			),
+			A.insert (keys.VIDEO_PAGE_SELECT)
 		),
-		A.insert (keys.VIDEO_PAGE_SELECT),
 		A.div (
 			A.link (
 				routes.login,
@@ -52,18 +75,20 @@ function getPageSelectView (appGlobal, params) {
 	var page;
 
 	var items = [];
-	var sep = '';
 	var i;
 	var n = pages.length;
 	for (i = 0; i < n; i++) {
 		page = pages [i];
 
-		items.push (sep);
-
 		if (page.from >= params.excludeFrom
 			&& page.to <= params.excludeTo) {
 
-			items.push (page.to);
+			items.push (
+				A.span (
+					A.inClass ('no-link'),
+					page.to
+				)
+			);
 
 		} else {
 			items.push (
@@ -77,11 +102,14 @@ function getPageSelectView (appGlobal, params) {
 				)
 			);
 		}
-
-		sep = ' | ';
 	}
 
-	return A.constant.apply (null, items);
+	return A.constant (
+		A.div (
+			A.inClass ('pages'),
+			A.macro.apply (null, items)
+		)
+	);
 }
 
 /**

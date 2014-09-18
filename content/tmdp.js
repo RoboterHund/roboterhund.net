@@ -37,16 +37,18 @@ function playlist (req, res, next) {
 	var video;
 	for (i = to - 1; i >= from; i--) {
 		playlistItem = playlist [i];
+		var snippet = playlistItem.data.snippet;
 
 		video = {};
 
 		video [keys.VIDEO_POSITION] = playlistItem.pos;
 		video [keys.VIDEO_LINK] =
 			'https://www.youtube.com/watch?v='
-			+ playlistItem.data.snippet.resourceId.videoId
+			+ snippet.resourceId.videoId
 			+ '&list='
 			+ playlistId;
-		video [keys.VIDEO_TITLE] = playlistItem.data.snippet.title;
+		video [keys.VIDEO_TITLE] = snippet.title;
+		video [keys.VIDEO_THUMBNAIL] = snippet.thumbnails.default.url;
 
 		videos.push (video);
 	}
@@ -149,6 +151,34 @@ function getPageSelect (req) {
 	);
 }
 
+/**
+ * show latest videos
+ * @param req
+ * @param res
+ * @param next
+ */
+function latest (req, res, next) {
+	var list = req.appGlobal.youtube.list;
+
+	var showNumber = 50;
+
+	var to = list.length;
+	var from = to - showNumber + 1;
+	if (from < 1) {
+		from = 1;
+	}
+
+	var showPlaylist = req.appGlobal.routes.showPlaylist;
+	res.redirect (
+			showPlaylist
+			+ '/'
+			+ from
+			+ '/'
+			+ to
+	);
+}
+
 module.exports = {
-	playlist: playlist
+	playlist: playlist,
+	latest: latest
 };
