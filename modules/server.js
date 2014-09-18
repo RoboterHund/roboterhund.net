@@ -82,7 +82,8 @@ function setupServer (rootDirName, debugs) {
 		{
 			db: params.db.name,
 			collection: params.db.collections.sessions,
-			stringify: false
+			stringify: false,
+			port: params.db.port
 		}
 	);
 	app.use (
