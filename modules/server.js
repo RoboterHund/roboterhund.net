@@ -35,13 +35,13 @@ function setupServer (rootDirName, debugs) {
 
 	var url = require ('url');
 	var serverParams = require ('../private/server');
-	params.host = url.format (
-		{
-			protocol: 'http',
-			hostname: serverParams.host,
-			port: serverParams.hostPort
-		}
-	);
+	var hostParams = {};
+	hostParams.protocol = 'http';
+	hostParams.hostname = serverParams.host;
+	if (serverParams.hostPort) {
+		hostParams.port = serverParams.hostPort;
+	}
+	params.host = url.format (hostParams);
 
 	params.routes = require ('../content/routes');
 
