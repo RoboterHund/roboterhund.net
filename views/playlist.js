@@ -23,6 +23,7 @@ function getTemplate (params) {
 		),
 		A.div (
 			A.inClass ('content'),
+			getPlaylistSearchTemplate (params),
 			A.insert (keys.VIDEO_PAGE_SELECT),
 			A.ul (
 				A.list (
@@ -58,6 +59,25 @@ function getTemplate (params) {
 				'Login',
 				'Admin'
 			)
+		)
+	);
+}
+
+function getPlaylistSearchTemplate (params) {
+	var A = params.appGlobal.A;
+	var keys = params.appGlobal.viewKeys;
+	var routes = params.routes;
+
+	return A.form (
+		A.action (routes.showPlaylistSearch),
+		A.method ('GET'),
+		A.textInput (
+			'term',
+			A.value (A.insert (keys.VIDEO_SEARCH_TERM))
+		),
+		A.input (
+			A.type ('submit'),
+			A.value ('Search')
 		)
 	);
 }

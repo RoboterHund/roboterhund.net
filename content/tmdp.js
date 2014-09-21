@@ -15,7 +15,7 @@ function playlist (req, res, next) {
 			.playlists.channelKasaneTetoOriginals;
 	var keys = req.appGlobal.viewKeys;
 
-	var playlist = req.appGlobal.youtube.list;
+	var playlist = req.tempData.playlist;
 
 	var from = parseInt (req.params.from);
 
@@ -56,6 +56,13 @@ function playlist (req, res, next) {
 	req.viewVals [keys.VIDEO_LOADER] = getLoader (req);
 	req.viewVals [keys.VIDEO_PAGE_SELECT] = getPageSelect (req);
 	req.viewVals [keys.VIDEO_PLAYLIST] = videos;
+
+	if (req.tempData.searchTerm) {
+		req.viewVals [keys.VIDEO_SEARCH_TERM] = req.tempData.searchTerm;
+
+	} else {
+		req.viewVals [keys.VIDEO_SEARCH_TERM] = '';
+	}
 
 	req.viewVals [keys.CONTENT] =
 		req.appGlobal.views.playlistTemplate;
@@ -99,9 +106,13 @@ function getLoader (req) {
  * @returns {string}
  */
 function getPageSelect (req) {
-	var list = req.appGlobal.youtube.list;
+	var list = req.tempData.playlist;
 
 	if (!list || list.length === 0) {
+		return '';
+	}
+
+	if (req.tempData.showAll) {
 		return '';
 	}
 
@@ -178,7 +189,53 @@ function latest (req, res, next) {
 	);
 }
 
+/**
+ * search
+ * @param req
+ * @param res
+ * @param next
+ */
+function search (req, res, next) {
+	var rawTerm = req.query.term;
+
+	// http://stackoverflow.com/a/3561711
+	var term = rawTerm.replace (/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+
+	var regex = new RegExp ('.*' + term + '.*', 'i');
+	req.appGlobal.debugs.tmdp ("regex: '%s'", regex);
+
+	req.appGlobal.db.tmdpVideos ().find (
+		{
+			$or: [
+				{
+					'data.snippet.title': regex
+				},
+				{
+					'data.snippet.description': regex
+				}
+			]
+		},
+		{
+			sort: [
+				['pos', 1]
+			]
+		},
+		require ('../modules/youtube').toGetResultArray (
+			function (items) {
+				req.tempData.playlist = items;
+				req.tempData.showAll = true;
+				req.tempData.searchTerm = rawTerm;
+
+				req.appGlobal.debugs.tmdp (items.length);
+
+				next ();
+			}
+		)
+	);
+}
+
 module.exports = {
 	playlist: playlist,
-	latest: latest
+	latest: latest,
+	search: search
 };

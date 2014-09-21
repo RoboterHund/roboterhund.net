@@ -29,6 +29,24 @@ function getTemplateEngine () {
 	A.inTitle = A.specAttr ('title');
 
 	/**
+	 * action attribute
+	 * @type {Function}
+	 */
+	A.action = A.specAttr ('action');
+
+	/**
+	 * method attribute
+	 * @type {Function}
+	 */
+	A.method = A.specAttr ('method');
+
+	/**
+	 * value attribute
+	 * @type {Function}
+	 */
+	A.value = A.specAttr ('value');
+
+	/**
 	 * link
 	 * @param href
 	 * @param title
@@ -62,6 +80,19 @@ function getTemplateEngine () {
 			A.rel ('stylesheet'),
 			A.href (path)
 		);
+	};
+
+	A.textInput = function (name) {
+		var args = [
+			A.type ('text'),
+			A.name (name)
+		];
+		var i;
+		var n = arguments.length;
+		for (i = 1; i < n; i++) {
+			args.push (arguments [i]);
+		}
+		return A.input.apply (null, args);
 	};
 
 	return A;

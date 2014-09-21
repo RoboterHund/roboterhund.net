@@ -89,6 +89,13 @@ function initTmdp (router, params) {
 		mContentTmdp.latest
 	);
 
+	router.get (
+		routes.showPlaylistSearch,
+		mContentTmdp.search,
+		mContentTmdp.playlist,
+		params.appGlobal.render
+	);
+
 	// legacy route
 	router.get (
 		routes.legacy.kasanetetoList,
@@ -96,6 +103,7 @@ function initTmdp (router, params) {
 			res.redirect (301, routes.showPlaylistLatest);
 		}
 	);
+
 }
 
 /**

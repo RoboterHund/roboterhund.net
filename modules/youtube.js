@@ -188,6 +188,7 @@ function clearNextPageToken (req, res, next) {
  */
 function loadPlaylist (req, res, next) {
 	if (req.appGlobal.youtube.list) {
+		req.tempData.playlist = req.appGlobal.youtube.list;
 		next ();
 
 	} else {
@@ -201,6 +202,7 @@ function loadPlaylist (req, res, next) {
 			toGetResultArray (
 				function usePlaylistArray (items) {
 					req.appGlobal.youtube.list = items;
+					req.tempData.playlist = req.appGlobal.youtube.list;
 					next ();
 				}
 			)
@@ -238,5 +240,6 @@ module.exports = {
 	youtubePlaylistPageRequest: youtubePlaylistPageRequest,
 	storePlaylistPage: storePlaylistPage,
 	clearNextPageToken: clearNextPageToken,
-	loadPlaylist: loadPlaylist
+	loadPlaylist: loadPlaylist,
+	toGetResultArray: toGetResultArray
 };
