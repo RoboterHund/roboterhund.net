@@ -116,6 +116,9 @@ function storePlaylistPage (req, res, next) {
 		);
 
 		storePlaylistItems (req, next, data, 0);
+
+		// invalidate cache
+		req.appGlobal.youtube.list = null;
 	}
 }
 
@@ -184,20 +187,27 @@ function clearNextPageToken (req, res, next) {
  * @param next
  */
 function loadPlaylist (req, res, next) {
-	req.appGlobal.db.tmdpVideos ().find (
-		{},
-		{
-			sort: [
-				['pos', 1]
-			]
-		},
-		toGetResultArray (
-			function usePlaylistArray (items) {
-				req.appGlobal.youtube.list = items;
-				next ();
-			}
-		)
-	);
+	if (req.appGlobal.youtube.list) {
+		req.tempData.playlist = req.appGlobal.youtube.list;
+		next ();
+
+	} else {
+		req.appGlobal.db.tmdpVideos ().find (
+			{},
+			{
+				sort: [
+					['pos', 1]
+				]
+			},
+			toGetResultArray (
+				function usePlaylistArray (items) {
+					req.appGlobal.youtube.list = items;
+					req.tempData.playlist = req.appGlobal.youtube.list;
+					next ();
+				}
+			)
+		);
+	}
 }
 
 /**
@@ -230,5 +240,6 @@ module.exports = {
 	youtubePlaylistPageRequest: youtubePlaylistPageRequest,
 	storePlaylistPage: storePlaylistPage,
 	clearNextPageToken: clearNextPageToken,
-	loadPlaylist: loadPlaylist
+	loadPlaylist: loadPlaylist,
+	toGetResultArray: toGetResultArray
 };

@@ -11,9 +11,9 @@ function startServer (rootDirName) {
 
 	var app = setupServer (rootDirName, debugs);
 
-	var port = require ('../private/port');
+	var listenPort = require ('../private/server').listenPort;
 	var server = app.listen (
-		port.listenPort,
+		listenPort,
 		function () {
 			mainDebug (
 				'start server listen on port %s',
@@ -34,13 +34,14 @@ function setupServer (rootDirName, debugs) {
 	params.debugs = debugs;
 
 	var url = require ('url');
-	params.host = url.format (
-		{
-			protocol: 'http',
-			hostname: 'localhost',
-			port: require ('../private/port').listenPort
-		}
-	);
+	var serverParams = require ('../private/server');
+	var hostParams = {};
+	hostParams.protocol = 'http';
+	hostParams.hostname = serverParams.host;
+	if (serverParams.hostPort) {
+		hostParams.port = serverParams.hostPort;
+	}
+	params.host = url.format (hostParams);
 
 	params.routes = require ('../content/routes');
 
@@ -82,7 +83,8 @@ function setupServer (rootDirName, debugs) {
 		{
 			db: params.db.name,
 			collection: params.db.collections.sessions,
-			stringify: false
+			stringify: false,
+			port: params.db.port
 		}
 	);
 	app.use (

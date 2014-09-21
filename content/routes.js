@@ -10,6 +10,7 @@ module.exports = {
 	showPlaylist: '/kasaneteto/videos',
 	showPlaylistFromTo: '/kasaneteto/videos/:from/:to',
 	showPlaylistLatest: '/kasaneteto/videos/latest',
+	showPlaylistSearch: '/kasaneteto/videos/search',
 
 	login: '/login',
 
