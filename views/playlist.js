@@ -9,7 +9,6 @@
 function getTemplate (params) {
 	var A = params.appGlobal.A;
 	var keys = params.appGlobal.viewKeys;
-	var routes = params.routes;
 
 	return A.template (
 		A.header (
@@ -29,7 +28,7 @@ function getTemplate (params) {
 				A.list (
 					keys.VIDEO_PLAYLIST,
 					A.li (
-						A.link (
+						A.alink (
 							A.insert (keys.VIDEO_LINK),
 							A.insert (keys.VIDEO_LINK),
 							A.macro (
@@ -52,13 +51,6 @@ function getTemplate (params) {
 				)
 			),
 			A.insert (keys.VIDEO_PAGE_SELECT)
-		),
-		A.div (
-			A.link (
-				routes.login,
-				'Login',
-				'Admin'
-			)
 		)
 	);
 }
@@ -112,7 +104,7 @@ function getPageSelectView (appGlobal, params) {
 
 		} else {
 			items.push (
-				A.link (
+				A.alink (
 					params.getRoute (page.from, page.to),
 						'Show videos '
 						+ page.from
@@ -143,13 +135,13 @@ function getLoader (params) {
 
 	return A.constant (
 		A.p (
-			A.a (
-				A.href (routes.resetPlaylistLoader),
+			A.alink (
+				routes.resetPlaylistLoader,
 				'Reset loader'
 			),
 			' | ',
-			A.a (
-				A.href (routes.loadNextPlaylistPage),
+			A.alink (
+				routes.loadNextPlaylistPage,
 				'Load next page'
 			)
 		)

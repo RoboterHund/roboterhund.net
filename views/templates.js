@@ -11,12 +11,6 @@ function getTemplateEngine () {
 	A.footer = A.specTag ('footer');
 
 	/**
-	 * link tag
-	 * @type {Function}
-	 */
-	A.tLink = A.specTag ('link');
-
-	/**
 	 * rel attribute
 	 * @type {Function}
 	 */
@@ -53,7 +47,10 @@ function getTemplateEngine () {
 	 * @param text
 	 * @returns {*}
 	 */
-	A.link = function (href, title, text) {
+	A.alink = function (href, title, text) {
+		if (!text) {
+			text = title;
+		}
 		return A.a (
 			A.href (href),
 			A.inTitle (title),
@@ -76,12 +73,15 @@ function getTemplateEngine () {
 	 * stylesheet
 	 */
 	A.stylesheet = function (path) {
-		return A.tLink (
+		return A.link (
 			A.rel ('stylesheet'),
 			A.href (path)
 		);
 	};
 
+	/**
+	 * textbox
+	 */
 	A.textInput = function (name) {
 		var args = [
 			A.type ('text'),
@@ -93,6 +93,17 @@ function getTemplateEngine () {
 			args.push (arguments [i]);
 		}
 		return A.input.apply (null, args);
+	};
+
+	/**
+	 * Font Awesome icon
+	 */
+	A.fontawesome = function (icon, also) {
+		return A.span (
+			A.inClass ('fa fa-' + icon),
+			also ? also : A.macro (),
+			''
+		);
 	};
 
 	return A;

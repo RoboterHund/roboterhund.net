@@ -12,7 +12,7 @@ function getHomeView (params) {
 			'The Web Territory of RoboterHund'
 		),
 		A.p (
-			A.link (
+			A.alink (
 				'https://twitter.com/RoboterHund87',
 				'my Twitter',
 				'RoboterHund'

@@ -14,21 +14,31 @@ function getCommonTemplate (params) {
 		A.DOCTYPE,
 		A.head (
 			A.title ('roboterhund.net'),
+			A.stylesheet (
+				'/css/font-awesome-4.2.0/css/font-awesome.min.css'
+			),
 			A.stylesheet ('/css/main.css')
 		),
 		A.body (
 			A.insert (keys.CONTENT),
 			A.div (
 				A.inClass ('main-nav'),
-				A.link (
+				A.alink (
 					routes.root,
-					'Home',
 					'Home'
 				),
-				A.link (
+				A.alink (
 					routes.showPlaylistLatest,
 					'The Miracle Diva Project',
 					'Kasane Teto playlist'
+				)
+			),
+			A.alink (
+				routes.login,
+				'Admin',
+				A.macro (
+					A.id ('adminLink'),
+					A.fontawesome ('cogs')
 				)
 			),
 			A.footer (
