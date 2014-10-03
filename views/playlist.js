@@ -13,6 +13,11 @@ function getTemplate (params) {
 	return A.template (
 		A.header (
 			A.insert (keys.VIDEO_LOADER),
+			A.img (
+				A.id ('tetologo'),
+				A.inTitle ('重音テト'),
+				A.src ('/img/kasaneteto.png')
+			),
 			'The Miracle Diva Project: ',
 			A.span (
 				A.id ('kasanetetoHeader'),
