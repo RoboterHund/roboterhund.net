@@ -78,7 +78,7 @@ function getAuthViews (params) {
 					A.list (
 						'provs',
 						A.li (
-							A.link (
+							A.alink (
 								A.insert ('href'),
 								A.macro (
 									'Login with ',
@@ -109,9 +109,8 @@ function getAuthViews (params) {
 		A.template (
 			A.ul (
 				A.li (
-					A.link (
+					A.alink (
 						routes.logout,
-						logoutLabel,
 						logoutLabel
 					)
 				)
