@@ -106,6 +106,13 @@ function getTemplateEngine () {
 		);
 	};
 
+	/**
+	 * empty div to clear float
+	 */
+	A.divClearBoth = A.constant (
+		A.div (A.inStyle ('clear:both'), '')
+	);
+
 	return A;
 }
 

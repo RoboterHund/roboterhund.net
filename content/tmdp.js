@@ -196,7 +196,12 @@ function latest (req, res, next) {
  * @param next
  */
 function search (req, res, next) {
-	var rawTerm = req.query.term;
+	var rawTerm = req.query.term.trim ();
+
+	if (rawTerm === '') {
+		res.redirect (req.appGlobal.routes.showPlaylistLatest);
+		return;
+	}
 
 	// http://stackoverflow.com/a/3561711
 	var term = rawTerm.replace (/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');

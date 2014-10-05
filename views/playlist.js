@@ -11,22 +11,28 @@ function getTemplate (params) {
 	var keys = params.appGlobal.viewKeys;
 
 	return A.template (
-		A.header (
-			A.insert (keys.VIDEO_LOADER),
+		A.div (
+			A.id ('tetoheader'),
 			A.img (
 				A.id ('tetologo'),
 				A.inTitle ('重音テト'),
 				A.src ('/img/kasaneteto.png')
 			),
-			'The Miracle Diva Project: ',
-			A.span (
-				A.id ('kasanetetoHeader'),
-				'Kasane Teto'
+			A.alink (
+				'https://www.youtube.com/channel/UCnhCFBm4pRI4YEG2S89AVlQ',
+				'Kasane Teto Original Songs YouTube channel',
+				A.macro (
+					A.id ('kasanetetoHeader'),
+					'Kasane Teto on YouTube!'
+				)
 			),
-			' original songs - YouTube videos'
+			A.h1 (
+				A.id ('tmdpheader'),
+				'The Miracle Diva Project'
+			)
 		),
 		A.div (
-			A.inClass ('content'),
+			A.inClass ('content playlist'),
 			getPlaylistSearchTemplate (params),
 			A.insert (keys.VIDEO_PAGE_SELECT),
 			A.ul (
@@ -55,6 +61,7 @@ function getTemplate (params) {
 					)
 				)
 			),
+			A.divClearBoth,
 			A.insert (keys.VIDEO_PAGE_SELECT)
 		)
 	);
@@ -65,17 +72,31 @@ function getPlaylistSearchTemplate (params) {
 	var keys = params.appGlobal.viewKeys;
 	var routes = params.routes;
 
-	return A.form (
-		A.action (routes.showPlaylistSearch),
-		A.method ('GET'),
-		A.textInput (
-			'term',
-			A.value (A.insert (keys.VIDEO_SEARCH_TERM))
+	return A.span (
+		A.id ('filter'),
+		A.form (
+			A.action (routes.showPlaylistSearch),
+			A.method ('GET'),
+			A.fontawesome ('search'),
+			A.textInput (
+				'term',
+				A.value (A.insert (keys.VIDEO_SEARCH_TERM))
+			),
+			A.input (
+				A.type ('submit'),
+				A.value ('Search')
+			),
+			A.span (
+				A.inClass ('note small'),
+				'The search includes title and description.'
+			)
 		),
-		A.input (
-			A.type ('submit'),
-			A.value ('Search')
-		)
+		A.alink (
+			routes.showPlaylistLatest,
+			'Return to unfiltered list',
+			'Clear search'
+		),
+		A.divClearBoth
 	);
 }
 

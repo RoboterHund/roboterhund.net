@@ -4,6 +4,8 @@
 $yellow : rgba(255, 220, 0, 1);
 $full-black : rgba(0, 0, 0, 1);
 $phosphor-green : rgba(0, 255, 0, 1);
+$dark-rose : #ff869e;
+$rose : #ffd4c7;
 
 body {
   background : $full-black;
@@ -15,14 +17,12 @@ body {
 }
 
 header {
-  font-size : 120%;
-  margin    : 16px;
+  font-size : 24px;
 }
 
 a {
   margin-bottom : 2px;
   display       : inline-block;
-  padding       : 1px 5px;
 }
 
 ul li {
@@ -31,7 +31,6 @@ ul li {
 
 div.content {
   margin        : 12px;
-  //  background    : rgb(39, 35, 36);
   padding       : 12px;
   border-radius : 3px;
   box-shadow    : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
@@ -39,35 +38,53 @@ div.content {
 
 div.content,
 div.content ul li {
-  background-color : rgb(69, 72, 77);
-  //  @include filter-gradient(#45484d, #282828, horizontal);
-  @include background-image(linear-gradient(left top, rgb(48, 44, 47) 0%, rgb(37, 33, 33) 100%));
+  background-color : #ffffff;
+  @include background-image(linear-gradient(left top, #ffffff 0%, #ffeeee 100%));
+}
+
+div.content.playlist {
+  box-shadow : 0 0 8px 0px rgba(0, 0, 0, 0.5), 0 -8px 12px 24px #17913e, inset 0 0 0 4px $dark-rose;
+}
+
+@mixin button-active-background {
+  background : #b4ffaa;
+  box-shadow : 0 0 0 3px $rose, inset 0 0 8px;
+}
+
+@mixin round-button {
+  border-radius   : 12px;
+  padding         : 4px 8px 4px 8px;
+  display         : inline-block;
+  font-size       : 80%;
+  margin          : 6px 4px 0 0;
+  text-decoration : none;
+  box-shadow      : 0 0 0 3px $rose, inset -3px -3px 6px 2px rgba(10, 48, 19, 0.5), inset 1px 1px 0 0 rgb(118, 192, 138), inset 2px 3px 1px 0px rgba(255, 255, 255, 0.7);
+  background      : rgb(74, 168, 100);
+  color           : #ffffff;
+
+  &:hover {
+    @include button-active-background();
+    color : rgb(102, 182, 102);
+  }
 }
 
 div.pages {
+  clear  : both;
   display : block;
+  margin : 0 12px 12px 12px;
 
   .no-link,
   a {
-    border-radius   : 12px;
-    padding         : 5px;
-    display         : inline-block;
-    font-size       : 80%;
-    margin          : 3px;
-    text-decoration : none;
-    box-shadow      : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
-  }
-  a:hover {
-    color       : rgb(168, 89, 99);
-    text-shadow : 0 0px 1px;
+    @include round-button();
   }
   .no-link {
-    text-shadow : 0 0px 1px;
-    color       : rgb(172, 172, 172);
-  }
-  a:hover,
-  .no-link {
-    box-shadow : -1px -1px 1px 0px rgba(0, 0, 0, 0.2), 1px 1px 1px 0px rgba(255, 255, 255, 0.1), inset -1px -1px 2px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 1px 0 rgba(255, 255, 255, 0.1);
+    @include button-active-background();
+    text-shadow : 0 0 0.5px;
+
+    &,
+    &:hover {
+      color : rgb(75, 126, 51);
+    }
   }
 }
 
@@ -78,9 +95,12 @@ div.content ul {
 a {
   margin-bottom   : 2px;
   display         : inline-block;
-  padding         : 1px 5px;
-  color           : rgb(103, 147, 226);
   text-decoration : none;
+
+  &,
+  & * {
+    color : rgb(103, 147, 226);
+  }
 }
 
 footer {
@@ -91,54 +111,97 @@ footer {
 }
 
 div.content ul li {
-  width         : 50%;
+  width      : 180px;
+  height     : 200px;
   box-sizing    : border-box;
-  display       : inline-block;
-  margin        : 1px 0px;
-  box-shadow    : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
-  padding       : 6px 8px 6px 8px;
+  float      : left;
+  margin     : 4px 8px;
+  box-shadow : 0px 3px 6px 1px rgba(190, 148, 124, 1), inset 0 0 1px $rose;
   border-radius : 2px;
   a {
-    width    : 100%;
     position : relative;
     img {
       float         : left;
-      margin-right  : 6px;
-      border-radius : 2px;
-      box-shadow    : -1px -1px 1px 1px rgba(0, 0, 0, 0.6), 1px 1px 1px 1px rgba(255, 255, 255, 0.3);
+      margin        : 6px;
+      border-radius : 4px;
+      box-shadow    : 0 0 0 2px #ffffff, 0 0 0 3px $dark-rose;
     }
     span.vid-pos {
-      display : inline-block;
-      color   : rgb(240, 96, 128);
+      color    : $dark-rose;
+      position : absolute;
+      right    : 6px;
+      top      : 6px;
     }
     span.title {
-      color        : rgb(71, 192, 119);
-      position     : absolute;
-      margin-right : 8px;
+      height     : 70px;
+
+      clear      : both;
+      color      : #a5935a;
+      display    : block;
+      font-size  : 0.9em;
+      margin     : 12px 4px;
+      overflow-y : auto;
     }
   }
   &:hover {
-    background-color : rgba(85, 45, 50, 1);
-    @include background-image(linear-gradient(left top, rgb(114, 60, 67) 0%, rgb(72, 38, 43) 100%));
+    background-color : #ca0e27;
+    @include background-image(linear-gradient(left top, #ca0e27 0%, #0e0000 100%));
+    box-shadow       : 0 0 0px 4px rgba(255, 126, 126, 0.85);
   }
 }
 
+#tetoheader {
+  margin-bottom : 22px;
+  margin-top    : 16px;
+}
+
+#tmdpheader {
+  //  display       : inline-block;
+  color         : #ffffff;
+  font-size     : 42px;
+  font-style    : italic;
+  margin-right  : 12px;
+  margin-bottom : -8px;
+  text-shadow   : 0px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
 #kasanetetoHeader {
-  color            : #ff98b0;
-  //  background    : #360011;
-  font-size        : 101%;
-  margin           : 0 8px;
-  box-shadow       : 0 0 0 1px, 0 2px 0 1px #96090e, inset 0 2px 0 0px #96090e, 0 2px 4px 3px rgba(162, 20, 20, 0.6), inset 0 4px 4px rgba(162, 20, 20, 0.4);
   border-radius    : 2px;
-  padding          : 0 4px 3px 4px;
+  box-shadow    : 0px 4px 4px 1px rgba(0, 0, 0, 0.3);
+  color         : #ffffff;
+  display       : inline-block;
+  font-size     : 18px;
+  margin-bottom : -4px;
+  margin-top    : 10px;
+  padding       : 2px 8px 4px 8px;
   text-shadow      : 0 2px #96090e, 0 3px 3px rgba(162, 20, 20, 0.8);
 
   background-color : rgb(242, 8, 39);
   @include filter-gradient(#f20827, #cb173b, vertical);
   @include background-image(linear-gradient(top, rgba(242, 8, 39, 1) 0%, rgba(237, 43, 72, 1) 50%, rgba(208, 8, 41, 1) 51%, rgba(209, 13, 46, 1) 71%, rgba(203, 23, 59, 1) 100%));
+
+  &:hover {
+    text-shadow : 0 0 12px #ffffff;
+    box-shadow  : 0 0 16px 4px rgba(255, 50, 80, 0.8);
+  }
+}
+
+#filter a {
+  @include round-button();
+  margin-left : 10px;
+  padding     : 6px 10px;
 }
 
 form {
+  display : inline-block;
+  float   : left;
+
+  .fa-search {
+    color   : $dark-rose;
+    display : inline-block;
+    margin  : 1px -4px 1px 12px;
+  }
+
   input {
     color         : rgba(0, 0, 0, 1);
     border-radius : 4px;
@@ -146,28 +209,22 @@ form {
     margin-left   : 12px;
 
     &[type=text] {
-      background : rgba(180, 180, 180, 1);
+      background : #fafafa;
       padding    : 1px 4px;
-      width      : 200px;
-      box-shadow : inset 2px 2px 3px 0 rgba(0, 0, 0, 0.6), 0 0 12px 0 rgba(180, 180, 180, 1);
+      width      : 300px;
+      box-shadow : inset 2px 2px 3px 0 rgba(175, 144, 144, 0.4), 0 0 0 4px $rose;
     }
 
     &[type=submit] {
-      color            : rgb(71, 192, 119);
-      background-color : rgb(69, 72, 77);
-      border-radius    : 6px;
-      padding          : 5px;
-      display          : inline-block;
-      font-size        : 80%;
-      margin-left      : 12px;
-      text-decoration  : none;
-      box-shadow       : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
-      cursor           : pointer;
-
-      &:hover {
-        text-shadow : 0 0 1px;
-      }
+      @include round-button();
     }
+  }
+
+  .note {
+    color      : #ff869e;
+    display    : block;
+    margin     : 4px;
+    text-align : right;
   }
 }
 
@@ -176,13 +233,13 @@ form {
   position      : fixed;
   right         : 0;
   top           : 0;
-  margin        : 8px;
-  border        : solid 1px;
+
+  background  : rgba(129, 89, 28, 0.8);
   border-radius : 3px;
-  box-shadow    : 0 0 1px, inset 0 0 1px;
-  text-shadow   : 0 0 1px;
+  box-shadow  : 0 0 1px, 0 0 1px 1px rgba(129, 89, 28, 0.8), inset 0 0 1px 1px;
+  margin      : 8px;
   padding       : 4px 4px;
-  background    : rgba(255, 255, 0, 0.15);
+  text-shadow : 0 0 1px;
 
   &,
   & span {
@@ -191,13 +248,53 @@ form {
 }
 
 #tetologo {
-  margin : -20px -8px -32px 12px;
+  margin : -12px 0 0 32px;
+  height : 100px;
+  float  : left;
 }
 
 // hack
 body {
   div,
+  h1,
+  h2,
   p {
     margin : 12px 12px 0 12px;
+  }
+}
+
+h1 {
+  font-size : 150%;
+}
+
+h2 {
+  font-size : 110%;
+  color     : rgba(255, 255, 255, 1);
+}
+
+.note {
+
+  &,
+  & * {
+    color : $yellow;
+  }
+
+  &.small {
+    font-size : 75%;
+  }
+}
+
+.main-nav {
+  background    : #161616;
+  border-radius : 2px;
+  display       : inline-block;
+  padding       : 6px 0 6px 6px;
+
+  a {
+    background    : #3a3a3a;
+    border-radius : 2px;
+    font-size     : 70%;
+    margin        : 0 6px 0 0;
+    padding       : 6px;
   }
 }

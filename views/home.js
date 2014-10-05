@@ -8,7 +8,7 @@ function getHomeView (params) {
 	var A = params.appGlobal.A;
 
 	return A.constant (
-		A.header (
+		A.h1 (
 			'The Web Territory of RoboterHund'
 		),
 		A.p (

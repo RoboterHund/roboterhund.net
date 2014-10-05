@@ -34,7 +34,7 @@ function getCommonTemplate (params) {
 				)
 			),
 			A.alink (
-				routes.login,
+				routes.admin,
 				'Admin',
 				A.macro (
 					A.id ('adminLink'),

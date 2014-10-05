@@ -247,9 +247,7 @@ function toCheckUser (users, debug) {
  */
 function logout (req, res, next) {
 	req.logout ();
-
-	var routes = require ('../content/routes');
-	res.redirect (routes.root);
+	res.redirect (req.appGlobal.routes.login);
 }
 
 module.exports = {

@@ -6,12 +6,14 @@ module.exports = {
 
 	resetPlaylistLoader: '/kasaneteto/videos/load/reset',
 	loadNextPlaylistPage: '/kasaneteto/videos/load/continue',
+	loadLatestPlaylistPage: '/kasaneteto/videos/load/latest',
 
-	showPlaylist: '/kasaneteto/videos',
-	showPlaylistFromTo: '/kasaneteto/videos/:from/:to',
+	showPlaylist: '/kasaneteto/videos/list',
+	showPlaylistFromTo: '/kasaneteto/videos/list/:from/:to',
 	showPlaylistLatest: '/kasaneteto/videos/latest',
 	showPlaylistSearch: '/kasaneteto/videos/search',
 
+	admin: '/admin',
 	login: '/login',
 
 	facebookLogin: '/login/facebook',
