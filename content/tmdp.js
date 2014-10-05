@@ -196,27 +196,47 @@ function latest (req, res, next) {
  * @param next
  */
 function search (req, res, next) {
-	var rawTerm = req.query.term.trim ();
-
-	if (rawTerm === '') {
-		res.redirect (req.appGlobal.routes.showPlaylistLatest);
-		return;
-	}
+	var rawTerm = req.query.term;
 
 	// http://stackoverflow.com/a/3561711
 	var term = rawTerm.replace (/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 
-	var regex = new RegExp ('.*' + term + '.*', 'i');
-	req.appGlobal.debugs.tmdp ("regex: '%s'", regex);
+	var parts = term.match (/\S+/g);
+
+	if (!parts) {
+		res.redirect (req.appGlobal.routes.showPlaylistLatest);
+		return;
+	}
+
+	var $andTitle = [];
+	var $andDescription = [];
+
+	var i;
+	var n = parts.length;
+	var regex;
+	for (i = 0; i < n; i++) {
+		regex = new RegExp ('.*\\b' + parts [i] + '.*', 'i');
+		req.appGlobal.debugs.tmdp ("regex [%d]: '%s'", i, regex);
+		$andTitle.push (
+			{
+				'data.snippet.title': regex
+			}
+		);
+		$andDescription.push (
+			{
+				'data.snippet.description': regex
+			}
+		);
+	}
 
 	req.appGlobal.db.tmdpVideos ().find (
 		{
 			$or: [
 				{
-					'data.snippet.title': regex
+					$and: $andTitle
 				},
 				{
-					'data.snippet.description': regex
+					$and: $andDescription
 				}
 			]
 		},
