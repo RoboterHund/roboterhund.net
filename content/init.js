@@ -48,9 +48,7 @@ function initTmdp (router, params) {
 	params.appGlobal.views.playlistTemplate =
 		mViewsPlaylist.getTemplate (params);
 
-	var redirect = function playlistRedirect (req, res, next) {
-		res.redirect (routes.showPlaylist);
-	};
+	var redirect = mContentTmdp.oldest;
 
 	router.get (
 		routes.admin,
@@ -72,6 +70,7 @@ function initTmdp (router, params) {
 		routes.resetPlaylistLoader,
 		mYoutube.checkIsUserAdmin,
 		mYoutube.clearNextPageToken,
+		mYoutube.loadPlaylist,
 		redirect
 	);
 
@@ -80,6 +79,7 @@ function initTmdp (router, params) {
 		mYoutube.checkIsUserAdmin,
 		mYoutube.youtubePlaylistPageRequest,
 		mYoutube.storePlaylistPage,
+		mYoutube.loadPlaylist,
 		redirect
 	);
 

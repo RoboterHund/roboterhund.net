@@ -197,6 +197,33 @@ function latest (req, res, next) {
 }
 
 /**
+ * show oldest videos
+ * @param req
+ * @param res
+ * @param next
+ */
+function oldest (req, res, next) {
+	var list = req.appGlobal.youtube.list;
+
+	var showNumber = 50;
+
+	var from = 1;
+	var to = from + showNumber - 1;
+	if (from > list.length) {
+		to = list.length;
+	}
+
+	var showPlaylist = req.appGlobal.routes.showPlaylist;
+	res.redirect (
+			showPlaylist
+			+ '/'
+			+ from
+			+ '/'
+			+ to
+	);
+}
+
+/**
  * search
  * @param req
  * @param res
@@ -269,5 +296,6 @@ function search (req, res, next) {
 module.exports = {
 	playlist: playlist,
 	latest: latest,
+	oldest: oldest,
 	search: search
 };
