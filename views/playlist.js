@@ -30,6 +30,13 @@ function getTemplate (params) {
 				A.id ('tmdpheader'),
 				'The Miracle Diva Project'
 			),
+			A.span (
+				A.id ('notice1010'),
+				'2014/10/10 — Teto day!',
+				A.small (
+					'YouTube celebration playlist coming soon!'
+				)
+			),
 			A.img (
 				A.id ('kisekinoutahime'),
 				A.inTitle ('重音テト・キセキノウタヒメ'),

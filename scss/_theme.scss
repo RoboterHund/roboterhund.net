@@ -162,10 +162,32 @@ div.content ul li {
     top      : -1px;
   }
 
+  #notice1010 {
+    background-color : #ca0e27;
+    border-radius    : 8px;
+    box-shadow       : 0 0 8px 4px #17913e, inset 0 0 0 2px #000000, inset 0 0 0 4px $dark-rose;
+    color            : rgb(255, 24, 52);
+    display          : block;
+    font-size        : 1.5em;
+    font-style       : italic;
+    padding          : 14px 32px 18px 24px;
+    position         : absolute;
+    right            : 292px;
+    text-shadow      : 0 0 4px;
+    top              : 6px;
+    @include background-image(linear-gradient(top, #4b050f 0%, #0e0000 100%));
+
+    small {
+      color      : white;
+      display    : block;
+      font-size  : 0.7em;
+      font-style : italic;
+      margin-top : 3px;
+    }
+  }
 }
 
 #tmdpheader {
-  //  display       : inline-block;
   color         : #ffffff;
   font-size     : 42px;
   font-style    : italic;
