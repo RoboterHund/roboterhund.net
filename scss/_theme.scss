@@ -71,7 +71,7 @@ div.content.playlist {
 div.pages {
   clear  : both;
   display : block;
-  margin : 0 12px 12px 12px;
+  margin : 24px 12px 12px 12px;
 
   .no-link,
   a {
@@ -217,10 +217,12 @@ div.content ul li {
   }
 }
 
-#filter a {
-  @include round-button();
-  margin-left : 10px;
-  padding     : 6px 10px;
+#filter {
+  a {
+    @include round-button();
+    margin-left : 10px;
+    padding     : 6px 10px;
+  }
 }
 
 form {

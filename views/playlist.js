@@ -39,7 +39,7 @@ function getTemplate (params) {
 			),
 			A.img (
 				A.id ('kisekinoutahime'),
-				A.inTitle ('重音テト・キセキノウタヒメ'),
+				A.inTitle ('重音テト・奇跡の歌姫'),
 				A.src ('/img/kisekinoutahime.svg')
 			)
 		),
@@ -76,8 +76,7 @@ function getTemplate (params) {
 			A.divClearBoth,
 			A.insert (keys.VIDEO_PAGE_SELECT)
 		)
-	)
-		;
+	);
 }
 
 function getPlaylistSearchTemplate (params) {
@@ -108,8 +107,7 @@ function getPlaylistSearchTemplate (params) {
 			routes.showPlaylistLatest,
 			'Return to unfiltered list',
 			'Clear search'
-		),
-		A.divClearBoth
+		)
 	);
 }
 

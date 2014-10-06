@@ -20,7 +20,7 @@ function getAdminView (appGlobal) {
 			A.insert (keys.CONT_USER),
 			A.insert (keys.LOGIN_CONTROL)
 		),
-		A.h2 ('Refresh list'),
+		A.h2 ('Refresh Kasane Teto playlist'),
 		A.div (
 			A.alink (
 				routes.loadLatestPlaylistPage,
