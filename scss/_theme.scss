@@ -69,7 +69,6 @@ div.content.playlist {
 }
 
 div.pages {
-  clear  : both;
   display : block;
   margin : 24px 12px 12px 12px;
 
@@ -86,6 +85,11 @@ div.pages {
       color : rgb(75, 126, 51);
     }
   }
+}
+
+.numResults {
+  color  : #4aa864;
+  margin : 20px 12px 8px 12px;
 }
 
 div.content ul {

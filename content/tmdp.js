@@ -119,8 +119,16 @@ function getPageSelect (req) {
 		return '';
 	}
 
-	if (req.tempData.showAll) {
-		return '';
+	if (req.tempData.searchTerm) {
+		var A = req.appGlobal.A;
+		return A.constant (
+			A.div (
+				A.inClass ('numResults'),
+				(list.length == 1 ?
+					'1 result.'
+					: list.length + ' results.')
+			)
+		);
 	}
 
 	var pages = [];
@@ -282,7 +290,6 @@ function search (req, res, next) {
 		require ('../modules/youtube').toGetResultArray (
 			function (items) {
 				req.tempData.playlist = items;
-				req.tempData.showAll = true;
 				req.tempData.searchTerm = rawTerm;
 
 				req.appGlobal.debugs.tmdp (items.length);

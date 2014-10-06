@@ -107,7 +107,8 @@ function getPlaylistSearchTemplate (params) {
 			routes.showPlaylistLatest,
 			'Return to unfiltered list',
 			'Clear search'
-		)
+		),
+		A.divClearBoth
 	);
 }
 
