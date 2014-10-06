@@ -153,6 +153,15 @@ div.content ul li {
 #tetoheader {
   margin-bottom : 22px;
   margin-top    : 16px;
+  position : relative;
+
+  img#kisekinoutahime {
+    height   : 110px;
+    position : absolute;
+    right    : 64px;
+    top      : -1px;
+  }
+
 }
 
 #tmdpheader {

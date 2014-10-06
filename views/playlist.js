@@ -29,6 +29,11 @@ function getTemplate (params) {
 			A.h1 (
 				A.id ('tmdpheader'),
 				'The Miracle Diva Project'
+			),
+			A.img (
+				A.id ('kisekinoutahime'),
+				A.inTitle ('重音テト・キセキノウタヒメ'),
+				A.src ('/img/kisekinoutahime.svg')
 			)
 		),
 		A.div (
@@ -64,7 +69,8 @@ function getTemplate (params) {
 			A.divClearBoth,
 			A.insert (keys.VIDEO_PAGE_SELECT)
 		)
-	);
+	)
+		;
 }
 
 function getPlaylistSearchTemplate (params) {
