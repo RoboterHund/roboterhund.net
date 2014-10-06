@@ -64,7 +64,7 @@ function getTemplate (params) {
 									A.inClass ('vid-pos'),
 									A.insert (keys.VIDEO_POSITION)
 								),
-								A.span (
+								A.div (
 									A.inClass ('title'),
 									A.insert (keys.VIDEO_TITLE)
 								)
@@ -185,8 +185,25 @@ function getLoader (params) {
 	);
 }
 
+function getTitleLinesView (A, titleLines) {
+	return A.string (
+		A.template (
+			A.list (
+				'lines',
+				A.div (
+					A.insert ('line')
+				)
+			)
+		),
+		{
+			lines: titleLines
+		}
+	);
+}
+
 module.exports = {
 	getTemplate: getTemplate,
 	getPageSelectView: getPageSelectView,
-	getLoader: getLoader
+	getLoader: getLoader,
+	getTitleLinesView: getTitleLinesView
 };

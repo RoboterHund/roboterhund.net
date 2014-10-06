@@ -140,10 +140,7 @@ function storePlaylistItems (req, next, data, index) {
 			pos: position
 		};
 
-		var value = {
-			pos: position,
-			data: item
-		};
+		var value = analyzeData (req.appGlobal, position, item);
 
 		req.appGlobal.db.tmdpVideos ().update (
 			key,
@@ -165,6 +162,78 @@ function storePlaylistItems (req, next, data, index) {
 	else {
 		next ();
 	}
+}
+
+function analyzeData (appGlobal, position, data) {
+	var value = {
+		pos: position,
+		data: data
+	};
+
+	var title = data.snippet.title.trim ();
+	var openDelims = ['(', '【', '『'];
+	var closeDelims = {
+		'(': ')',
+		'【': '】',
+		'『': '』'
+	};
+
+	var i = 0;
+	var n = title.length;
+	var di;
+	var dn = openDelims.length;
+	var pos;
+	var search;
+	var openDelimPos;
+	var openDelim;
+	var closeDelimPos;
+	var closeDelim;
+	var line = '';
+	var titleLines = [];
+
+	while (i < n) {
+		openDelimPos = n;
+
+		for (di = 0; di < dn; di++) {
+			search = openDelims [di];
+
+			pos = title.indexOf (search, i);
+
+			if (pos !== -1 && pos < openDelimPos) {
+				openDelimPos = pos;
+				openDelim = search;
+			}
+		}
+
+		line = title.substring (i, openDelimPos).trim ();
+
+		if (line.length > 0) {
+			titleLines.push ({ line: line });
+		}
+
+		closeDelim = closeDelims [openDelim];
+
+		closeDelimPos = title.indexOf (closeDelim, openDelimPos);
+
+		if (closeDelimPos !== -1) {
+			i = closeDelimPos + 1;
+
+		} else {
+			i = n;
+		}
+
+		line = title.substring (openDelimPos, i).trim ();
+
+		if (line.length > 0) {
+			titleLines.push ({ line: line });
+		}
+	}
+
+	value.titleLinesHtml =
+		require ('../views/playlist')
+			.getTitleLinesView (appGlobal.A, titleLines);
+
+	return value;
 }
 
 /**

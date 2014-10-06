@@ -119,6 +119,9 @@ div.content ul li {
   box-shadow : 0px 3px 6px 1px rgba(190, 148, 124, 1), inset 0 0 1px $rose;
   border-radius : 2px;
   a {
+    width  : 100%;
+    height : 100%;
+
     position : relative;
     img {
       float         : left;
@@ -132,15 +135,18 @@ div.content ul li {
       right    : 6px;
       top      : 6px;
     }
-    span.title {
-      height     : 70px;
+    div.title {
+      height : 90px;
 
       clear      : both;
-      color      : #a5935a;
-      display    : block;
       font-size  : 0.9em;
       margin     : 12px 4px;
       overflow-y : auto;
+
+      div {
+        color  : #a5935a;
+        margin : 3px 0 0 4px;
+      }
     }
   }
   &:hover {

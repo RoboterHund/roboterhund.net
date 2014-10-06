@@ -47,7 +47,14 @@ function playlist (req, res, next) {
 			+ snippet.resourceId.videoId
 			+ '&list='
 			+ playlistId;
-		video [keys.VIDEO_TITLE] = snippet.title;
+
+		if (playlistItem.titleLinesHtml) {
+			video [keys.VIDEO_TITLE] = playlistItem.titleLinesHtml;
+
+		} else {
+			video [keys.VIDEO_TITLE] = snippet.title;
+		}
+
 		video [keys.VIDEO_THUMBNAIL] = snippet.thumbnails.default.url;
 
 		videos.push (video);
