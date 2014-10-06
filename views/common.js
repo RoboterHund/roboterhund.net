@@ -34,7 +34,7 @@ function getCommonTemplate (params) {
 				)
 			),
 			A.alink (
-				routes.login,
+				routes.admin,
 				'Admin',
 				A.macro (
 					A.id ('adminLink'),
@@ -42,7 +42,11 @@ function getCommonTemplate (params) {
 				)
 			),
 			A.footer (
-				'© 2014 RoboterHund'
+				'roboterhund.net website © 2014 RoboterHund.',
+				A.br (),
+				'All videoclips and songs are copyright to their respective owners and are presented for informational purposes only.',
+				A.br (),
+				'Kasane Teto © 2008 Sen, Oyamano Mayo, TWINDRILL.'
 			)
 		)
 	);

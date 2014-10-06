@@ -30,78 +30,13 @@ function getAuthViews (params) {
 	var A = params.appGlobal.A;
 	var keys = params.appGlobal.viewKeys;
 
-	var authParams = require ('../private/auth');
-	var providers = [];
-	if (authParams.facebook.enabled) {
-		providers.push (
-			{
-				href: routes.facebookLogin,
-				prov: 'Facebook'
-			}
-		);
-	}
-	if (authParams.github.enabled) {
-		providers.push (
-			{
-				href: routes.githubLogin,
-				prov: 'GitHub'
-			}
-		);
-	}
-	if (authParams.google.enabled) {
-		providers.push (
-			{
-				href: routes.googleLogin,
-				prov: 'Google'
-			}
-		);
-	}
-	if (authParams.twitter.enabled) {
-		providers.push (
-			{
-				href: routes.twitterLogin,
-				prov: 'Twitter'
-			}
-		);
-	}
-
-	var loginEnabled = providers.length !== 0;
-
-	var login;
-	if (loginEnabled) {
-		/**
-		 * login link list
-		 */
-		login = A.string (
-			A.template (
-				A.ul (
-					A.list (
-						'provs',
-						A.li (
-							A.alink (
-								A.insert ('href'),
-								A.macro (
-									'Login with ',
-									A.insert ('prov')
-								),
-								A.insert ('prov')
-							)
-						)
-					)
-				)
-			),
-			{
-				provs: providers
-			}
-		);
-
-	} else {
-		login = A.constant (
-			A.p (
-				'Login has been disabled.'
-			)
-		);
-	}
+	var login = A.constant (
+		A.alink (
+			routes.twitterLogin,
+			' Admin access',
+			A.fontawesome ('twitter-square')
+		)
+	);
 
 	var logoutLabel = 'Logout';
 
@@ -122,24 +57,20 @@ function getAuthViews (params) {
 	 * authenticated user template
 	 */
 	var authUser = A.template (
-		A.p (
-			'user: ',
-			A.span (
-				A.inClass ('user'),
-				A.insert (keys.AUTH_USER)
-			),
-			' (',
-			A.insert (keys.USER_FROM),
-			')'
-		)
+		'Authenticated user: ',
+		A.span (
+			A.inClass ('user'),
+			A.insert (keys.AUTH_USER)
+		),
+		' (',
+		A.insert (keys.USER_FROM),
+		') '
 	);
 
 	/**
 	 * user not authenticated
 	 */
-	var noAuthUser = A.constant (
-		A.p ('no user')
-	);
+	var noAuthUser = 'Accessing as anonymous user. ';
 
 	return {
 		login: login,

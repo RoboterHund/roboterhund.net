@@ -8,7 +8,7 @@ function getHomeView (params) {
 	var A = params.appGlobal.A;
 
 	return A.constant (
-		A.header (
+		A.h1 (
 			'The Web Territory of RoboterHund'
 		),
 		A.p (
@@ -17,7 +17,17 @@ function getHomeView (params) {
 				'my Twitter',
 				'RoboterHund'
 			),
-			' is building a node.js server.'
+				' (Alexander Díaz Chub IRL) built the '
+				+ 'node.js server that serves this website, '
+				+ 'and is still working on it from time to time :P'
+		),
+		A.p (
+			'This website hosts the searchable and easy-to-access ',
+			A.alink (
+				params.appGlobal.routes.showPlaylistLatest,
+				'The Miracle Diva Project original songs playlist'
+			),
+			'.'
 		)
 	);
 }

@@ -38,6 +38,7 @@ function initHome (router, params) {
  * @param params
  */
 function initTmdp (router, params) {
+	var mContentAdmin = require ('../content/admin');
 	var mContentTmdp = require ('../content/tmdp');
 	var mViewsPlaylist = require ('../views/playlist');
 	var mYoutube = require ('../modules/youtube');
@@ -47,14 +48,29 @@ function initTmdp (router, params) {
 	params.appGlobal.views.playlistTemplate =
 		mViewsPlaylist.getTemplate (params);
 
-	var redirect = function playlistRedirect (req, res, next) {
-		res.redirect (routes.showPlaylist);
-	};
+	var redirect = mContentTmdp.oldest;
+
+	router.get (
+		routes.admin,
+		mContentAdmin.showAdminPanel,
+		params.appGlobal.render
+	);
+
+	router.get (
+		routes.loadLatestPlaylistPage,
+		mYoutube.checkIsUserAdmin,
+		mYoutube.clearNextPageToken,
+		mYoutube.youtubePlaylistPageRequest,
+		mYoutube.storePlaylistPage,
+		mContentAdmin.showAdminPanel,
+		params.appGlobal.render
+	);
 
 	router.get (
 		routes.resetPlaylistLoader,
 		mYoutube.checkIsUserAdmin,
 		mYoutube.clearNextPageToken,
+		mYoutube.loadPlaylist,
 		redirect
 	);
 
@@ -63,6 +79,7 @@ function initTmdp (router, params) {
 		mYoutube.checkIsUserAdmin,
 		mYoutube.youtubePlaylistPageRequest,
 		mYoutube.storePlaylistPage,
+		mYoutube.loadPlaylist,
 		redirect
 	);
 
@@ -117,8 +134,9 @@ function initAuth (router, params) {
 	var mContentAuth = require ('../content/auth');
 	router.get (
 		routes.login,
-		mContentAuth.toShowAuth (params),
-		params.appGlobal.render
+		function adminRedirect (req, res) {
+			res.redirect (routes.admin);
+		}
 	);
 
 	var authParams = require ('../private/auth');
@@ -128,7 +146,7 @@ function initAuth (router, params) {
 	setupParams.passport = require ('passport');
 	setupParams.failRoute = routes.authFail;
 	setupParams.successRedirect =
-		toRedirectAuthenticated (routes.root);
+		toRedirectAuthenticated (routes.admin);
 
 	if (authParams.facebook.enabled) {
 		setupParams.provider = 'facebook';

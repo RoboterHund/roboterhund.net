@@ -47,7 +47,14 @@ function playlist (req, res, next) {
 			+ snippet.resourceId.videoId
 			+ '&list='
 			+ playlistId;
-		video [keys.VIDEO_TITLE] = snippet.title;
+
+		if (playlistItem.titleLinesHtml) {
+			video [keys.VIDEO_TITLE] = playlistItem.titleLinesHtml;
+
+		} else {
+			video [keys.VIDEO_TITLE] = snippet.title;
+		}
+
 		video [keys.VIDEO_THUMBNAIL] = snippet.thumbnails.default.url;
 
 		videos.push (video);
@@ -112,8 +119,16 @@ function getPageSelect (req) {
 		return '';
 	}
 
-	if (req.tempData.showAll) {
-		return '';
+	if (req.tempData.searchTerm) {
+		var A = req.appGlobal.A;
+		return A.constant (
+			A.div (
+				A.inClass ('numResults'),
+				(list.length == 1 ?
+					'1 result.'
+					: list.length + ' results.')
+			)
+		);
 	}
 
 	var pages = [];
@@ -190,6 +205,33 @@ function latest (req, res, next) {
 }
 
 /**
+ * show oldest videos
+ * @param req
+ * @param res
+ * @param next
+ */
+function oldest (req, res, next) {
+	var list = req.appGlobal.youtube.list;
+
+	var showNumber = 50;
+
+	var from = 1;
+	var to = from + showNumber - 1;
+	if (from > list.length) {
+		to = list.length;
+	}
+
+	var showPlaylist = req.appGlobal.routes.showPlaylist;
+	res.redirect (
+			showPlaylist
+			+ '/'
+			+ from
+			+ '/'
+			+ to
+	);
+}
+
+/**
  * search
  * @param req
  * @param res
@@ -201,17 +243,42 @@ function search (req, res, next) {
 	// http://stackoverflow.com/a/3561711
 	var term = rawTerm.replace (/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 
-	var regex = new RegExp ('.*' + term + '.*', 'i');
-	req.appGlobal.debugs.tmdp ("regex: '%s'", regex);
+	var parts = term.match (/\S+/g);
+
+	if (!parts) {
+		res.redirect (req.appGlobal.routes.showPlaylistLatest);
+		return;
+	}
+
+	var $andTitle = [];
+	var $andDescription = [];
+
+	var i;
+	var n = parts.length;
+	var regex;
+	for (i = 0; i < n; i++) {
+		regex = new RegExp ('.*\\b' + parts [i] + '.*', 'i');
+		req.appGlobal.debugs.tmdp ("regex [%d]: '%s'", i, regex);
+		$andTitle.push (
+			{
+				'data.snippet.title': regex
+			}
+		);
+		$andDescription.push (
+			{
+				'data.snippet.description': regex
+			}
+		);
+	}
 
 	req.appGlobal.db.tmdpVideos ().find (
 		{
 			$or: [
 				{
-					'data.snippet.title': regex
+					$and: $andTitle
 				},
 				{
-					'data.snippet.description': regex
+					$and: $andDescription
 				}
 			]
 		},
@@ -223,7 +290,6 @@ function search (req, res, next) {
 		require ('../modules/youtube').toGetResultArray (
 			function (items) {
 				req.tempData.playlist = items;
-				req.tempData.showAll = true;
 				req.tempData.searchTerm = rawTerm;
 
 				req.appGlobal.debugs.tmdp (items.length);
@@ -237,5 +303,6 @@ function search (req, res, next) {
 module.exports = {
 	playlist: playlist,
 	latest: latest,
+	oldest: oldest,
 	search: search
 };
