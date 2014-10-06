@@ -152,6 +152,8 @@ function getPageSelectView (appGlobal, params) {
 				)
 			);
 		}
+
+		items.push (' ');
 	}
 
 	return A.constant (

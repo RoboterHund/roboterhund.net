@@ -56,7 +56,7 @@ div.content.playlist {
   padding         : 4px 8px 4px 8px;
   display         : inline-block;
   font-size       : 80%;
-  margin          : 6px 4px 0 0;
+  margin : 6px 4px 2px 0;
   text-decoration : none;
   box-shadow      : 0 0 0 3px $rose, inset -3px -3px 6px 2px rgba(10, 48, 19, 0.5), inset 1px 1px 0 0 rgb(118, 192, 138), inset 2px 3px 1px 0px rgba(255, 255, 255, 0.7);
   background      : rgb(74, 168, 100);
@@ -119,7 +119,7 @@ div.content ul li {
   height     : 200px;
   box-sizing    : border-box;
   float      : left;
-  margin     : 4px 8px;
+  margin : 6px 0 8px 12px;
   box-shadow : 0px 3px 6px 1px rgba(190, 148, 124, 1), inset 0 0 1px $rose;
   border-radius : 2px;
   a {
@@ -143,9 +143,8 @@ div.content ul li {
       height : 90px;
 
       clear      : both;
-      font-size  : 0.9em;
-      margin     : 12px 4px;
-      overflow-y : auto;
+      font-size : 0.85em;
+      margin    : 12px 8px 12px 4px;
 
       div {
         color  : #a5935a;
