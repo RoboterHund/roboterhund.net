@@ -113,6 +113,13 @@ function getTemplateEngine () {
 		A.div (A.inStyle ('clear:both'), '')
 	);
 
+	/**
+	 * for CSS3 media queries
+	 * @type {string}
+	 */
+	A.metaViewportDeviceWidth =
+		'<meta name="viewport" content="width=device-width" />';
+
 	return A;
 }
 

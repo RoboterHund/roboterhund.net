@@ -1,76 +1,76 @@
 @import "compass/css3";
 @import url(http://fonts.googleapis.com/css?family=Roboto+Condensed);
 
-$yellow : rgba(255, 220, 0, 1);
-$full-black : rgba(0, 0, 0, 1);
-$phosphor-green : rgba(0, 255, 0, 1);
-$dark-rose : #ff869e;
-$rose : #ffd4c7;
+$yellow: rgba(255, 220, 0, 1);
+$full-black: rgba(0, 0, 0, 1);
+$phosphor-green: rgba(0, 255, 0, 1);
+$dark-rose: #ff869e;
+$rose: #ffd4c7;
 
 body {
-  background : $full-black;
+  background: $full-black;
 }
 
 * {
-  color       : $phosphor-green;
-  font-family : 'Roboto Condensed', sans-serif;
+  color: $phosphor-green;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 header {
-  font-size : 24px;
+  font-size: 24px;
 }
 
 a {
-  margin-bottom : 2px;
-  display       : inline-block;
+  margin-bottom: 2px;
+  display: inline-block;
 }
 
 ul li {
-  margin : 2px 12px;
+  margin: 2px 12px;
 }
 
 div.content {
-  margin        : 12px;
-  padding       : 12px;
-  border-radius : 3px;
-  box-shadow    : 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
+  margin: 12px;
+  padding: 12px;
+  border-radius: 3px;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
 }
 
 div.content,
 div.content ul li {
-  background-color : #ffffff;
+  background-color: #ffffff;
   @include background-image(linear-gradient(left top, #ffffff 0%, #ffeeee 100%));
 }
 
 div.content.playlist {
-  box-shadow : 0 0 8px 0px rgba(0, 0, 0, 0.5), 0 -8px 12px 24px #17913e, inset 0 0 0 4px $dark-rose;
+  box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.5), 0 -8px 12px 24px #17913e, inset 0 0 0 4px $dark-rose;
 }
 
 @mixin button-active-background {
-  background : #b4ffaa;
-  box-shadow : 0 0 0 3px $rose, inset 0 0 8px;
+  background: #b4ffaa;
+  box-shadow: 0 0 0 3px $rose, inset 0 0 8px;
 }
 
 @mixin round-button {
-  border-radius   : 12px;
-  padding         : 4px 8px 4px 8px;
-  display         : inline-block;
-  font-size       : 80%;
-  margin : 6px 4px 2px 0;
-  text-decoration : none;
-  box-shadow      : 0 0 0 3px $rose, inset -3px -3px 6px 2px rgba(10, 48, 19, 0.5), inset 1px 1px 0 0 rgb(118, 192, 138), inset 2px 3px 1px 0px rgba(255, 255, 255, 0.7);
-  background      : rgb(74, 168, 100);
-  color           : #ffffff;
+  border-radius: 12px;
+  padding: 4px 8px 4px 8px;
+  display: inline-block;
+  font-size: 80%;
+  margin: 6px 4px 2px 0;
+  text-decoration: none;
+  box-shadow: 0 0 0 3px $rose, inset -3px -3px 6px 2px rgba(10, 48, 19, 0.5), inset 1px 1px 0 0 rgb(118, 192, 138), inset 2px 3px 1px 0px rgba(255, 255, 255, 0.7);
+  background: rgb(74, 168, 100);
+  color: #ffffff;
 
   &:hover {
     @include button-active-background();
-    color : rgb(102, 182, 102);
+    color: rgb(102, 182, 102);
   }
 }
 
 div.pages {
-  display : block;
-  margin : 24px 12px 12px 12px;
+  display: block;
+  margin: 24px 12px 12px 12px;
 
   .no-link,
   a {
@@ -78,183 +78,204 @@ div.pages {
   }
   .no-link {
     @include button-active-background();
-    text-shadow : 0 0 0.5px;
+    text-shadow: 0 0 0.5px;
 
     &,
     &:hover {
-      color : rgb(75, 126, 51);
+      color: rgb(75, 126, 51);
     }
   }
 }
 
 .numResults {
-  color  : #4aa864;
-  margin : 20px 12px 8px 12px;
+  color: #4aa864;
+  margin: 20px 12px 8px 12px;
 }
 
 div.content ul {
-  margin : 12px 0;
+  margin: 12px 0;
 }
 
 a {
-  margin-bottom   : 2px;
-  display         : inline-block;
-  text-decoration : none;
+  margin-bottom: 2px;
+  display: inline-block;
+  text-decoration: none;
 
   &,
   & * {
-    color : rgb(103, 147, 226);
+    color: rgb(103, 147, 226);
   }
 }
 
 footer {
-  text-align : center;
-  font-size  : 80%;
-  margin     : 20px;
-  color      : rgba(0, 255, 0, 0.5);
+  text-align: center;
+  font-size: 80%;
+  margin: 20px;
+  color: rgba(0, 255, 0, 0.5);
 }
 
 div.content ul li {
-  width      : 180px;
-  height     : 200px;
-  box-sizing    : border-box;
-  float      : left;
-  margin : 6px 0 8px 12px;
-  box-shadow : 0px 3px 6px 1px rgba(190, 148, 124, 1), inset 0 0 1px $rose;
-  border-radius : 2px;
+  width: 180px;
+  height: 200px;
+  box-sizing: border-box;
+  float: left;
+  margin: 6px 0 8px 12px;
+  box-shadow: 0px 3px 6px 1px rgba(190, 148, 124, 1), inset 0 0 1px $rose;
+  border-radius: 2px;
   a {
-    width  : 100%;
-    height : 100%;
+    width: 100%;
+    height: 100%;
 
-    position : relative;
+    position: relative;
     img {
-      float         : left;
-      margin        : 6px;
-      border-radius : 4px;
-      box-shadow    : 0 0 0 2px #ffffff, 0 0 0 3px $dark-rose;
+      float: left;
+      margin: 6px;
+      border-radius: 4px;
+      box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px $dark-rose;
     }
     span.vid-pos {
-      color    : $dark-rose;
-      position : absolute;
-      right    : 6px;
-      top      : 6px;
+      color: $dark-rose;
+      position: absolute;
+      right: 6px;
+      top: 6px;
     }
     div.title {
-      height : 90px;
+      height: 90px;
 
-      clear      : both;
-      font-size : 0.85em;
-      margin    : 12px 8px 12px 4px;
+      clear: both;
+      font-size: 0.85em;
+      margin: 12px 8px 12px 4px;
 
       div {
-        color  : #a5935a;
-        margin : 3px 0 0 4px;
+        color: #a5935a;
+        margin: 3px 0 0 4px;
       }
     }
   }
   &:hover {
-    background-color : #ca0e27;
+    background-color: #5b0013;
     @include background-image(linear-gradient(left top, #ca0e27 0%, #0e0000 100%));
-    box-shadow       : 0 0 0px 4px rgba(255, 126, 126, 0.85);
+    box-shadow: 0 0 0px 4px rgba(255, 126, 126, 0.85);
   }
 }
 
+$medium-header-max-width: 1180px;
+$small-header-max-width: 1100px;
+
 #tetoheader {
-  margin-bottom : 22px;
-  margin-top    : 16px;
-  position : relative;
+  margin-bottom: 22px;
+  margin-top: 16px;
+  position: relative;
 
   img#kisekinoutahime {
-    height   : 110px;
-    position : absolute;
-    right    : 64px;
-    top      : -1px;
+    height: 110px;
+    position: absolute;
+    right: 64px;
+    top: -1px;
+
+    @media (min-width: $small-header-max-width) and (max-width: $medium-header-max-width) {
+      right: 28px;
+    }
+    @media (max-width: $small-header-max-width) {
+      float: right;
+      margin: 15px 15px 0 0;
+      position: initial;
+    }
   }
 
   #notice1010 {
-    background-color : #ca0e27;
-    border-radius    : 8px;
-    box-shadow       : 0 0 8px 4px #17913e, inset 0 0 0 2px #000000, inset 0 0 0 4px $dark-rose;
-    color            : rgb(255, 24, 52);
-    display          : block;
-    font-size        : 1.5em;
-    font-style       : italic;
-    padding          : 14px 32px 18px 24px;
-    position         : absolute;
-    right            : 292px;
-    text-shadow      : 0 0 4px;
-    top              : 6px;
+    background-color: #0e0000;
+    border-radius: 8px;
+    box-shadow: 0 0 8px 4px #17913e, inset 0 0 0 2px #000000, inset 0 0 0 4px $dark-rose;
+    color: rgb(255, 24, 52);
+    display: block;
+    font-size: 1.5em;
+    font-style: italic;
+    padding: 14px 32px 18px 24px;
+    position: absolute;
+    right: 230px;
+    text-shadow: 0 0 4px;
+    top: 6px;
     @include background-image(linear-gradient(top, #4b050f 0%, #0e0000 100%));
 
     small {
-      color      : white;
-      display    : block;
-      font-size  : 0.7em;
-      font-style : italic;
-      margin-top : 3px;
+      color: white;
+      display: block;
+      font-size: 0.7em;
+      font-style: italic;
+      margin-top: 3px;
+    }
+
+    @media (min-width: $small-header-max-width) and (max-width: $medium-header-max-width) {
+      right: 150px;
+    }
+    @media (max-width: $small-header-max-width) {
+      display: inline-block;
+      margin: 24px 0 -8px 32px;
+      position: initial;
     }
   }
 }
 
 #tmdpheader {
-  color         : #ffffff;
-  font-size     : 42px;
-  font-style    : italic;
-  margin-right  : 12px;
-  margin-bottom : -8px;
-  text-shadow   : 0px 4px 4px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  font-size: 42px;
+  font-style: italic;
+  margin-right: 12px;
+  margin-bottom: -8px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
 #kasanetetoHeader {
-  border-radius    : 2px;
-  box-shadow    : 0px 4px 4px 1px rgba(0, 0, 0, 0.3);
-  color         : #ffffff;
-  display       : inline-block;
-  font-size     : 18px;
-  margin-bottom : -4px;
-  margin-top    : 10px;
-  padding       : 2px 8px 4px 8px;
-  text-shadow      : 0 2px #96090e, 0 3px 3px rgba(162, 20, 20, 0.8);
+  border-radius: 2px;
+  box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  display: inline-block;
+  font-size: 18px;
+  margin-bottom: -4px;
+  margin-top: 10px;
+  padding: 2px 8px 4px 8px;
+  text-shadow: 0 2px #96090e, 0 3px 3px rgba(162, 20, 20, 0.8);
 
-  background-color : rgb(242, 8, 39);
+  background-color: rgb(242, 8, 39);
   @include filter-gradient(#f20827, #cb173b, vertical);
   @include background-image(linear-gradient(top, rgba(242, 8, 39, 1) 0%, rgba(237, 43, 72, 1) 50%, rgba(208, 8, 41, 1) 51%, rgba(209, 13, 46, 1) 71%, rgba(203, 23, 59, 1) 100%));
 
   &:hover {
-    text-shadow : 0 0 12px #ffffff;
-    box-shadow  : 0 0 16px 4px rgba(255, 50, 80, 0.8);
+    text-shadow: 0 0 12px #ffffff;
+    box-shadow: 0 0 16px 4px rgba(255, 50, 80, 0.8);
   }
 }
 
 #filter {
   a {
     @include round-button();
-    margin-left : 10px;
-    padding     : 6px 10px;
+    margin-left: 10px;
+    padding: 6px 10px;
   }
 }
 
 form {
-  display : inline-block;
-  float   : left;
+  display: inline-block;
+  float: left;
 
   .fa-search {
-    color   : $dark-rose;
-    display : inline-block;
-    margin  : 1px -4px 1px 12px;
+    color: $dark-rose;
+    display: inline-block;
+    margin: 1px -4px 1px 12px;
   }
 
   input {
-    color         : rgba(0, 0, 0, 1);
-    border-radius : 4px;
-    border        : none;
-    margin-left   : 12px;
+    color: rgba(0, 0, 0, 1);
+    border-radius: 4px;
+    border: none;
+    margin-left: 12px;
 
     &[type=text] {
-      background : #fafafa;
-      padding    : 1px 4px;
-      width      : 300px;
-      box-shadow : inset 2px 2px 3px 0 rgba(175, 144, 144, 0.4), 0 0 0 4px $rose;
+      background: #fafafa;
+      padding: 1px 4px;
+      width: 300px;
+      box-shadow: inset 2px 2px 3px 0 rgba(175, 144, 144, 0.4), 0 0 0 4px $rose;
     }
 
     &[type=submit] {
@@ -263,36 +284,36 @@ form {
   }
 
   .note {
-    color      : #ff869e;
-    display    : block;
-    margin     : 4px;
-    text-align : right;
+    color: #ff869e;
+    display: block;
+    margin: 4px;
+    text-align: right;
   }
 }
 
 // admin link
 #adminLink {
-  position      : fixed;
-  right         : 0;
-  top           : 0;
+  position: fixed;
+  right: 0;
+  top: 0;
 
-  background  : rgba(129, 89, 28, 0.8);
-  border-radius : 3px;
-  box-shadow  : 0 0 1px, 0 0 1px 1px rgba(129, 89, 28, 0.8), inset 0 0 1px 1px;
-  margin      : 8px;
-  padding       : 4px 4px;
-  text-shadow : 0 0 1px;
+  background: rgba(129, 89, 28, 0.8);
+  border-radius: 3px;
+  box-shadow: 0 0 1px, 0 0 1px 1px rgba(129, 89, 28, 0.8), inset 0 0 1px 1px;
+  margin: 8px;
+  padding: 4px 4px;
+  text-shadow: 0 0 1px;
 
   &,
   & span {
-    color : $yellow
+    color: $yellow
   }
 }
 
 #tetologo {
-  margin : -12px 0 0 32px;
-  height : 100px;
-  float  : left;
+  margin: -12px 0 0 32px;
+  height: 100px;
+  float: left;
 }
 
 // hack
@@ -301,42 +322,42 @@ body {
   h1,
   h2,
   p {
-    margin : 12px 12px 0 12px;
+    margin: 12px 12px 0 12px;
   }
 }
 
 h1 {
-  font-size : 150%;
+  font-size: 150%;
 }
 
 h2 {
-  font-size : 110%;
-  color     : rgba(255, 255, 255, 1);
+  font-size: 110%;
+  color: rgba(255, 255, 255, 1);
 }
 
 .note {
 
   &,
   & * {
-    color : $yellow;
+    color: $yellow;
   }
 
   &.small {
-    font-size : 75%;
+    font-size: 75%;
   }
 }
 
 .main-nav {
-  background    : #161616;
-  border-radius : 2px;
-  display       : inline-block;
-  padding       : 6px 0 6px 6px;
+  background: #161616;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 6px 0 6px 6px;
 
   a {
-    background    : #3a3a3a;
-    border-radius : 2px;
-    font-size     : 70%;
-    margin        : 0 6px 0 0;
-    padding       : 6px;
+    background: #3a3a3a;
+    border-radius: 2px;
+    font-size: 70%;
+    margin: 0 6px 0 0;
+    padding: 6px;
   }
 }
