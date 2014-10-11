@@ -39,7 +39,7 @@ div.content {
 div.content,
 div.content ul li {
   background-color: #ffffff;
-  @include background-image(linear-gradient(left top, #ffffff 0%, #ffeeee 100%));
+  @include background-image(linear-gradient(left top, #ffffff 40%, #ffeeee 100%));
 }
 
 div.content.playlist {
@@ -183,6 +183,10 @@ $small-header-max-width: 1100px;
     }
   }
 
+  #notice1010Link {
+    display: block;
+  }
+
   #notice1010 {
     background-color: #0e0000;
     border-radius: 8px;
@@ -198,12 +202,25 @@ $small-header-max-width: 1100px;
     top: 6px;
     @include background-image(linear-gradient(top, #4b050f 0%, #0e0000 100%));
 
+    &:hover {
+      box-shadow: 0 0 1px 4px #42cc6e, inset 0 0 0 2px black, inset 0 0 0 4px #ff869e;
+      background: #572b2b;
+    }
+
     small {
-      color: white;
       display: block;
       font-size: 0.7em;
       font-style: italic;
       margin-top: 3px;
+
+      &,
+      & .fa {
+        color: white;
+      }
+
+      .fa {
+        margin-left: 8px;
+      }
     }
 
     @media (min-width: $small-header-max-width) and (max-width: $medium-header-max-width) {

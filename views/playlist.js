@@ -30,11 +30,19 @@ function getTemplate (params) {
 				A.id ('tmdpheader'),
 				'The Miracle Diva Project'
 			),
-			A.span (
-				A.id ('notice1010'),
-				'2014/10/10 — Teto day!',
-				A.small (
-					'YouTube celebration playlist coming soon!'
+			A.alink (
+				'https://www.youtube.com/watch?v=Q4Lr91Eepvc&index=1&list=PL2Nz7j8k502L_dWrlWm7Wj7wOKf91G2R-',
+				'2014/10/10 Teto´s Day Fest playlist',
+				A.macro (
+					A.id ('notice1010Link'),
+					A.span (
+						A.id ('notice1010'),
+						'Teto´s Day Fest! 2014/10/10',
+						A.small (
+							'Celebration playlist on YouTube!',
+							A.fontawesome ('play-circle-o fa-lg')
+						)
+					)
 				)
 			),
 			A.img (
