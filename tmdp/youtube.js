@@ -50,7 +50,7 @@ function requireUserAdmin (req, res) {
 
 	} else {
 		req.appGlobal.debugs.tmdp ('user NOT admin');
-		res.redirect (require ('../content/routes').admin);
+		res.redirect (require ('../routes/routes').admin);
 		return false;
 	}
 }

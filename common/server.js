@@ -43,7 +43,7 @@ function setupServer (rootDirName, debugs) {
 	}
 	params.host = url.format (hostParams);
 
-	params.routes = require ('../content/routes');
+	params.routes = require ('../routes/routes');
 
 	var express = require ('express');
 	var app = express ();
@@ -100,19 +100,18 @@ function setupServer (rootDirName, debugs) {
 	var mAuth = require ('./auth');
 	mAuth.usePassport (params);
 
-	var mContentCommon = require ('../content/common');
 	app.use (
 		params.routes.root,
-		mContentCommon.toInit (params.appGlobal)
+		mGlobal.toInitReq (params.appGlobal)
 	);
 
-	var mContentAuth = require ('../content/auth');
+	var mContentAuth = require ('../admin/auth');
 	app.use (
 		params.routes.root,
 		mContentAuth.toCheckAuthUser (params)
 	);
 
-	var mContentInit = require ('../content/init');
+	var mContentInit = require ('../routes/init');
 	var router = new express.Router ();
 	mContentInit.init (router, params);
 	app.use (

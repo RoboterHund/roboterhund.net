@@ -19,7 +19,7 @@ function init (router, params) {
  * @param params
  */
 function initHome (router, params) {
-	var mContentHome = require ('../content/home');
+	var mContentHome = require ('../home/home');
 	var mViewsHome = require ('../views/home');
 
 	params.appGlobal.views.home =
@@ -38,10 +38,10 @@ function initHome (router, params) {
  * @param params
  */
 function initTmdp (router, params) {
-	var mContentAdmin = require ('../content/admin');
-	var mContentTmdp = require ('../content/tmdp');
+	var mContentAdmin = require ('../admin/admin');
+	var mContentTmdp = require ('../tmdp/tmdp');
 	var mViewsPlaylist = require ('../views/playlist');
-	var mYoutube = require ('../modules/youtube');
+	var mYoutube = require ('../tmdp/youtube');
 
 	var routes = params.routes;
 
@@ -131,7 +131,7 @@ function initTmdp (router, params) {
 function initAuth (router, params) {
 	var routes = params.routes;
 
-	var mContentAuth = require ('../content/auth');
+	var mContentAuth = require ('../admin/auth');
 	router.get (
 		routes.login,
 		function adminRedirect (req, res) {
@@ -176,7 +176,7 @@ function initAuth (router, params) {
 		setupAuthStrategyRoutes (setupParams);
 	}
 
-	var mAuth = require ('../modules/auth');
+	var mAuth = require ('../common/auth');
 	router.get (
 		params.routes.logout,
 		mAuth.logout
