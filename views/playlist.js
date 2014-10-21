@@ -35,6 +35,7 @@ function getTemplate (params) {
 				'2014/10/10 Teto´s Day Fest playlist',
 				A.macro (
 					A.id ('notice1010Link'),
+					A.target ('_blank'),
 					A.span (
 						A.id ('notice1010'),
 						'Teto´s Day Fest! 2014/10/10',
@@ -63,6 +64,7 @@ function getTemplate (params) {
 							A.insert (keys.VIDEO_LINK),
 							A.insert (keys.VIDEO_LINK),
 							A.macro (
+								A.target ('_blank'),
 								A.img (
 									A.src (
 										A.insert (keys.VIDEO_THUMBNAIL)

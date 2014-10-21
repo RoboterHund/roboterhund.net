@@ -41,6 +41,12 @@ function getTemplateEngine () {
 	A.value = A.specAttr ('value');
 
 	/**
+	 * target attribute
+	 * @type {Function}
+	 */
+	A.target = A.specAttr ('target');
+
+	/**
 	 * link
 	 * @param href
 	 * @param title
