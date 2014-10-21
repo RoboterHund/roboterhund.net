@@ -8,29 +8,11 @@ function getAdminView (appGlobal) {
 
 	return A.template (
 		A.h1 ('Admin panel'),
-		A.h2 ('User authentication'),
-		A.p (
-			A.em (
-				A.inClass ('note small'),
-				A.fontawesome ('warning'),
-				' Authentication does not enable restricted operations.'
-			)
-		),
-		A.p (
-			A.insert (keys.CONT_USER),
-			A.insert (keys.LOGIN_CONTROL)
-		),
 		A.h2 ('Refresh Kasane Teto playlist'),
 		A.div (
 			A.alink (
 				routes.loadLatestPlaylistPage,
 				'Reload latest ≤50 videos. '
-			),
-			A.em (
-				A.inClass ('note small'),
-				' ',
-				A.fontawesome ('ban'),
-				' Restricted operation.'
 			)
 		)
 	);

@@ -58,7 +58,7 @@ function initTmdp (router, params) {
 
 	router.get (
 		routes.loadLatestPlaylistPage,
-		mYoutube.checkIsUserAdmin,
+		mYoutube.allowAdminOperation,
 		mYoutube.clearNextPageToken,
 		mYoutube.youtubePlaylistPageRequest,
 		mYoutube.storePlaylistPage,

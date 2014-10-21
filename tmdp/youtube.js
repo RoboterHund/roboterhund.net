@@ -38,6 +38,17 @@ function checkIsUserAdmin (req, res, next) {
 }
 
 /**
+ * Allow admin operation without authentication.
+ * @param req
+ * @param res
+ * @param next
+ */
+function allowAdminOperation (req, res, next) {
+	req.tempData.tmdpWriteAllowed = true;
+	next ();
+}
+
+/**
  * check if user is marked in req as admin
  * @param req
  * @param res
@@ -62,7 +73,8 @@ function requireUserAdmin (req, res) {
  * @param next
  */
 function youtubePlaylistPageRequest (req, res, next) {
-	if (requireUserAdmin (req, res)) {
+	if (req.tempData.tmdpWriteAllowed ||
+		requireUserAdmin (req, res)) {
 
 		var Youtube = require ('youtube-api');
 		var youtubeParams = require ('../private/youtube');
@@ -107,7 +119,9 @@ function youtubePlaylistPageRequest (req, res, next) {
  * @param next
  */
 function storePlaylistPage (req, res, next) {
-	if (requireUserAdmin (req, res)) {
+	if (req.tempData.tmdpWriteAllowed ||
+		requireUserAdmin (req, res)) {
+
 		var data = req.tempData.youtubeData;
 
 		req.appGlobal.debugs.tmdp (
@@ -243,7 +257,9 @@ function analyzeData (appGlobal, position, data) {
  * @param next
  */
 function clearNextPageToken (req, res, next) {
-	if (requireUserAdmin (req, res)) {
+	if (req.tempData.tmdpWriteAllowed ||
+		requireUserAdmin (req, res)) {
+
 		req.session.nextYoutubePageToken = null;
 		next ();
 	}
@@ -306,6 +322,7 @@ function toGetResultArray (callback) {
 
 module.exports = {
 	checkIsUserAdmin: checkIsUserAdmin,
+	allowAdminOperation: allowAdminOperation,
 	youtubePlaylistPageRequest: youtubePlaylistPageRequest,
 	storePlaylistPage: storePlaylistPage,
 	clearNextPageToken: clearNextPageToken,
