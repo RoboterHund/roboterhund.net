@@ -14,6 +14,7 @@ function getCommonTemplate (params) {
 		A.DOCTYPE,
 		A.head (
 			A.title ('roboterhund.net'),
+			A.metaViewportDeviceWidth,
 			A.stylesheet (
 				'/css/font-awesome-4.2.0/css/font-awesome.min.css'
 			),

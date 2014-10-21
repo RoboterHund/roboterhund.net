@@ -41,6 +41,12 @@ function getTemplateEngine () {
 	A.value = A.specAttr ('value');
 
 	/**
+	 * target attribute
+	 * @type {Function}
+	 */
+	A.target = A.specAttr ('target');
+
+	/**
 	 * link
 	 * @param href
 	 * @param title
@@ -112,6 +118,13 @@ function getTemplateEngine () {
 	A.divClearBoth = A.constant (
 		A.div (A.inStyle ('clear:both'), '')
 	);
+
+	/**
+	 * for CSS3 media queries
+	 * @type {string}
+	 */
+	A.metaViewportDeviceWidth =
+		'<meta name="viewport" content="width=device-width" />';
 
 	return A;
 }

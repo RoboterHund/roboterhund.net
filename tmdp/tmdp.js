@@ -94,7 +94,7 @@ function getLoader (req) {
 					appGlobal: {
 						A: appGlobal.A
 					},
-					routes: require ('./routes')
+					routes: require ('../routes/routes')
 				}
 			);
 			loader = appGlobal.views.loader;
@@ -155,7 +155,7 @@ function getPageSelect (req) {
 	}
 
 	var mViewsPlaylist = require ('../views/playlist');
-	var routes = require ('./routes');
+	var routes = require ('../routes/routes');
 	var showPlaylist = routes.showPlaylist;
 
 	return mViewsPlaylist.getPageSelectView (
@@ -287,7 +287,7 @@ function search (req, res, next) {
 				['pos', 1]
 			]
 		},
-		require ('../modules/youtube').toGetResultArray (
+		require ('../tmdp/youtube').toGetResultArray (
 			function (items) {
 				req.tempData.playlist = items;
 				req.tempData.searchTerm = rawTerm;
