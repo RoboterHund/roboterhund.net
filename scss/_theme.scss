@@ -267,6 +267,7 @@ $small-header-max-width: 1100px;
 #filter {
   a {
     @include round-button();
+    float: left;
     margin-left: 10px;
     padding: 6px 10px;
   }
