@@ -63,7 +63,8 @@ function playlist (req, res, next) {
 	var style = req.appGlobal.styles.tmdp;
 	if (!req.appGlobal.styles.tmdp) {
 		var A = req.appGlobal.A;
-		req.appGlobal.styles.tmdp = A.constant (A.stylesheet ('/css/tmdp.css'));
+		style = req.appGlobal.styles.tmdp =
+			A.constant (A.stylesheet ('/css/tmdp.css'));
 	}
 
 	req.viewVals [keys.STYLE] = style;
@@ -250,6 +251,16 @@ function search (req, res, next) {
 	// http://stackoverflow.com/a/3561711
 	var term = rawTerm.replace (/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 
+	var regexPrefix;
+	if (/^[\000-\177]*$/.test (term)) {
+		// term contains only ascii
+		regexPrefix = '.*\\b';
+
+	} else {
+		// string contains non ascii
+		regexPrefix = '.*';
+	}
+
 	var parts = term.match (/\S+/g);
 
 	if (!parts) {
@@ -257,37 +268,31 @@ function search (req, res, next) {
 		return;
 	}
 
-	var $andTitle = [];
-	var $andDescription = [];
+	var $andParts = [];
 
 	var i;
 	var n = parts.length;
 	var regex;
 	for (i = 0; i < n; i++) {
-		regex = new RegExp ('.*\\b' + parts [i] + '.*', 'i');
+		regex = new RegExp (regexPrefix + parts [i] + '.*', 'i');
 		req.appGlobal.debugs.tmdp ("regex [%d]: '%s'", i, regex);
-		$andTitle.push (
+		$andParts.push (
 			{
-				'data.snippet.title': regex
-			}
-		);
-		$andDescription.push (
-			{
-				'data.snippet.description': regex
+				$or: [
+					{
+						'data.snippet.title': regex
+					},
+					{
+						'data.snippet.description': regex
+					}
+				]
 			}
 		);
 	}
 
 	req.appGlobal.db.tmdpVideos ().find (
 		{
-			$or: [
-				{
-					$and: $andTitle
-				},
-				{
-					$and: $andDescription
-				}
-			]
+			$and: $andParts
 		},
 		{
 			sort: [

@@ -15,10 +15,15 @@ function initGlobalData (params) {
 
 	var mViewsTemplates = require ('../views/templates');
 	var keys = require ('../views/keys');
-	appGlobal.A = mViewsTemplates.getTemplateEngine ();
+	var A = mViewsTemplates.getTemplateEngine ();
+	appGlobal.A = A;
 	appGlobal.viewKeys = keys;
 	appGlobal.views = {};
 	appGlobal.render = toRender (params);
+
+	appGlobal.styles = {
+		rh: A.constant (A.stylesheet ('/css/rh.css'))
+	};
 
 	appGlobal.db = params.collections;
 
@@ -33,11 +38,6 @@ function initGlobalData (params) {
  * @returns {Function}
  */
 function toInitReq (appGlobal) {
-	var A = appGlobal.A;
-	appGlobal.styles = {
-		rh: A.constant (A.stylesheet ('/css/rh.css'))
-	};
-
 	return function initReq (req, res, next) {
 		req.appGlobal = appGlobal;
 		req.tempData = {};
