@@ -60,6 +60,13 @@ function playlist (req, res, next) {
 		videos.push (video);
 	}
 
+	var style = req.appGlobal.styles.tmdp;
+	if (!req.appGlobal.styles.tmdp) {
+		var A = req.appGlobal.A;
+		req.appGlobal.styles.tmdp = A.constant (A.stylesheet ('/css/tmdp.css'));
+	}
+
+	req.viewVals [keys.STYLE] = style;
 	req.viewVals [keys.VIDEO_LOADER] = getLoader (req);
 	req.viewVals [keys.VIDEO_PAGE_SELECT] = getPageSelect (req);
 	req.viewVals [keys.VIDEO_PLAYLIST] = videos;

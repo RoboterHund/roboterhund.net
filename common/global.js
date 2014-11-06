@@ -33,10 +33,17 @@ function initGlobalData (params) {
  * @returns {Function}
  */
 function toInitReq (appGlobal) {
+	var A = appGlobal.A;
+	appGlobal.styles = {
+		rh: A.constant (A.stylesheet ('/css/rh.css'))
+	};
+
 	return function initReq (req, res, next) {
 		req.appGlobal = appGlobal;
 		req.tempData = {};
 		req.viewVals = {};
+
+		req.viewVals [appGlobal.viewKeys.STYLE] = appGlobal.styles.rh;
 
 		next ();
 	};
