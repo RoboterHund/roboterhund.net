@@ -281,7 +281,7 @@ function loadPlaylist (req, res, next) {
 			{},
 			{
 				sort: [
-					['pos', 1]
+					['pos', -1]
 				]
 			},
 			toGetResultArray (

@@ -35,13 +35,15 @@ function playlist (req, res, next) {
 	var i;
 	var playlistItem;
 	var video;
-	for (i = to - 1; i >= from; i--) {
+
+	var playlistLength = req.appGlobal.youtube.list.length;
+	for (i = from; i < to; i++) {
 		playlistItem = playlist [i];
 		var snippet = playlistItem.data.snippet;
 
 		video = {};
 
-		video [keys.VIDEO_POSITION] = playlistItem.pos;
+		video [keys.VIDEO_POSITION] = playlistLength - playlistItem.pos + 1;
 		video [keys.VIDEO_LINK] =
 			'https://www.youtube.com/watch?v='
 			+ snippet.resourceId.videoId
@@ -196,10 +198,10 @@ function latest (req, res, next) {
 
 	var showNumber = 50;
 
-	var to = list.length;
-	var from = to - showNumber + 1;
-	if (from < 1) {
-		from = 1;
+	var from = 1;
+	var to = from + showNumber - 1;
+	if (from > list.length) {
+		to = list.length;
 	}
 
 	var showPlaylist = req.appGlobal.routes.showPlaylist;
@@ -223,10 +225,10 @@ function oldest (req, res, next) {
 
 	var showNumber = 50;
 
-	var from = 1;
-	var to = from + showNumber - 1;
-	if (from > list.length) {
-		to = list.length;
+	var to = list.length;
+	var from = to - showNumber + 1;
+	if (from < 1) {
+		from = 1;
 	}
 
 	var showPlaylist = req.appGlobal.routes.showPlaylist;
@@ -296,7 +298,7 @@ function search (req, res, next) {
 		},
 		{
 			sort: [
-				['pos', 1]
+				['pos', -1]
 			]
 		},
 		require ('../tmdp/youtube').toGetResultArray (

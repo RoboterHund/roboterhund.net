@@ -139,8 +139,8 @@ footer {
 }
 
 div.content ul li {
-	width: 180px;
-	height: 200px;
+	width: 140px;
+	height: 210px;
 	box-sizing: border-box;
 	float: left;
 	margin: 6px 0 8px 12px;
@@ -159,9 +159,10 @@ div.content ul li {
 		}
 		span.vid-pos {
 			color: $dark-rose;
+			font-size: 80%;
 			position: absolute;
 			right: 6px;
-			top: 6px;
+			bottom: 6px;
 		}
 		div.title {
 			height: 90px;
