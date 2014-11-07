@@ -254,7 +254,7 @@ function search (req, res, next) {
 	var term = rawTerm.replace (/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 
 	var regexPrefix;
-	if (/^[\000-\177]*$/.test (term)) {
+	if (req.appGlobal.f.isAscii (term)) {
 		// term contains only ascii
 		regexPrefix = '.*\\b';
 

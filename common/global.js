@@ -29,6 +29,10 @@ function initGlobalData (params) {
 
 	appGlobal.youtube = {};
 
+	appGlobal.f = {
+		isAscii: isAsciiString
+	};
+
 	return appGlobal;
 }
 
@@ -66,6 +70,15 @@ function toRender (params) {
 			)
 		);
 	};
+}
+
+/**
+ * true if all characters in string are ascii
+ * @param string
+ * @returns {boolean}
+ */
+function isAsciiString (string) {
+	return /^[\000-\177]*$/.test (string);
 }
 
 module.exports = {

@@ -178,6 +178,13 @@ function storePlaylistItems (req, next, data, index) {
 	}
 }
 
+/**
+ * analyze TMDP track data
+ * @param appGlobal
+ * @param position
+ * @param data
+ * @returns {{}} value
+ */
 function analyzeData (appGlobal, position, data) {
 	var value = {
 		pos: position,
@@ -222,7 +229,7 @@ function analyzeData (appGlobal, position, data) {
 		line = title.substring (i, openDelimPos).trim ();
 
 		if (line.length > 0) {
-			titleLines.push ({ line: line });
+			pushTitleLine (appGlobal, titleLines, line, null);
 		}
 
 		closeDelim = closeDelims [openDelim];
@@ -239,7 +246,7 @@ function analyzeData (appGlobal, position, data) {
 		line = title.substring (openDelimPos, i).trim ();
 
 		if (line.length > 0) {
-			titleLines.push ({ line: line });
+			pushTitleLine (appGlobal, titleLines, line, openDelim);
 		}
 	}
 
@@ -248,6 +255,40 @@ function analyzeData (appGlobal, position, data) {
 			.getTitleLinesView (appGlobal.A, titleLines);
 
 	return value;
+}
+
+function pushTitleLine (appGlobal, titleLines, line, openDelim) {
+	var inClass = '';
+
+	if (openDelim != null) {
+		if (line.indexOf ('【Original') == 0) {
+			return;
+		}
+
+		if (openDelim == '【'
+			|| openDelim == '『') {
+			// reduce indent
+			inClass += ' ri';
+		}
+
+		if (openDelim == '('
+			&& !appGlobal.f.isAscii (line)) {
+			// show with Japanese font
+			inClass += ' sjp';
+		}
+
+		if (line == '『Teto\'s Day Fest 2014』') {
+			// make smaller
+			inClass += ' sm';
+		}
+	}
+
+	titleLines.push (
+		{
+			inClass: inClass,
+			line: line
+		}
+	);
 }
 
 /**

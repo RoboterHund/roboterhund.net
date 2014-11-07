@@ -204,6 +204,7 @@ function getTitleLinesView (A, titleLines) {
 			A.list (
 				'lines',
 				A.div (
+					A.inClass (A.insert ('inClass')),
 					A.insert ('line')
 				)
 			)

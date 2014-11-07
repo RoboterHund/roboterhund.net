@@ -5,6 +5,12 @@
 @import "compass/css3";
 @import url(http://fonts.googleapis.com/css?family=Roboto+Condensed);
 
+@font-face {
+	font-family: 'Mincho';
+	//noinspection CssUnknownTarget
+	src: url('/css/MS Mincho.ttf');
+}
+
 $yellow: rgba(255, 220, 0, 1);
 $full-black: rgba(0, 0, 0, 1);
 $phosphor-green: rgba(0, 255, 0, 1);
@@ -19,7 +25,7 @@ body {
 	background-color: $dark-rose;
 	@include background-image(
 			linear-gradient(
-							left bottom,
+							45deg,
 							$dark-red-1 0%,
 							$dark-red-1 10%,
 							$dark-red-2 10%,
@@ -62,11 +68,12 @@ div.content {
 div.content,
 div.content ul li {
 	background-color: #ffffff;
-	@include background-image(linear-gradient(left top, #ffffff 40%, #ffeeee 100%));
+	@include background-image(linear-gradient(135deg, #ffffff 40%, #ffeeee 100%));
 }
 
 div.content.playlist {
 	box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.5), 0 -8px 2px 22px $dark-olive-green, 0 0 8px 36px rgba(0, 0, 0, 0.5), inset 0 0 0 4px $dark-rose;
+	margin-top: 6px;
 }
 
 @mixin button-active-background {
@@ -174,12 +181,25 @@ div.content ul li {
 			div {
 				color: #a5935a;
 				margin: 3px 0 0 4px;
+
+				&.ri {
+					text-indent: -5px;
+				}
+
+				&.sjp {
+					font-family: 'Mincho';
+					text-shadow: 0 0 0.2px;
+				}
+
+				&.sm {
+					font-size: 84%;
+				}
 			}
 		}
 	}
 	&:hover {
 		background-color: $rose;
-		@include background-image(linear-gradient(left top, #ffdddd 0%, #ffffff 60%));
+		@include background-image(linear-gradient(135deg, #ffdddd 0%, #ffffff 60%));
 		box-shadow: 0px 3px 6px 1px rgb(155, 121, 102);
 
 		a div.title div {
@@ -192,12 +212,13 @@ $medium-header-max-width: 1180px;
 $small-header-max-width: 1100px;
 
 #tetoheader {
-	margin-bottom: 22px;
 	margin-top: 16px;
 	position: relative;
 
 	img#kisekinoutahime {
+		display: inline-block;
 		height: 110px;
+		margin-bottom: 4px;
 		position: absolute;
 		right: 64px;
 		top: -1px;
@@ -206,14 +227,22 @@ $small-header-max-width: 1100px;
 			right: 28px;
 		}
 		@media (max-width: $small-header-max-width) {
-			float: right;
-			margin: 15px 15px 0 0;
-			position: initial;
+			display: inline-block;
+			position: relative;
+			right: 0;
+			float: left;
 		}
 	}
 
 	#notice1010Link {
-		display: block;
+		display: inline-block;
+		margin-bottom: 12px;
+
+		@media (max-width: $small-header-max-width) {
+			display: block;
+			float: left;
+			margin: 12px;
+		}
 	}
 
 	#notice1010 {
@@ -229,11 +258,11 @@ $small-header-max-width: 1100px;
 		right: 230px;
 		text-shadow: 0 0 4px;
 		top: 6px;
-		@include background-image(linear-gradient(top, #4b050f 0%, #0e0000 100%));
+		@include background-image(linear-gradient(180deg, #4b050f 0%, #0e0000 100%));
 
 		&:hover {
 			//			box-shadow: 0 0 1px 4px #42cc6e, inset 0 0 0 2px black, inset 0 0 0 4px #ff869e;
-			@include background-image(linear-gradient(top, #630714 0%, #2a0000 100%));
+			@include background-image(linear-gradient(180deg, #630714 0%, #2a0000 100%));
 		}
 
 		small {
@@ -257,8 +286,8 @@ $small-header-max-width: 1100px;
 		}
 		@media (max-width: $small-header-max-width) {
 			display: inline-block;
-			margin: 24px 0 -8px 32px;
-			position: initial;
+			position: relative;
+			right: 0;
 		}
 	}
 }
@@ -285,11 +314,16 @@ $small-header-max-width: 1100px;
 
 	background-color: rgb(242, 8, 39);
 	@include filter-gradient(#f20827, #cb173b, vertical);
-	@include background-image(linear-gradient(top, rgba(242, 8, 39, 1) 0%, rgba(237, 43, 72, 1) 50%, rgba(208, 8, 41, 1) 51%, rgba(209, 13, 46, 1) 71%, rgba(203, 23, 59, 1) 100%));
+	@include background-image(linear-gradient(180deg, rgba(242, 8, 39, 1) 0%, rgba(237, 43, 72, 1) 50%, rgba(208, 8, 41, 1) 51%, rgba(209, 13, 46, 1) 71%, rgba(203, 23, 59, 1) 100%));
 
 	&:hover {
 		text-shadow: 0 0 12px #ffffff;
 		box-shadow: 0 0 16px 4px rgba(255, 50, 80, 0.8);
+	}
+
+	@media (max-width: $small-header-max-width) {
+		position: relative;
+		z-index: 1000;
 	}
 }
 
@@ -361,6 +395,10 @@ form {
 	margin: -12px 0 0 32px;
 	height: 100px;
 	float: left;
+
+	@media (max-width: $small-header-max-width) {
+		//		float: none;
+	}
 }
 
 // hack
