@@ -57,6 +57,9 @@ function setupServer (rootDirName, debugs) {
 	var mGlobal = require ('./global');
 	mGlobal.initGlobalData (params);
 
+	var mCompression = require ('compression');
+	app.use (mCompression ());
+
 	var path = require ('path');
 	var staticDir = path.join (rootDirName, 'static');
 	app.use (

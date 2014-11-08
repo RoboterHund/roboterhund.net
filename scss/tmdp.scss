@@ -65,15 +65,13 @@ div.content {
 	box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
 }
 
-div.content,
-div.content ul li {
-	background-color: #ffffff;
-	@include background-image(linear-gradient(135deg, #ffffff 40%, #ffeeee 100%));
-}
-
 div.content.playlist {
+	background-color: #ffffff;
+	//noinspection CssUnknownTarget
+	background-image: url('/img/bg.png');
+	background-repeat: repeat;
 	box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.5), 0 -8px 2px 22px $dark-olive-green, 0 0 8px 36px rgba(0, 0, 0, 0.5), inset 0 0 0 4px $dark-rose;
-	margin-top: 6px;
+	margin: 6px 42px 12px 42px;
 }
 
 @mixin button-active-background {
@@ -148,11 +146,22 @@ footer {
 div.content ul li {
 	width: 140px;
 	height: 210px;
+
+	background-color: #ffffff;
+	@include background-image(linear-gradient(
+					0deg,
+					#fff8f8 0%,
+					#ffffff 25%,
+					#ffffff 65%,
+					#fff0f0 75%,
+					#ffffff 100%
+	));
 	box-sizing: border-box;
 	float: left;
 	margin: 6px 0 8px 12px;
-	box-shadow: 0px 3px 6px 1px rgba(190, 148, 124, 1);
+	box-shadow: 0px 0px 2px 0px rgba(190, 148, 124, 0.1), 0px 3px 6px rgba(190, 148, 124, 0.9);
 	border-radius: 2px;
+
 	a {
 		width: 100%;
 		height: 100%;
@@ -172,8 +181,6 @@ div.content ul li {
 			bottom: 6px;
 		}
 		div.title {
-			height: 90px;
-
 			clear: both;
 			font-size: 0.85em;
 			margin: 12px 8px 12px 4px;
@@ -188,7 +195,6 @@ div.content ul li {
 
 				&.sjp {
 					font-family: 'Mincho';
-					text-shadow: 0 0 0.2px;
 				}
 
 				&.sm {
@@ -198,12 +204,36 @@ div.content ul li {
 		}
 	}
 	&:hover {
-		background-color: $rose;
-		@include background-image(linear-gradient(135deg, #ffdddd 0%, #ffffff 60%));
-		box-shadow: 0px 3px 6px 1px rgb(155, 121, 102);
+		box-shadow: 0px 0px 3px 0px rgba(229, 46, 88, 0.5), 0px 5px 8px rgba(190, 148, 124, 0.9);
+		margin: 4px 0 10px 12px;
 
-		a div.title div {
-			color: #625c46;
+		&,
+		div.title {
+			transition: all 0.2s ease;
+		}
+
+		a div.title {
+			width: 220%;
+
+			background: rgba(255, 255, 255, 0.8);
+			border-radius: 12px;
+			box-shadow: 0 1px 2px rgba(22, 22, 22, 0.40);
+			display: table;
+			font-size: 102%;
+			margin: -60%;
+			padding: 12px 2px 18px 2px;
+			position: relative;
+			text-align: center;
+			z-index: 1000;
+
+			div {
+				color: #625c46;
+
+				&.sjp {
+					color: #000000;
+					font-size: 130%;
+				}
+			}
 		}
 	}
 }
@@ -261,7 +291,6 @@ $small-header-max-width: 1100px;
 		@include background-image(linear-gradient(180deg, #4b050f 0%, #0e0000 100%));
 
 		&:hover {
-			//			box-shadow: 0 0 1px 4px #42cc6e, inset 0 0 0 2px black, inset 0 0 0 4px #ff869e;
 			@include background-image(linear-gradient(180deg, #630714 0%, #2a0000 100%));
 		}
 
@@ -369,6 +398,7 @@ form {
 		display: block;
 		margin: 4px;
 		text-align: right;
+		text-shadow: 0 0 1px #ffffff, 0 0 2px #ffffff;
 	}
 }
 
