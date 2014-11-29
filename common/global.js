@@ -15,14 +15,23 @@ function initGlobalData (params) {
 
 	var mViewsTemplates = require ('../views/templates');
 	var keys = require ('../views/keys');
-	appGlobal.A = mViewsTemplates.getTemplateEngine ();
+	var A = mViewsTemplates.getTemplateEngine ();
+	appGlobal.A = A;
 	appGlobal.viewKeys = keys;
 	appGlobal.views = {};
 	appGlobal.render = toRender (params);
 
+	appGlobal.styles = {
+		rh: A.constant (A.stylesheet ('/css/rh.css'))
+	};
+
 	appGlobal.db = params.collections;
 
 	appGlobal.youtube = {};
+
+	appGlobal.f = {
+		isAscii: isAsciiString
+	};
 
 	return appGlobal;
 }
@@ -37,6 +46,8 @@ function toInitReq (appGlobal) {
 		req.appGlobal = appGlobal;
 		req.tempData = {};
 		req.viewVals = {};
+
+		req.viewVals [appGlobal.viewKeys.STYLE] = appGlobal.styles.rh;
 
 		next ();
 	};
@@ -59,6 +70,15 @@ function toRender (params) {
 			)
 		);
 	};
+}
+
+/**
+ * true if all characters in string are ascii
+ * @param string
+ * @returns {boolean}
+ */
+function isAsciiString (string) {
+	return /^[\000-\177]*$/.test (string);
 }
 
 module.exports = {

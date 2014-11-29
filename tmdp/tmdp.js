@@ -35,13 +35,15 @@ function playlist (req, res, next) {
 	var i;
 	var playlistItem;
 	var video;
-	for (i = to - 1; i >= from; i--) {
+
+	var playlistLength = req.appGlobal.youtube.list.length;
+	for (i = from; i < to; i++) {
 		playlistItem = playlist [i];
 		var snippet = playlistItem.data.snippet;
 
 		video = {};
 
-		video [keys.VIDEO_POSITION] = playlistItem.pos;
+		video [keys.VIDEO_POSITION] = playlistLength - playlistItem.pos + 1;
 		video [keys.VIDEO_LINK] =
 			'https://www.youtube.com/watch?v='
 			+ snippet.resourceId.videoId
@@ -60,6 +62,14 @@ function playlist (req, res, next) {
 		videos.push (video);
 	}
 
+	var style = req.appGlobal.styles.tmdp;
+	if (!req.appGlobal.styles.tmdp) {
+		var A = req.appGlobal.A;
+		style = req.appGlobal.styles.tmdp =
+			A.constant (A.stylesheet ('/css/tmdp.css'));
+	}
+
+	req.viewVals [keys.STYLE] = style;
 	req.viewVals [keys.VIDEO_LOADER] = getLoader (req);
 	req.viewVals [keys.VIDEO_PAGE_SELECT] = getPageSelect (req);
 	req.viewVals [keys.VIDEO_PLAYLIST] = videos;
@@ -188,10 +198,10 @@ function latest (req, res, next) {
 
 	var showNumber = 50;
 
-	var to = list.length;
-	var from = to - showNumber + 1;
-	if (from < 1) {
-		from = 1;
+	var from = 1;
+	var to = from + showNumber - 1;
+	if (from > list.length) {
+		to = list.length;
 	}
 
 	var showPlaylist = req.appGlobal.routes.showPlaylist;
@@ -215,10 +225,10 @@ function oldest (req, res, next) {
 
 	var showNumber = 50;
 
-	var from = 1;
-	var to = from + showNumber - 1;
-	if (from > list.length) {
-		to = list.length;
+	var to = list.length;
+	var from = to - showNumber + 1;
+	if (from < 1) {
+		from = 1;
 	}
 
 	var showPlaylist = req.appGlobal.routes.showPlaylist;
@@ -243,6 +253,16 @@ function search (req, res, next) {
 	// http://stackoverflow.com/a/3561711
 	var term = rawTerm.replace (/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 
+	var regexPrefix;
+	if (req.appGlobal.f.isAscii (term)) {
+		// term contains only ascii
+		regexPrefix = '.*\\b';
+
+	} else {
+		// string contains non ascii
+		regexPrefix = '.*';
+	}
+
 	var parts = term.match (/\S+/g);
 
 	if (!parts) {
@@ -250,41 +270,35 @@ function search (req, res, next) {
 		return;
 	}
 
-	var $andTitle = [];
-	var $andDescription = [];
+	var $andParts = [];
 
 	var i;
 	var n = parts.length;
 	var regex;
 	for (i = 0; i < n; i++) {
-		regex = new RegExp ('.*\\b' + parts [i] + '.*', 'i');
+		regex = new RegExp (regexPrefix + parts [i] + '.*', 'i');
 		req.appGlobal.debugs.tmdp ("regex [%d]: '%s'", i, regex);
-		$andTitle.push (
+		$andParts.push (
 			{
-				'data.snippet.title': regex
-			}
-		);
-		$andDescription.push (
-			{
-				'data.snippet.description': regex
+				$or: [
+					{
+						'data.snippet.title': regex
+					},
+					{
+						'data.snippet.description': regex
+					}
+				]
 			}
 		);
 	}
 
 	req.appGlobal.db.tmdpVideos ().find (
 		{
-			$or: [
-				{
-					$and: $andTitle
-				},
-				{
-					$and: $andDescription
-				}
-			]
+			$and: $andParts
 		},
 		{
 			sort: [
-				['pos', 1]
+				['pos', -1]
 			]
 		},
 		require ('../tmdp/youtube').toGetResultArray (

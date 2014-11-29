@@ -13,11 +13,19 @@ function getHomeView (params) {
 		),
 		A.p (
 			A.alink (
-				'https://twitter.com/RoboterHund87',
-				'my Twitter',
-				'RoboterHund'
+				'https://github.com/RoboterHund',
+				'my GitHub account',
+				A.macro (
+					A.target ('_blank'),
+					'RoboterHund'
+				)
 			),
-				' (Alexander Díaz Chub IRL) built the '
+			' (',
+			A.span (
+				A.inStyle ('color: yellow;'),
+				'Alexander Díaz Chub'
+			),
+				') built the '
 				+ 'node.js server that serves this website, '
 				+ 'and is still working on it from time to time :P'
 		),

@@ -18,7 +18,7 @@ function getCommonTemplate (params) {
 			A.stylesheet (
 				'/css/font-awesome-4.2.0/css/font-awesome.min.css'
 			),
-			A.stylesheet ('/css/main.css')
+			A.insert (keys.STYLE)
 		),
 		A.body (
 			A.insert (keys.CONTENT),
@@ -43,7 +43,7 @@ function getCommonTemplate (params) {
 				)
 			),
 			A.footer (
-				'roboterhund.net website © 2014 RoboterHund.',
+				'roboterhund.net website © 2014 RoboterHund',
 				A.br (),
 				'All videoclips and songs are copyright to their respective owners and are presented for informational purposes only.',
 				A.br (),

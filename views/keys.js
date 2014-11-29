@@ -3,6 +3,7 @@
 
 module.exports = {
 	CONTENT: 'content',
+	STYLE: 'style',
 
 	VIDEO_LOADER: 'vidLoader',
 	VIDEO_PAGE_SELECT: 'vidPagSel',
