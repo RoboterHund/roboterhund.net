@@ -114,15 +114,36 @@ function setupServer (rootDirName, debugs) {
 		mContentAuth.toCheckAuthUser (params)
 	);
 
-	var mContentInit = require ('../routes/init');
+	setupRouter (app, express, params);
+
+	return app;
+}
+
+/**
+ * setup app router
+ * @param app Express app
+ * @param express Express
+ * @param params initialization params
+ */
+function setupRouter (app, express, params) {
 	var router = new express.Router ();
-	mContentInit.init (router, params);
+
+	var mRoutesTmdp = require ('../routes/tmdp');
+	mRoutesTmdp.initTmdp (router, params);
+
+	var mRoutesAuth = require ('../routes/auth');
+	mRoutesAuth.initAuth (router, params);
+
+	var mRoutesHome = require ('../routes/home');
+	mRoutesHome.initHome (router, params);
+
+	var mRoutesTest = require ('../routes/test');
+	mRoutesTest.initFail (router, params);
+
 	app.use (
 		params.routes.root,
 		router
 	);
-
-	return app;
 }
 
 module.exports = {
