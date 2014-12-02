@@ -337,7 +337,7 @@ function loadPlaylist (req, res, next) {
 }
 
 /**
- * convert
+ * convert database result to array
  * @param callback
  * @returns {Function}
  */

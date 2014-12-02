@@ -111,7 +111,7 @@ function setupServer (rootDirName, debugs) {
 	var mContentAuth = require ('../admin/auth');
 	app.use (
 		params.routes.root,
-		mContentAuth.toCheckAuthUser (params)
+		mContentAuth.checkAuthUser
 	);
 
 	setupRouter (app, express, params);
