@@ -40,7 +40,8 @@ function initGlobalData (params) {
 	appGlobal.youtube = {};
 
 	appGlobal.f = {
-		isAscii: isAsciiString
+		isAscii: isAsciiString,
+		useResultArray: toGetResultArray
 	};
 
 	return appGlobal;
@@ -82,6 +83,32 @@ function render (req, res) {
  */
 function isAsciiString (string) {
 	return /^[\000-\177]*$/.test (string);
+}
+
+/**
+ * convert database result to array
+ * @param callback
+ * @param next
+ * @returns {Function}
+ */
+function toGetResultArray (callback, next) {
+	return function getResultArray (err, result) {
+		if (err) {
+			next (err);
+
+		} else {
+			result.toArray (
+				function useResultArray (err, items) {
+					if (err) {
+						next (err);
+
+					} else {
+						callback (items);
+					}
+				}
+			);
+		}
+	};
 }
 
 module.exports = {

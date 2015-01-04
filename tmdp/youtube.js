@@ -129,6 +129,9 @@ function storePlaylistPage (req, res, next) {
 			data.items.length
 		);
 
+		req.appGlobal.youtube.listLength =
+			data.pageInfo.totalResults;
+
 		storePlaylistItems (req, next, data, 0);
 
 		// invalidate cache
@@ -306,67 +309,10 @@ function clearNextPageToken (req, res, next) {
 	}
 }
 
-/**
- * load from database the list of videos in the TMDP playlist
- * @param req
- * @param res
- * @param next
- */
-function loadPlaylist (req, res, next) {
-	if (req.appGlobal.youtube.list) {
-		req.tempData.playlist = req.appGlobal.youtube.list;
-		next ();
-
-	} else {
-		req.appGlobal.db.tmdpVideos ().find (
-			{},
-			{
-				sort: [
-					['pos', -1]
-				]
-			},
-			toGetResultArray (
-				function usePlaylistArray (items) {
-					req.appGlobal.youtube.list = items;
-					req.tempData.playlist = req.appGlobal.youtube.list;
-					next ();
-				}
-			)
-		);
-	}
-}
-
-/**
- * convert database result to array
- * @param callback
- * @returns {Function}
- */
-function toGetResultArray (callback) {
-	return function getResultArray (err, result) {
-		if (err) {
-			next (err);
-
-		} else {
-			result.toArray (
-				function useResultArray (err, items) {
-					if (err) {
-						next (err);
-
-					} else {
-						callback (items);
-					}
-				}
-			);
-		}
-	};
-}
-
 module.exports = {
 	checkIsUserAdmin: checkIsUserAdmin,
 	allowAdminOperation: allowAdminOperation,
 	youtubePlaylistPageRequest: youtubePlaylistPageRequest,
 	storePlaylistPage: storePlaylistPage,
-	clearNextPageToken: clearNextPageToken,
-	loadPlaylist: loadPlaylist,
-	toGetResultArray: toGetResultArray
+	clearNextPageToken: clearNextPageToken
 };

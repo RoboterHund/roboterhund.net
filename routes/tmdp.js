@@ -8,7 +8,7 @@
  */
 function initTmdp (router, params) {
 	var mContentAdmin = require ('../admin/admin');
-	var mContentTmdp = require ('../tmdp/tmdp');
+	var mTmdpPlaylist = require ('../tmdp/playlist');
 	var mViewsPlaylist = require ('../views/playlist');
 	var mYoutube = require ('../tmdp/youtube');
 
@@ -16,8 +16,6 @@ function initTmdp (router, params) {
 
 	params.appGlobal.views.playlistTemplate =
 		mViewsPlaylist.getTemplate (params);
-
-	var redirect = mContentTmdp.oldest;
 
 	router.get (
 		routes.admin,
@@ -39,8 +37,7 @@ function initTmdp (router, params) {
 		routes.resetPlaylistLoader,
 		mYoutube.checkIsUserAdmin,
 		mYoutube.clearNextPageToken,
-		mYoutube.loadPlaylist,
-		redirect
+		mTmdpPlaylist.oldest
 	);
 
 	router.get (
@@ -48,37 +45,32 @@ function initTmdp (router, params) {
 		mYoutube.checkIsUserAdmin,
 		mYoutube.youtubePlaylistPageRequest,
 		mYoutube.storePlaylistPage,
-		mYoutube.loadPlaylist,
-		redirect
+		mTmdpPlaylist.oldest
 	);
 
 	router.get (
 		routes.showPlaylist,
 		mYoutube.checkIsUserAdmin,
-		mYoutube.loadPlaylist,
-		mContentTmdp.playlist,
+		mTmdpPlaylist.showPlaylist,
 		params.appGlobal.render
 	);
 
 	router.get (
 		routes.showPlaylistFromTo,
 		mYoutube.checkIsUserAdmin,
-		mYoutube.loadPlaylist,
-		mContentTmdp.playlist,
+		mTmdpPlaylist.showPlaylist,
 		params.appGlobal.render
 	);
 
 	router.get (
 		routes.showPlaylistLatest,
 		mYoutube.checkIsUserAdmin,
-		mYoutube.loadPlaylist,
-		mContentTmdp.latest
+		mTmdpPlaylist.latest
 	);
 
 	router.get (
 		routes.showPlaylistSearch,
-		mContentTmdp.search,
-		mContentTmdp.playlist,
+		mTmdpPlaylist.search,
 		params.appGlobal.render
 	);
 
