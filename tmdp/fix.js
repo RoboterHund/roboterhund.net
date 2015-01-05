@@ -248,6 +248,9 @@ function onFixFinished (req, res, next) {
 	if (req.tempData.completed.fixedItems
 		&& req.tempData.completed.fixedList) {
 
+		// invalidate cache
+		req.appGlobal.youtube.list = null;
+
 		res.json (req.tempData.result);
 	}
 }
