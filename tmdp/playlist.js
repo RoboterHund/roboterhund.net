@@ -1,78 +1,119 @@
-// The Miracle Diva Project
+// TMDP playlist
 'use strict';
 
 /**
- * show Kasane Teto Original Songs playlist
- * @param req
- * @param res
- * @param next
+ * show playlist route handler
  */
-function playlist (req, res, next) {
-	var videos = [];
+function showPlaylist (req, res, next) {
+	getPlaylist (
+		req,
+		setPlaylistViewVals,
+		next);
+}
 
-	var playlistId =
-		require ('../private/youtube')
-			.playlists.channelKasaneTetoOriginals;
-	var keys = req.appGlobal.viewKeys;
+/**
+ * get entire TMDP playlist
+ * newest first
+ */
+function getPlaylist (req, callback, next) {
+	if (req.appGlobal.youtube.list) {
+		req.tempData.playlist = req.appGlobal.youtube.list;
+		callback (req, next);
 
+	} else {
+		// pos goes from oldest to newest
+		// inverse sort puts newest first
+		req.appGlobal.db.tmdpVideos ().find (
+			{},
+			{
+				sort: [
+					['pos', -1]
+				]
+			},
+			req.appGlobal.f.useResultArray (
+				function usePlaylistArray (items) {
+					req.appGlobal.youtube.list = items;
+					req.appGlobal.youtube.listLength = items.length;
+					req.tempData.playlist = items;
+					callback (req, next);
+				},
+				next
+			)
+		);
+	}
+}
+
+/**
+ * set values to render playlist
+ */
+function setPlaylistViewVals (req, next) {
 	var playlist = req.tempData.playlist;
 
 	var from = parseInt (req.params.from);
-
 	if (isNaN (from) || from < 1) {
 		from = 0;
-
 	} else {
+		// params.from is 1-based
+		// list is 0-based
 		from -= 1;
 	}
 
 	var to = parseInt (req.params.to);
-
 	if (isNaN (to) || to > playlist.length) {
 		to = playlist.length;
 	}
 
+	var videos = [];
+	var playlistLength = req.appGlobal.youtube.listLength;
+	var keys = req.appGlobal.viewKeys;
+	var playlistId =
+		require ('../private/youtube')
+			.playlists.channelKasaneTetoOriginals;
 	var i;
 	var playlistItem;
 	var video;
-
-	var playlistLength = req.appGlobal.youtube.list.length;
 	for (i = from; i < to; i++) {
-		playlistItem = playlist [i];
-		var snippet = playlistItem.data.snippet;
-
 		video = {};
 
-		video [keys.VIDEO_POSITION] = playlistLength - playlistItem.pos + 1;
+		playlistItem = playlist[i];
+		var snippet = playlistItem.data.snippet;
+
+		video [keys.VIDEO_POSITION] =
+			playlistLength - playlistItem.pos + 1;
+
 		video [keys.VIDEO_LINK] =
 			'https://www.youtube.com/watch?v='
 			+ snippet.resourceId.videoId
 			+ '&list='
 			+ playlistId;
 
-		if (playlistItem.titleLinesHtml) {
-			video [keys.VIDEO_TITLE] = playlistItem.titleLinesHtml;
-
-		} else {
-			video [keys.VIDEO_TITLE] = snippet.title;
+		var title = playlistItem.titleLinesHtml;
+		if (!title) {
+			title = snippet.title;
 		}
+		video [keys.VIDEO_TITLE] = title;
 
-		video [keys.VIDEO_THUMBNAIL] = snippet.thumbnails.default.url;
+		video [keys.VIDEO_THUMBNAIL] =
+			snippet.thumbnails.default.url;
 
 		videos.push (video);
 	}
+	req.viewVals [keys.VIDEO_PLAYLIST] = videos;
+
+	req.viewVals [keys.VIDEO_PAGE_SELECT] = getPageSelect (req);
+
+	req.viewVals [keys.VIDEO_LOADER] = getLoader (req);
 
 	var style = req.appGlobal.styles.tmdp;
 	if (!req.appGlobal.styles.tmdp) {
 		var A = req.appGlobal.A;
-		style = req.appGlobal.styles.tmdp =
-			A.constant (A.stylesheet ('/css/tmdp.css'));
+		style =
+			A.constant (
+				A.stylesheet ('/css/tmdp.css')
+			);
+		req.appGlobal.styles.tmdp = style;
 	}
-
 	req.viewVals [keys.STYLE] = style;
-	req.viewVals [keys.VIDEO_LOADER] = getLoader (req);
-	req.viewVals [keys.VIDEO_PAGE_SELECT] = getPageSelect (req);
-	req.viewVals [keys.VIDEO_PLAYLIST] = videos;
 
 	if (req.tempData.searchTerm) {
 		req.viewVals [keys.VIDEO_SEARCH_TERM] = req.tempData.searchTerm;
@@ -174,12 +215,12 @@ function getPageSelect (req) {
 			pages: pages,
 			getRoute: function (from, to) {
 				return (
-					showPlaylist
-					+ '/'
-					+ from
-					+ '/'
-					+ to
-					);
+				showPlaylist
+				+ '/'
+				+ from
+				+ '/'
+				+ to
+				);
 			},
 			excludeFrom: req.params.from,
 			excludeTo: req.params.to
@@ -194,23 +235,28 @@ function getPageSelect (req) {
  * @param next
  */
 function latest (req, res, next) {
-	var list = req.appGlobal.youtube.list;
+	getPlaylist (
+		req,
+		function () {
+			var list = req.appGlobal.youtube.list;
 
-	var showNumber = 50;
+			var showNumber = 50;
 
-	var from = 1;
-	var to = from + showNumber - 1;
-	if (from > list.length) {
-		to = list.length;
-	}
+			var from = 1;
+			var to = from + showNumber - 1;
+			if (from > list.length) {
+				to = list.length;
+			}
 
-	var showPlaylist = req.appGlobal.routes.showPlaylist;
-	res.redirect (
-			showPlaylist
-			+ '/'
-			+ from
-			+ '/'
-			+ to
+			var showPlaylist = req.appGlobal.routes.showPlaylist;
+			res.redirect (
+				showPlaylist
+				+ '/'
+				+ from
+				+ '/'
+				+ to
+			);
+		}
 	);
 }
 
@@ -221,23 +267,28 @@ function latest (req, res, next) {
  * @param next
  */
 function oldest (req, res, next) {
-	var list = req.appGlobal.youtube.list;
+	getPlaylist (
+		req,
+		function () {
+			var list = req.appGlobal.youtube.list;
 
-	var showNumber = 50;
+			var showNumber = 50;
 
-	var to = list.length;
-	var from = to - showNumber + 1;
-	if (from < 1) {
-		from = 1;
-	}
+			var to = list.length;
+			var from = to - showNumber + 1;
+			if (from < 1) {
+				from = 1;
+			}
 
-	var showPlaylist = req.appGlobal.routes.showPlaylist;
-	res.redirect (
-			showPlaylist
-			+ '/'
-			+ from
-			+ '/'
-			+ to
+			var showPlaylist = req.appGlobal.routes.showPlaylist;
+			res.redirect (
+				showPlaylist
+				+ '/'
+				+ from
+				+ '/'
+				+ to
+			);
+		}
 	);
 }
 
@@ -301,21 +352,22 @@ function search (req, res, next) {
 				['pos', -1]
 			]
 		},
-		require ('../tmdp/youtube').toGetResultArray (
+		req.appGlobal.f.useResultArray (
 			function (items) {
 				req.tempData.playlist = items;
 				req.tempData.searchTerm = rawTerm;
 
 				req.appGlobal.debugs.tmdp (items.length);
 
-				next ();
-			}
+				setPlaylistViewVals (req, next);
+			},
+			next
 		)
 	);
 }
 
 module.exports = {
-	playlist: playlist,
+	showPlaylist: showPlaylist,
 	latest: latest,
 	oldest: oldest,
 	search: search

@@ -18,8 +18,18 @@ function initGlobalData (params) {
 	var A = mViewsTemplates.getTemplateEngine ();
 	appGlobal.A = A;
 	appGlobal.viewKeys = keys;
+	appGlobal.render = render;
+
 	appGlobal.views = {};
-	appGlobal.render = toRender (params);
+
+	var mViewsAuth = require ('../views/auth');
+	appGlobal.authViews = mViewsAuth.getAuthViews (params);
+	appGlobal.views.login =
+		mViewsAuth.getLoginView (params);
+
+	var mViewsCommon = require ('../views/common');
+	appGlobal.views.rootTemplate =
+		mViewsCommon.getCommonTemplate (params);
 
 	appGlobal.styles = {
 		rh: A.constant (A.stylesheet ('/css/rh.css'))
@@ -30,7 +40,8 @@ function initGlobalData (params) {
 	appGlobal.youtube = {};
 
 	appGlobal.f = {
-		isAscii: isAsciiString
+		isAscii: isAsciiString,
+		useResultArray: toGetResultArray
 	};
 
 	return appGlobal;
@@ -55,21 +66,14 @@ function toInitReq (appGlobal) {
 
 /**
  * send rendered view
- * @returns {Function}
  */
-function toRender (params) {
-	var mViewsCommon = require ('../views/common');
-	params.appGlobal.views.rootTemplate =
-		mViewsCommon.getCommonTemplate (params);
-
-	return function render (req, res) {
-		res.send (
-			req.appGlobal.A.string (
-				req.appGlobal.views.rootTemplate,
-				req.viewVals
-			)
-		);
-	};
+function render (req, res) {
+	res.send (
+		req.appGlobal.A.string (
+			req.appGlobal.views.rootTemplate,
+			req.viewVals
+		)
+	);
 }
 
 /**
@@ -79,6 +83,32 @@ function toRender (params) {
  */
 function isAsciiString (string) {
 	return /^[\000-\177]*$/.test (string);
+}
+
+/**
+ * convert database result to array
+ * @param callback
+ * @param next
+ * @returns {Function}
+ */
+function toGetResultArray (callback, next) {
+	return function getResultArray (err, result) {
+		if (err) {
+			next (err);
+
+		} else {
+			result.toArray (
+				function useResultArray (err, items) {
+					if (err) {
+						next (err);
+
+					} else {
+						callback (items);
+					}
+				}
+			);
+		}
+	};
 }
 
 module.exports = {
