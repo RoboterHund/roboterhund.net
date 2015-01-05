@@ -13,6 +13,8 @@ module.exports = {
 	showPlaylistLatest: '/kasaneteto/videos/latest',
 	showPlaylistSearch: '/kasaneteto/videos/search',
 
+	tmdpFix: '/kasaneteto/fix/list',
+
 	admin: '/admin',
 	login: '/login',
 

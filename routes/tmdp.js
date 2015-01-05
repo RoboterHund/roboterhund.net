@@ -82,6 +82,11 @@ function initTmdp (router, params) {
 		}
 	);
 
+	// temporary fix route
+	router.get (
+		routes.tmdpFix,
+		require ('../tmdp/fix').fix
+	);
 }
 
 module.exports = {
