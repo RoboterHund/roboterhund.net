@@ -18,7 +18,13 @@ function getCommonTemplate (params) {
 			A.stylesheet (
 				'/css/font-awesome-4.2.0/css/font-awesome.min.css'
 			),
-			A.insert (keys.STYLE)
+			A.insert (keys.STYLE),
+			A.list (
+				keys.SCRIPTS,
+				'<script src="',
+				A.insert (keys.SCRIPT),
+				'" defer></script>'
+			)
 		),
 		A.body (
 			A.insert (keys.CONTENT),
@@ -53,6 +59,13 @@ function getCommonTemplate (params) {
 	);
 }
 
+function addScript (req, src) {
+	var script = {};
+	script [req.appGlobal.viewKeys.SCRIPT] = src;
+	req.viewVals [req.appGlobal.viewKeys.SCRIPTS].push (script);
+}
+
 module.exports = {
-	getCommonTemplate: getCommonTemplate
+	getCommonTemplate: getCommonTemplate,
+	addScript: addScript
 };

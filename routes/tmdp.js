@@ -16,6 +16,8 @@ function initTmdp (router, params) {
 
 	params.appGlobal.views.playlistTemplate =
 		mViewsPlaylist.getTemplate (params);
+	params.appGlobal.views.contentTemplate =
+		mViewsPlaylist.getContentTemplate (params);
 
 	router.get (
 		routes.admin,

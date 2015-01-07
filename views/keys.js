@@ -5,6 +5,11 @@ module.exports = {
 	CONTENT: 'content',
 	STYLE: 'style',
 
+	SCRIPTS: 'scripts',
+	SCRIPT: 'script',
+
+	TMDP_CONTENT: 'tmdpContent',
+
 	VIDEO_LOADER: 'vidLoader',
 	VIDEO_PAGE_SELECT: 'vidPagSel',
 	VIDEO_PLAYLIST: 'vidList',

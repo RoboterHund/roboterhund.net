@@ -14,6 +14,16 @@ function getAdminView (appGlobal) {
 				routes.loadLatestPlaylistPage,
 				'Reload latest ≤50 videos. '
 			)
+		),
+		A.div (
+			A.alink (
+				routes.tmdpFix,
+				'Apply after reloading',
+				A.macro (
+					A.target ('_blank'),
+					'Apply fix patch'
+				)
+			)
 		)
 	);
 }

@@ -122,8 +122,27 @@ function setPlaylistViewVals (req, next) {
 		req.viewVals [keys.VIDEO_SEARCH_TERM] = '';
 	}
 
-	req.viewVals [keys.CONTENT] =
-		req.appGlobal.views.playlistTemplate;
+	if (req.query.content) {
+		// render only internal content
+		req.tempData.rootTemplate =
+			req.appGlobal.views.contentTemplate;
+
+	} else {
+		// render complete page
+		req.appGlobal.f.addScript (
+			req, '/js/lib/modernizr.custom.06455.min.js');
+		req.appGlobal.f.addScript (
+			req, '//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js');
+		req.appGlobal.f.addScript (
+			req, '/js/lib/jquery.form.min.js');
+		req.appGlobal.f.addScript (
+			req, '/js/tmdp.js');
+
+		req.viewVals [keys.CONTENT] =
+			req.appGlobal.views.playlistTemplate;
+		req.viewVals [keys.TMDP_CONTENT] =
+			req.appGlobal.views.contentTemplate;
+	}
 
 	next ();
 }
@@ -207,15 +226,13 @@ function getPageSelect (req) {
 
 	var mViewsPlaylist = require ('../views/playlist');
 	var routes = require ('../routes/routes');
-	var showPlaylist = routes.showPlaylist;
-
 	return mViewsPlaylist.getPageSelectView (
 		req.appGlobal,
 		{
 			pages: pages,
 			getRoute: function (from, to) {
 				return (
-				showPlaylist
+				routes.showPlaylist
 				+ '/'
 				+ from
 				+ '/'
@@ -248,14 +265,7 @@ function latest (req, res, next) {
 				to = list.length;
 			}
 
-			var showPlaylist = req.appGlobal.routes.showPlaylist;
-			res.redirect (
-				showPlaylist
-				+ '/'
-				+ from
-				+ '/'
-				+ to
-			);
+			showPlaylistRedirect (req, res, from, to);
 		}
 	);
 }
@@ -280,15 +290,19 @@ function oldest (req, res, next) {
 				from = 1;
 			}
 
-			var showPlaylist = req.appGlobal.routes.showPlaylist;
-			res.redirect (
-				showPlaylist
-				+ '/'
-				+ from
-				+ '/'
-				+ to
-			);
+			showPlaylistRedirect (req, res, from, to);
 		}
+	);
+}
+
+function showPlaylistRedirect (req, res, from, to) {
+	res.redirect (
+		req.appGlobal.routes.showPlaylist
+		+ '/'
+		+ from
+		+ '/'
+		+ to
+		+ require ('url').parse (req.url).search
 	);
 }
 

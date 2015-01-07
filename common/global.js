@@ -40,6 +40,7 @@ function initGlobalData (params) {
 	appGlobal.youtube = {};
 
 	appGlobal.f = {
+		addScript: mViewsCommon.addScript,
 		isAscii: isAsciiString,
 		useResultArray: toGetResultArray
 	};
@@ -58,7 +59,11 @@ function toInitReq (appGlobal) {
 		req.tempData = {};
 		req.viewVals = {};
 
+		req.tempData.rootTemplate = req.appGlobal.views.rootTemplate;
+
 		req.viewVals [appGlobal.viewKeys.STYLE] = appGlobal.styles.rh;
+		req.viewVals [appGlobal.viewKeys.SCRIPTS] = [];
+		req.viewVals [appGlobal.viewKeys.INIT_SCRIPT] = '';
 
 		next ();
 	};
@@ -70,7 +75,7 @@ function toInitReq (appGlobal) {
 function render (req, res) {
 	res.send (
 		req.appGlobal.A.string (
-			req.appGlobal.views.rootTemplate,
+			req.tempData.rootTemplate,
 			req.viewVals
 		)
 	);

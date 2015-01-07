@@ -12,4 +12,5 @@ private/
 static/css/
 static/img/
 static/favicon.ico
+static/js/lib/
 start.bat

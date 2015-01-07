@@ -54,38 +54,47 @@ function getTemplate (params) {
 		),
 		A.div (
 			A.inClass ('content playlist'),
-			getPlaylistSearchTemplate (params),
-			A.insert (keys.VIDEO_PAGE_SELECT),
-			A.ul (
-				A.list (
-					keys.VIDEO_PLAYLIST,
-					A.li (
-						A.alink (
-							A.insert (keys.VIDEO_LINK),
-							A.insert (keys.VIDEO_LINK),
-							A.macro (
-								A.target ('_blank'),
-								A.img (
-									A.src (
-										A.insert (keys.VIDEO_THUMBNAIL)
-									)
-								),
-								A.span (
-									A.inClass ('vid-pos'),
-									A.insert (keys.VIDEO_POSITION)
-								),
-								A.div (
-									A.inClass ('title'),
-									A.insert (keys.VIDEO_TITLE)
+			A.insert (keys.TMDP_CONTENT)
+		)
+	);
+}
+
+function getContentTemplate (params) {
+	var A = params.appGlobal.A;
+	var keys = params.appGlobal.viewKeys;
+
+	return A.template (
+		getPlaylistSearchTemplate (params),
+		A.insert (keys.VIDEO_PAGE_SELECT),
+		A.ul (
+			A.list (
+				keys.VIDEO_PLAYLIST,
+				A.li (
+					A.alink (
+						A.insert (keys.VIDEO_LINK),
+						A.insert (keys.VIDEO_LINK),
+						A.macro (
+							A.target ('_blank'),
+							A.img (
+								A.src (
+									A.insert (keys.VIDEO_THUMBNAIL)
 								)
+							),
+							A.span (
+								A.inClass ('vid-pos'),
+								A.insert (keys.VIDEO_POSITION)
+							),
+							A.div (
+								A.inClass ('title'),
+								A.insert (keys.VIDEO_TITLE)
 							)
 						)
 					)
 				)
-			),
-			A.divClearBoth,
-			A.insert (keys.VIDEO_PAGE_SELECT)
-		)
+			)
+		),
+		A.divClearBoth,
+		A.insert (keys.VIDEO_PAGE_SELECT)
 	);
 }
 
@@ -154,10 +163,10 @@ function getPageSelectView (appGlobal, params) {
 			items.push (
 				A.alink (
 					params.getRoute (page.from, page.to),
-						'Show videos '
-						+ page.from
-						+ ', '
-						+ page.to,
+					'Show videos '
+					+ page.from
+					+ ', '
+					+ page.to,
 					page.to
 				)
 			);
@@ -217,6 +226,7 @@ function getTitleLinesView (A, titleLines) {
 
 module.exports = {
 	getTemplate: getTemplate,
+	getContentTemplate: getContentTemplate,
 	getPageSelectView: getPageSelectView,
 	getLoader: getLoader,
 	getTitleLinesView: getTitleLinesView
