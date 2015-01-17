@@ -296,14 +296,17 @@ function oldest (req, res, next) {
 }
 
 function showPlaylistRedirect (req, res, from, to) {
-	res.redirect (
+	var path =
 		req.appGlobal.routes.showPlaylist
 		+ '/'
 		+ from
 		+ '/'
-		+ to
-		+ require ('url').parse (req.url).search
-	);
+		+ to;
+	var search = require ('url').parse (req.url).search;
+	if (search) {
+		path += search;
+	}
+	res.redirect (path);
 }
 
 /**

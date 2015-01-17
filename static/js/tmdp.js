@@ -14,6 +14,11 @@ var tmdp = (function () {
 		$ (
 			function () {
 				if (Modernizr.history) {
+					findElements ();
+
+					var state = getInitialState ();
+					history.replaceState (state, '', state.url);
+
 					$ (window).on ('popstate', function (e) {
 						var state = e.originalEvent.state;
 						if (state) {
@@ -24,11 +29,28 @@ var tmdp = (function () {
 						}
 					});
 
-					findElements ();
 					setButtonEvents ();
 				}
 			}
 		);
+	};
+
+	var getInitialState = function () {
+		var state = {};
+
+		var $form = $E.filterForm;
+		var searchTerm = $E.$searchTerm ($form).val ();
+		if (searchTerm) {
+			state.restore = restoreFilter.name;
+			state.term = searchTerm;
+			state.url = $form.attr ('action') + '?' + $form.serialize ();
+
+		} else {
+			state.restore = restorePage.name;
+			state.url = window.location.href;
+		}
+
+		return state;
 	};
 
 	var findElements = function () {
