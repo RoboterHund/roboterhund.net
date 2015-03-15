@@ -47,6 +47,13 @@ function getPlaylist (req, callback, next) {
  * set values to render playlist
  */
 function setPlaylistViewVals (req, next) {
+	var tmdpPatch = req.appGlobal.TEMP_tmdpPatch;
+	if (!tmdpPatch) {
+		tmdpPatch = require ('../private/tmdp_patch');
+		req.appGlobal.TEMP_tmdpPatch = tmdpPatch;
+	}
+	tmdpPatch.patch (req);
+
 	var playlist = req.tempData.playlist;
 
 	var from = parseInt (req.params.from);
