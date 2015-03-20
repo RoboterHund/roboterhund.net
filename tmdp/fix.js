@@ -111,13 +111,18 @@ function fix (req, res, next) {
 			replaceWith: 1549
 		},
 		{
-			videoId: 'UUv_2usGj-nngXvNDlhsOJUJ_073WIqQN4',
-			videoTitle: '【Kasane Teto】Actually (now), with you! - '
-			+ '現在 (いま)、君と【Original Song】',
-			replaceField: 'titleLinesHtml',
-			replaceWith: '<div class=" ri">【Kasane Teto】</div>'
-			+ '<div class="">Actually (now), with you!</div>'
-			+ '<div class=" sjp">現在 (いま)、君と</div>'
+			videoId: 'UUv_2usGj-nngdbTzfOVBLI1Ej4Hzhw1Rg',
+			videoTitle: "【Kasane Teto & Momone Momo】"
+			+ "Myosotis's Illusion【Original Song】",
+			replaceField: 'pos',
+			replaceWith: 1623
+		},
+		{
+			videoId: 'UUv_2usGj-nngMZXTW0rsPwlAv9CUvjUcZ',
+			videoTitle: "【Kasane Teto】"
+			+ "Magical Kisses♥【Original Song】",
+			replaceField: 'pos',
+			replaceWith: 1622
 		}
 	];
 
