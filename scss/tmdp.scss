@@ -62,7 +62,7 @@ div.content {
 	margin: 12px;
 	padding: 12px;
 	border-radius: 3px;
-	box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0px rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0px rgba(255, 255, 255, 0.3);
+	box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.4), inset -2px -2px 1px 0 rgba(0, 0, 0, 0.5), inset 1px 1px 2px 0 rgba(255, 255, 255, 0.3);
 }
 
 div.content.playlist {
@@ -70,7 +70,7 @@ div.content.playlist {
 	//noinspection CssUnknownTarget
 	background-image: url('/img/bg.png');
 	background-repeat: repeat;
-	box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.5), 0 -8px 2px 22px $dark-olive-green, 0 0 8px 36px rgba(0, 0, 0, 0.5), inset 0 0 0 4px $dark-rose;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.5), 0 -8px 2px 22px $dark-olive-green, 0 0 8px 36px rgba(0, 0, 0, 0.5), inset 0 0 0 4px $dark-rose;
 	margin: 6px 42px 12px 42px;
 }
 
@@ -86,7 +86,7 @@ div.content.playlist {
 	font-size: 80%;
 	margin: 6px 4px 2px 0;
 	text-decoration: none;
-	box-shadow: 0 0 0 3px $rose, inset -3px -3px 6px 2px rgba(10, 48, 19, 0.5), inset 1px 1px 0 0 rgb(118, 192, 138), inset 2px 3px 1px 0px rgba(255, 255, 255, 0.7);
+	box-shadow: 0 0 0 3px $rose, inset -3px -3px 6px 2px rgba(10, 48, 19, 0.5), inset 1px 1px 0 0 rgb(118, 192, 138), inset 2px 3px 1px 0 rgba(255, 255, 255, 0.7);
 	background: rgb(74, 168, 100);
 	color: #ffffff;
 
@@ -159,7 +159,7 @@ div.content ul li {
 	box-sizing: border-box;
 	float: left;
 	margin: 6px 0 8px 12px;
-	box-shadow: 0px 0px 2px 0px rgba(190, 148, 124, 0.1), 0px 3px 6px rgba(190, 148, 124, 0.9);
+	box-shadow: 0 0 2px 0 rgba(190, 148, 124, 0.1), 0 3px 6px rgba(190, 148, 124, 0.9);
 	border-radius: 2px;
 
 	a {
@@ -194,7 +194,7 @@ div.content ul li {
 				}
 
 				&.sjp {
-					font-family: 'Mincho';
+					font-family: 'Mincho', serif;
 				}
 
 				&.sm {
@@ -204,7 +204,7 @@ div.content ul li {
 		}
 	}
 	&:hover {
-		box-shadow: 0px 0px 3px 0px rgba(229, 46, 88, 0.5), 0px 5px 8px rgba(190, 148, 124, 0.9);
+		box-shadow: 0 0 3px 0 rgba(229, 46, 88, 0.5), 0 5px 8px rgba(190, 148, 124, 0.9);
 		margin: 4px 0 10px 12px;
 
 		&,
@@ -264,6 +264,7 @@ $small-header-max-width: 1100px;
 		}
 	}
 
+	#notice0401Link,
 	#notice1010Link {
 		display: inline-block;
 		margin-bottom: 12px;
@@ -275,24 +276,12 @@ $small-header-max-width: 1100px;
 		}
 	}
 
+	#notice0401,
 	#notice1010 {
-		background-color: #0e0000;
-		border-radius: 8px;
-		box-shadow: 0 1px 8px 4px rgba(0, 0, 0, 0.5), inset 0 0 1px 1px;
-		color: rgb(255, 24, 52);
 		display: block;
-		font-size: 1.5em;
-		font-style: italic;
-		padding: 14px 32px 18px 24px;
 		position: absolute;
 		right: 230px;
-		text-shadow: 0 0 4px;
 		top: 6px;
-		@include background-image(linear-gradient(180deg, #4b050f 0%, #0e0000 100%));
-
-		&:hover {
-			@include background-image(linear-gradient(180deg, #630714 0%, #2a0000 100%));
-		}
 
 		small {
 			display: block;
@@ -319,6 +308,58 @@ $small-header-max-width: 1100px;
 			right: 0;
 		}
 	}
+
+	#notice0401 {
+		background-color: #ffabae;
+		border-radius: 8px;
+		box-shadow: 0 1px 8px 4px rgba(0, 0, 0, 0.40), inset 0 0 0 3px, inset 0 0 0 5px #ffffff;
+		font-size: 1.5em;
+		font-style: italic;
+		padding: 14px 32px 18px 24px;
+		text-shadow: 0 0 8px #ffffff, 0 0 1px #ffffff;
+		@include background-image(linear-gradient(180deg, #ffd3d1 0%, #ffabae 100%));
+
+		&,
+		& span {
+			color: #ff0048;
+		}
+
+		& span.inner {
+			display: block;
+			text-align: center;
+		}
+
+		&:hover {
+			background-color: #ffbabc;
+			box-shadow: 0 1px 8px 4px rgba(0, 0, 0, 0.40), inset 0 0 0 3px, inset 0 0 0 5px #ffffff;
+			@include background-image(linear-gradient(180deg, #ffe7e0 0%, #ffbabc 100%));
+
+			&,
+			& span {
+				color: #ff7382;
+			}
+		}
+
+		small {
+			text-shadow: 0 1px 2px #b60034, 0 0 1px rgba(164, 0, 46, 0.50);
+		}
+	}
+
+	#notice1010 {
+		background-color: #0e0000;
+		border-radius: 8px;
+		box-shadow: 0 1px 8px 4px rgba(0, 0, 0, 0.5), inset 0 0 1px 1px;
+		color: rgb(255, 24, 52);
+		font-size: 1.5em;
+		font-style: italic;
+		padding: 14px 32px 18px 24px;
+		text-shadow: 0 0 4px;
+		@include background-image(linear-gradient(180deg, #4b050f 0%, #0e0000 100%));
+
+		&:hover {
+			@include background-image(linear-gradient(180deg, #630714 0%, #2a0000 100%));
+		}
+	}
 }
 
 #tmdpheader {
@@ -327,12 +368,12 @@ $small-header-max-width: 1100px;
 	font-style: italic;
 	margin-right: 12px;
 	margin-bottom: -8px;
-	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+	text-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
 }
 
 #kasanetetoHeader {
 	border-radius: 2px;
-	box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 4px 4px 1px rgba(0, 0, 0, 0.3);
 	color: #ffffff;
 	display: inline-block;
 	font-size: 18px;
@@ -410,7 +451,7 @@ form {
 
 	background: rgba(129, 89, 28, 0.8);
 	border-radius: 3px;
-	box-shadow: 0 0 1px, 0 0 1px 1px rgba(129, 89, 28, 0.8), inset 0 0 1px 1px;
+	box-shadow: 0 0 1px 1px rgba(129, 89, 28, 0.8), inset 0 0 1px 1px;
 	margin: 8px;
 	padding: 4px 4px;
 	text-shadow: 0 0 1px;
